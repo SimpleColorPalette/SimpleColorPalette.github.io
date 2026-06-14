@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    outline: none;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 12pt;
+    width: 100%;
+    height: 100%;
+    background-color: #eeeeee;
+}
+
+section {
+    padding: 1rem;
+    width: calc(100% - 2rem);
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.75rem;
+    align-items: center;
+}
+
+/* Buttons */
+.btn, button {
+    cursor: pointer;
+    display: block;
+    box-shadow: #ffffffa8 -0.1rem -0.1rem 0.5rem,
+                #000000a8 0.1rem 0.1rem 0.5rem;
+    border-radius: 0.25rem;
+    font-weight: normal;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: 0.25s;
+}
+.btn:hover {
+    filter: brightness(1.05);
+}
+
+.btn-text {
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    font-weight: bold;
+}
+.btn-icon {
+    border-radius: 4rem;
+}
+
+/* Inputs */
+.form {
+    box-shadow: #00000080 0.1rem 0px 0.25rem;
+}
+
+.input, input {
+    background-color: inherit;
+}
+
+.input {
+    padding: 0.25rem 0.5rem;
+    border-radius: 2rem;
+    box-shadow: inset #808080a8 0px 0.1rem 0.5rem;
+    transition: 0.25s;
+}
+
+/* Palette */
+#palette {
+    --cell-size: 25px;
+    display: grid;
+    gap: 0.5rem;
+    grid-auto-flow: column;
+    grid-auto-columns: min-content;
+    justify-content: center;
+}
+
+.color-btn {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    text-align: center;
+    align-content: center;
+    border: 1pt #00000000 solid;
+    outline: 1pt #ffffff00 solid;
+}
+
+.color-text-dark { color: #00000080; }
+.color-text-light { color: #ffffff80; }
+.color-text-dark.selected { color: #000000a8; }
+.color-text-light.selected { color: #ffffffa8; }
+
+.color-btn:hover, .color-btn.selected {
+    scale: 1.2;
+}
+.color-btn.selected {
+    border: 1pt #00000048 solid;
+    outline: 1pt #ffffffff solid;
+}
+
+/* Grid */
+#grid {
+    display: grid;
+    gap: 0px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+    user-select: none;
+    touch-action: none;
+}
+
+.cell {
+    cursor: pointer;
+    user-select: none;
+    touch-action: none;
+}
+
+pre {
+    background: #eee;
+    padding: 10px;
+}
+
+
+/* Output */
+#output {
+    text-align: center;
+    background-color: #00000014;
+}

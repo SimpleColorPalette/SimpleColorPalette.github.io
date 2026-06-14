@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editor de Matriz</title>
+    <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=refresh" />
+</head>
+
+<body>
+
+    <section class="col form">
+    
+        <div class="row">
+            <h4>Paleta</h4>
+            <div id="palette"></div>
+        </div>
+    
+        <div class="row">
+            <h4>Celda</h4>
+
+            <div class="row input">
+                <label for="cell-width">Ancho:</label>
+                <input id="cell-width" type="number" value="8" min="1", max="25"/>
+            </div>
+        
+            <div class="row input">
+                <label for="cell-height">Alto:</label>
+                <input id="cell-height" type="number" value="16" min="1", max="25"/>
+            </div>
+    
+            <button onclick="updateCellSize()" class="btn-text">
+                Actualizar
+            </button>
+        </div>
+
+        <div class="row">
+            <h4>Matriz</h4>
+
+            <div class="row input">
+                <label for="width">Ancho:</label>
+                <input id="width" type="number" value="120" min="1", max="200"/>
+            </div>
+        
+            <div class="row input">
+                <label for="height">Alto:</label>
+                <input id="height" type="number" value="30" min="1", max="100"/>
+            </div>
+    
+            <button onclick="createMatrix()" class="btn btn-text">
+                Generar
+            </button>
+        </div>
+    </section>
+
+    <section>
+        <div id="grid"></div>
+    </section>
+
+    <section class="col">
+        <button id="copy-btn" onclick="copyMatrix()" class="btn-text">Copiar matriz</button>
+        <pre id="output"></pre>
+    </section>
+
+    <script src="./palette.js"></script>
+    <script src="./script.js"></script>
+
+</body>
+
+</html>
