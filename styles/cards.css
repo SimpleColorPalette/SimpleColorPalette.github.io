@@ -1,0 +1,28 @@
+/* Cards */
+.card-container {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  max-width: max-content;
+  flex-wrap: wrap;
+  width: 100%;
+  min-width: -webkit-fill-available;
+}
+
+.card {
+  display: block;
+  padding: 1rem 1.5rem;
+  align-content: space-evenly;
+  background-color: var(--paper);
+  color: var(--text-secondary);
+  border-radius: 0.25rem;
+}
+
+.card.card-small { width: 8rem; }
+
+.card h4 {
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
