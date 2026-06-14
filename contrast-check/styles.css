@@ -241,8 +241,6 @@ ul#colors input[type="color"]{
   -moz-animation: fadeColors var(--animation-fadecolor-time);
   -webkit-animation: fadeColors var(--animation-fadecolor-time);
   -o-animation: fadeColors var(--animation-fadecolor-time);
-  filter: drop-shadow(1pt -1pt 0.25pt #00000080)
-          drop-shadow(-1pt 1pt 0.25pt #00000080);
   letter-spacing: 1.5pt;
 }
 .fade-colors-backg, .fade-colors {
