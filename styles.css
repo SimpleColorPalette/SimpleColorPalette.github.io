@@ -85,7 +85,7 @@ h2, h3 {
 
 
 /* Buttons */
-button, .btn {
+button, .btn, input[type="color"] {
   display: inline-block;
   background-color: var(--paper);
   color: var(--text-secondary);
@@ -96,7 +96,7 @@ button, .btn {
   border-radius: 0.5rem;
   box-shadow: var(--shadow-light), var(--shadow-dark);
 }
-button:hover, .btn:hover {
+button:hover, .btn:hover, input[type="color"]:hover, .custom-file-upload:hover {
   scale: 1.05;
   translate: 0px -0.125rem;
   filter: brightness(1.0125);
@@ -110,7 +110,16 @@ button:hover, .btn:hover {
 .btn-icon {
   border-radius: 4rem;
 }
+button.primary {
+  background-color: var(--primary-main);
+  color: var(--text-contrast-primary);
+}
+button.secondary {
+  background-color: var(--secondary-main);
+  color: var(--text-contrast-secondary);
+}
 
+/* General */
 header, footer {
   grid-column: 1 / -1;
 }
