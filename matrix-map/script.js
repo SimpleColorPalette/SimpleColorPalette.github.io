@@ -179,7 +179,8 @@ document.addEventListener("keydown", (e) => {
 
 const updateCellSize = () => {
     const grid = document.getElementById("grid");
-    
+    grid.style.gridTemplateColumns = `repeat(${matrix[0].length}, ${cellSize.w}px)`;
+
     [...grid.children].forEach((cell, i) => {
         cell.style.width = cellSize.w + "px";
         cell.style.height = cellSize.h + "px";
