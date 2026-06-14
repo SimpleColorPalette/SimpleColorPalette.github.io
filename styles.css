@@ -9,7 +9,7 @@
 :root .light {
   --background: #f3f3f3;
   --text-primary: #222;
-  --paper: #ffffff;
+  --paper: #fcfcfc;
   --text-secondary: #1f1f1f;
 }
 
@@ -89,6 +89,8 @@ button:hover, .btn:hover {
   display: block;
   padding: 1rem 1.5rem;
   align-content: space-evenly;
+  background-color: var(--paper);
+  color: var(--text-secondary);
 }
 
 .card.card-small { width: 8rem; }
@@ -96,5 +98,5 @@ button:hover, .btn:hover {
 .card h4 {
   text-align: center;
   text-transform: uppercase;
-  font-weight: normal;
+  opacity: 0.85;
 }
