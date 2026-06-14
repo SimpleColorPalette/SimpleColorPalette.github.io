@@ -33,7 +33,7 @@ section {
 #palette {
   --cell-size: 25px;
   display: grid;
-  gap: 0.5rem;
+  gap: 0px;
   grid-auto-flow: column;
   grid-auto-columns: min-content;
   justify-content: center;
@@ -46,6 +46,7 @@ section {
   align-content: center;
   border: 1pt #00000000 solid;
   outline: 1pt #ffffff00 solid;
+  border-radius: 0px;
 }
 
 .color-text-dark { color: #00000080; }
@@ -54,7 +55,7 @@ section {
 .color-text-light.selected { color: #ffffffa8; }
 
 .color-btn:hover, .color-btn.selected {
-  scale: 1.2;
+  scale: 1.125;
 }
 .color-btn.selected {
   border: 1pt #00000048 solid;
