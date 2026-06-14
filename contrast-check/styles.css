@@ -61,15 +61,6 @@ input[type="text"]:active {
   gap: 0.5rem;
 }
 
-.pixel {
-  /* IE, only works on <img> tags */
-  -ms-interpolation-mode: nearest-neighbor;
-  /* Firefox */
-  image-rendering: crisp-edges;
-  /* Chromium + Safari */
-  image-rendering: pixelated;
-}
-
 /* Section cont */
 main.container > h1 {
   flex-grow: 1;
