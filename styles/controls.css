@@ -101,7 +101,8 @@ input[type="file"] {
   white-space: normal;
   overflow-wrap: break-word; 
   /* Modern Chrome and standards support */
-  text-wrap: wrap; 
+  text-wrap: wrap;
+  /* text-align-last: center; */
 
   transition: var(--input-transition);
 }
