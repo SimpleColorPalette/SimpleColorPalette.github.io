@@ -2,75 +2,75 @@
 <html lang="es">
 
 <head>
-  <base href="./"/>
+  <base href="./" />
   <meta charset="UTF-8">
   <title>Editor de Matriz</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link rel="styleSheet" href="./../styles.css" type="text/css" media="screen"/>
-  <link rel="stylesheet" href="./styles.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="styleSheet" href="./../styles.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body class="light">
 
-    <div class="container">
-        <h1 class="fade-colors">🪟 Editor de Matriz</h1>
+  <div class="container">
+    <h1 class="fade-colors">🪟 Editor de Matriz</h1>
 
-        <section class="col card">
-        
-            <div class="row">
-                <h4>Paleta</h4>
-                <div id="palette"></div>
-            </div>
-        
-            <div class="row">
-                <h4>Celda</h4>
+    <section class="col card">
 
-                <div class="row input">
-                    <label for="cell-width">Ancho:</label>
-                    <input id="cell-width" type="number" value="8" min="1", max="25"/>
-                </div>
-            
-                <div class="row input">
-                    <label for="cell-height">Alto:</label>
-                    <input id="cell-height" type="number" value="16" min="1", max="25"/>
-                </div>
-        
-                <button onclick="updateCellSize()" class="btn-text">
-                    Actualizar
-                </button>
-            </div>
+      <div class="row">
+        <h4>Paleta</h4>
+        <div id="palette"></div>
+      </div>
 
-            <div class="row">
-                <h4>Matriz</h4>
+      <div class="row">
+        <h4>Celda</h4>
 
-                <div class="row input">
-                    <label for="width">Ancho:</label>
-                    <input id="width" type="number" value="120" min="1", max="200"/>
-                </div>
-            
-                <div class="row input">
-                    <label for="height">Alto:</label>
-                    <input id="height" type="number" value="30" min="1", max="100"/>
-                </div>
-        
-                <button onclick="createMatrix()" class="btn btn-text">
-                    Generar
-                </button>
-            </div>
-        </section>
-    </div>
+        <div class="row input">
+          <label for="cell-width">Ancho:</label>
+          <input id="cell-width" type="number" value="8" min="1" , max="25" />
+        </div>
 
-    <section>
-        <div id="grid"></div>
+        <div class="row input">
+          <label for="cell-height">Alto:</label>
+          <input id="cell-height" type="number" value="16" min="1" , max="25" />
+        </div>
+
+        <button onclick="updateCellSize()" class="btn-text">
+          Actualizar
+        </button>
+      </div>
+
+      <div class="row">
+        <h4>Matriz</h4>
+
+        <div class="row input">
+          <label for="width">Ancho:</label>
+          <input id="width" type="number" value="120" min="1" , max="200" />
+        </div>
+
+        <div class="row input">
+          <label for="height">Alto:</label>
+          <input id="height" type="number" value="30" min="1" , max="100" />
+        </div>
+
+        <button onclick="createMatrix()" class="btn btn-text">
+          Generar
+        </button>
+      </div>
     </section>
+  </div>
 
-    <section class="col">
-        <button id="copy-btn" onclick="copyMatrix()" class="btn-text">Copiar matriz</button>
-        <pre id="output"></pre>
-    </section>
+  <section>
+    <div id="grid"></div>
+  </section>
 
-    <script src="./palette.js"></script>
-    <script src="./script.js"></script>
+  <section class="col">
+    <button id="copy-btn" onclick="copyMatrix()" class="btn-text">Copiar matriz</button>
+    <pre id="output"></pre>
+  </section>
+
+  <script src="./palette.js"></script>
+  <script src="./script.js"></script>
 
 </body>
 
