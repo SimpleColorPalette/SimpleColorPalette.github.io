@@ -12,49 +12,53 @@
 
 <body class="light">
 
-    <section class="col form container">
-    
-        <div class="row">
-            <h4>Paleta</h4>
-            <div id="palette"></div>
-        </div>
-    
-        <div class="row">
-            <h4>Celda</h4>
+    <div class="container">
+        <h1 class="fade-colors">🪟 Editor de Matriz</h1>
 
-            <div class="row input">
-                <label for="cell-width">Ancho:</label>
-                <input id="cell-width" type="number" value="8" min="1", max="25"/>
+        <section class="col card">
+        
+            <div class="row">
+                <h4>Paleta</h4>
+                <div id="palette"></div>
             </div>
         
-            <div class="row input">
-                <label for="cell-height">Alto:</label>
-                <input id="cell-height" type="number" value="16" min="1", max="25"/>
-            </div>
-    
-            <button onclick="updateCellSize()" class="btn-text">
-                Actualizar
-            </button>
-        </div>
+            <div class="row">
+                <h4>Celda</h4>
 
-        <div class="row">
-            <h4>Matriz</h4>
-
-            <div class="row input">
-                <label for="width">Ancho:</label>
-                <input id="width" type="number" value="120" min="1", max="200"/>
-            </div>
+                <div class="row input">
+                    <label for="cell-width">Ancho:</label>
+                    <input id="cell-width" type="number" value="8" min="1", max="25"/>
+                </div>
+            
+                <div class="row input">
+                    <label for="cell-height">Alto:</label>
+                    <input id="cell-height" type="number" value="16" min="1", max="25"/>
+                </div>
         
-            <div class="row input">
-                <label for="height">Alto:</label>
-                <input id="height" type="number" value="30" min="1", max="100"/>
+                <button onclick="updateCellSize()" class="btn-text">
+                    Actualizar
+                </button>
             </div>
-    
-            <button onclick="createMatrix()" class="btn btn-text">
-                Generar
-            </button>
-        </div>
-    </section>
+
+            <div class="row">
+                <h4>Matriz</h4>
+
+                <div class="row input">
+                    <label for="width">Ancho:</label>
+                    <input id="width" type="number" value="120" min="1", max="200"/>
+                </div>
+            
+                <div class="row input">
+                    <label for="height">Alto:</label>
+                    <input id="height" type="number" value="30" min="1", max="100"/>
+                </div>
+        
+                <button onclick="createMatrix()" class="btn btn-text">
+                    Generar
+                </button>
+            </div>
+        </section>
+    </div>
 
     <section>
         <div id="grid"></div>

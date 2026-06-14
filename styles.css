@@ -6,6 +6,8 @@
   --text-contrast-secondary: #0c0d16;
 
   --font-base: Calibri, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --shadow-light: 0.125rem -0.125rem 0.5rem -0.125rem rgba(255, 255, 255, 0.33);
+  --shadow-dark: -0.125rem 0.125rem 0.5rem -0.125rem rgba(0, 0, 0, 0.33);
 }
 
 :root .light {
@@ -92,8 +94,7 @@ button, .btn {
 
   transition: 0.2s;
   border-radius: 0.5rem;
-  box-shadow: 0.125rem -0.125rem 0.5rem -0.125rem rgba(255, 255, 255, 0.33),
-              -0.125rem 0.125rem 0.5rem -0.125rem rgba(0, 0, 0, 0.33);
+  box-shadow: var(--shadow-light), var(--shadow-dark);
 }
 button:hover, .btn:hover {
   scale: 1.05;
@@ -120,7 +121,7 @@ input {
   background-color: var(--paper);
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
-  box-shadow: inset rgba(0,0,0,0.2) 0px 0.125rem 0.5rem;
+  box-shadow: var(--shadow-light) inset, var(--shadow-dark) inset;
   transition: 0.25s;
 }
 
@@ -135,7 +136,7 @@ input[type=range] {
   height: 0.25rem;
   border-radius: 0.125rem;
   background: var(--background);
-  box-shadow: 0 -2px 2px rgba(255, 255, 255, 0.33) inset, 0 2px 2px rgba(0, 0, 0, 0.33) inset;
+  box-shadow: var(--shadow-light) inset, var(--shadow-dark) inset;
   outline: none;
   padding: 0;
   margin: 0.5rem 0;
@@ -184,6 +185,7 @@ input[type=range]::-moz-range-thumb {
   align-content: space-evenly;
   background-color: var(--paper);
   color: var(--text-secondary);
+  border-radius: 0.25rem;
 }
 
 .card.card-small { width: 8rem; }
