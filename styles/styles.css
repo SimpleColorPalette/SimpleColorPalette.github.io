@@ -29,6 +29,10 @@ h2, h3 {
   image-rendering: crisp-edges;
 }
 
+/* *[hidden] {
+  display: none !important;
+} */
+
 /* Cards */
 .card-container {
   grid-column: 1 / -1;

@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap');
 
-.container {
-  grid-template-columns: 1fr 2fr 3fr;
-}
-
-*[hidden] {
-  display: none !important;
-}
-
-
 /* General */
 .row {
   display: flex;
@@ -44,6 +35,13 @@ section#test {
   gap: 1rem;
 }
 
+section#color-picker {
+  grid-column: 2/3;
+}
+section#test {
+  grid-column: 4/-1;
+}
+
 section#color-picker input[type="text"] {
   text-transform: uppercase;
   width: 6rem;
@@ -60,6 +58,7 @@ canvas#colorWheel {
   text-align: center;
   flex-direction: column;
   gap: 0.5rem;
+  grid-column: 1/1;
 }
 #image-drop {
   background-color: var(--background);

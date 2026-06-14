@@ -29,10 +29,10 @@ const colorElement = (index, hex) => {
         '<input type="color" id="cp-' + index + '" onchange="clickColor(event,colorPalette,pickColorWheel)" value="' + hex + '"/>' +
         '<input type="text"  id="hex-' + index + '" onchange="textColorChange(event,colorPalette,pickColorWheel)" value="' + hex + '"/>' +
         '<span></span>' +
-        // '<button class="icon" onload="eyeDropperCheck(event)" onclick="eyeDropper(event)"><span class="material-symbols-rounded">colorize</span></button>' +
-        '<button class="icon" onclick="removeColor(event)"><span class="material-symbols-rounded">close</span></button>' +
-        '<button class="icon" onclick="colorPalette.moveColorUp(event)"><span class="material-symbols-rounded">arrow_upward</span></button>' +
-        '<button class="icon" onclick="colorPalette.moveColorDown(event)"><span class="material-symbols-rounded">arrow_downward</span></button>'
+        // '<button class="btn-icon" onload="eyeDropperCheck(event)" onclick="eyeDropper(event)"><span class="material-symbols-rounded">colorize</span></button>' +
+        '<button class="btn-icon" onclick="removeColor(event)"><span class="material-symbols-rounded">close</span></button>' +
+        '<button class="btn-icon" onclick="colorPalette.moveColorUp(event)"><span class="material-symbols-rounded">arrow_upward</span></button>' +
+        '<button class="btn-icon" onclick="colorPalette.moveColorDown(event)"><span class="material-symbols-rounded">arrow_downward</span></button>'
         //'</li>'
     ;
     return element;

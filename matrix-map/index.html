@@ -37,8 +37,8 @@
         <h4>Modo</h4>
 
         <div class="btn-select">
-          <button class="btn-text" id="btn-mode-console" onclick="changeCellMode('CONSOLE')">Consola</button>
-          <button class="btn-text" id="btn-mode-tilemap" onclick="changeCellMode('TILEMAP')">Tilemap</button>
+          <button id="btn-mode-console" onclick="changeCellMode('CONSOLE')">Consola</button>
+          <button id="btn-mode-tilemap" onclick="changeCellMode('TILEMAP')">Tilemap</button>
         </div>
       </div>
 
@@ -60,7 +60,7 @@
           <input id="cell-height" type="number" value="16" min="1" , max="25" />
         </div>
 
-        <button onclick="updateCellSize()" class="btn-text">
+        <button onclick="updateCellSize()">
           Actualizar
         </button>
       </div> -->
@@ -78,7 +78,7 @@
           <input id="height" type="number" value="30" min="1" , max="100" />
         </div>
 
-        <button onclick="createMatrix()" class="btn btn-text">
+        <button onclick="createMatrix()">
           Generar
         </button>
       </div>
@@ -90,7 +90,7 @@
   </section>
 
   <section class="col">
-    <button id="copy-btn" onclick="copyMatrix()" class="btn-text">Copiar matriz</button>
+    <button id="copy-btn" onclick="copyMatrix()">Copiar matriz</button>
     <pre id="output"></pre>
   </section>
 

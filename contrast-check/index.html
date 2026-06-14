@@ -35,7 +35,7 @@
     <section class="cont" id="image-reference">
       <h2>Referece image</h2>
       <input type="text" id="image-input" placeholder="Paste image (Ctrl+V)" />
-      <label for="image-file" class="btn">
+      <label for="image-file">
         ... Or upload here
         <input type="file" id="image-file" accept="image/*" />
       </label>
@@ -54,10 +54,10 @@
       </div>
       <ul id="colors"></ul>
       <div class="row">
-        <button class="icon" onclick="addColor()">
+        <button class="btn-icon" onclick="addColor()">
           <span class="material-symbols-rounded">add</span>
         </button>
-        <button class="icon" onclick="resetColors()">
+        <button class="btn-icon" onclick="resetColors()">
           <span class="material-symbols-rounded">restart_alt</span>
         </button>
       </div>
@@ -66,7 +66,7 @@
     <!-- TEST COLORS -->
     <section class="cont" id="test">
       <h2>Contrast Check</h2>
-      <button class="fade-colors-backg btn-text" onclick="testColors()">TEST</button>
+      <button class="fade-colors-backg" onclick="testColors()">TEST</button>
       <div id="test-colors"></div>
       <small>
         <div class="row">
