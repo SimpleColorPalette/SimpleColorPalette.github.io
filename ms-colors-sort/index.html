@@ -10,60 +10,68 @@
 </head>
 
 <body class="light">
-<div class="container">
-
-  <div class="tooltip" id="tooltip"></div>
+  <header class="container row">
+    <nav>
+      <a class="btn btn-icon" href="./../index.html" id="btn-main-menu">
+        <img class="apps-icon" src="../favicon.ico" title="return to main menu"/>
+        <span><</span>
+      </a>
+    </nav>
+    <h1>📚 Ms Colors Organizer</h1>
+  </header>
   
-  <h1>📚 Ms Colors Organizer</h1>
+  <div class="container">
   
-  <section class="gray-cont">
-    <h2>🖤 Grises</h2>
-    <div class="list" id="grayList"></div>
-  </section>
-
-  <section class="chromatic fill-flex">
-    <h2>🌈 Círculo Cromático</h2>
-    <div class="chr-settings">
-      <label>
-        <span>Tamaño de círculo</span>
-        <div class="row">
-          <span>10</span>
-          <input id="dot-radius" type="range" value="15" min="10" max="40" step="5"/>
-          <span>40</span>
-        </div>
-      </label>
-      <label>
-        <span>Niveles</span>
-        <div class="row">
-          <span>0</span>
-          <input id="levels" type="range" value="0" min="0" max="15" step="1"/>
-          <span>15</span>
-        </div>
-      </label>
-      <label>
-        <span>Sectores</span>
-        <div class="row">
-          <span>6</span>
-          <input id="sectors" type="range" value="3" min="6" max="18" step="3"/>
-          <span>18</span>
-        </div>
-      </label>
-    </div>
-
-    <div class="chr-container">
-      <div class="circle-container levels-container" id="levelsContainer"></div>
-      <svg class="circle-container sector-container" id="sectorSvg"></svg>
-      <div class="circle-container" id="circleContainer"></div>
-    </div>
-
-    <div class="chr-selected fill-flex">
-      <h3>Sección seleccionada</h3>
-      <div class="list" id="colorList"></div>
-    </div>
-  </section>
-
-</div>
-<script src="./script.js"></script>
+    <div class="tooltip" id="tooltip"></div>
+  
+    <section class="gray-cont">
+      <h2>🖤 Grises</h2>
+      <div class="list" id="grayList"></div>
+    </section>
+  
+    <section class="chromatic fill-flex">
+      <h2>🌈 Círculo Cromático</h2>
+      <div class="chr-settings">
+        <label>
+          <span>Tamaño de círculo</span>
+          <div class="row">
+            <span>10</span>
+            <input id="dot-radius" type="range" value="15" min="10" max="40" step="5" />
+            <span>40</span>
+          </div>
+        </label>
+        <label>
+          <span>Niveles</span>
+          <div class="row">
+            <span>0</span>
+            <input id="levels" type="range" value="0" min="0" max="15" step="1" />
+            <span>15</span>
+          </div>
+        </label>
+        <label>
+          <span>Sectores</span>
+          <div class="row">
+            <span>6</span>
+            <input id="sectors" type="range" value="3" min="6" max="18" step="3" />
+            <span>18</span>
+          </div>
+        </label>
+      </div>
+  
+      <div class="chr-container">
+        <div class="circle-container levels-container" id="levelsContainer"></div>
+        <svg class="circle-container sector-container" id="sectorSvg"></svg>
+        <div class="circle-container" id="circleContainer"></div>
+      </div>
+  
+      <div class="chr-selected fill-flex">
+        <h3>Sección seleccionada</h3>
+        <div class="list" id="colorList"></div>
+      </div>
+    </section>
+  
+  </div>
+  <script src="./script.js"></script>
 </body>
-
+  
 </html>

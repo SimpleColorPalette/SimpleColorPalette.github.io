@@ -60,10 +60,10 @@ a {
   color: inherit;
 }
 
+  /* grid-column: 1/-1; */
 h1 {
-  width: 100%;
+  width: inherit; /*100%*/
   text-align: center;
-  grid-column: 1/-1;
 }
 
 h2 {
@@ -111,6 +111,33 @@ button:hover, .btn:hover {
   border-radius: 4rem;
 }
 
+header, footer {
+  grid-column: 1 / -1;
+}
+img.apps-icon {
+  width: 2rem;
+  height: 2rem;
+  image-rendering: pixelated;
+  vertical-align: middle;
+}
+#btn-main-menu {
+  position: relative;
+}
+#btn-main-menu span {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  align-content: center;
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+  color: #fff;
+}
+#btn-main-menu img {
+  filter: brightness(0.75);
+}
 
 /* Inputs */
 input {
