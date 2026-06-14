@@ -1,3 +1,5 @@
+@import url("./styles/animations.css");
+
 /* Theme */
 :root {
   --primary-main: #ffd862;
@@ -74,16 +76,6 @@ h2, h3 {
   text-align: center;
 }
 
-.container {
-  display: grid;
-  gap: 2rem;
-  margin: 0px auto;
-  padding: 2rem 2.5rem;
-  width: calc(100% - 5rem);
-  max-width: 1280px;
-}
-
-
 /* Buttons */
 button, .btn, input[type="color"] {
   cursor: pointer;
@@ -136,35 +128,6 @@ button.secondary {
 }
 .btn-select .btn-selected {
   box-shadow: var(--shadow-light) inset, var(--shadow-dark) inset;
-}
-
-/* General */
-header, footer {
-  grid-column: 1 / -1;
-}
-img.apps-icon {
-  width: 2rem;
-  height: 2rem;
-  image-rendering: pixelated;
-  vertical-align: middle;
-}
-#btn-main-menu {
-  position: relative;
-}
-#btn-main-menu span {
-  position: absolute;
-  left: 0%;
-  top: 0%;
-  width: 100%;
-  height: 100%;
-  align-content: center;
-  text-align: center;
-  font-weight: bold;
-  font-size: large;
-  color: #fff;
-}
-#btn-main-menu img {
-  filter: brightness(0.75);
 }
 
 /* Inputs */
@@ -249,4 +212,49 @@ input[type=range]::-moz-range-thumb {
   text-align: center;
   text-transform: uppercase;
   opacity: 0.85;
+}
+
+
+/* General */
+.container {
+  display: grid;
+  gap: 2rem;
+  margin: 0px auto;
+  padding: 2rem 2.5rem;
+  width: calc(100% - 5rem);
+  max-width: 1280px;
+}
+
+main {
+  min-height: calc(100vh - 14rem);
+  align-content: center;
+}
+
+header, footer {
+  grid-column: 1 / -1;
+}
+
+img.apps-icon {
+  width: 2rem;
+  height: 2rem;
+  image-rendering: pixelated;
+  vertical-align: middle;
+}
+#btn-main-menu {
+  position: relative;
+}
+#btn-main-menu span {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  align-content: center;
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+  color: #fff;
+}
+#btn-main-menu img {
+  filter: brightness(0.75);
 }

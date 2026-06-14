@@ -1,0 +1,81 @@
+/* Button animation*/
+:root {
+  --primary-secondary-1: #9ff57a;
+  --primary-secondary-2: #fea8ff;
+  --animation-fadecolor-time: 120s;
+}
+@keyframes fadeColorsBackground {
+  0% { background-color: var(--primary-main); }
+  25% { background-color: var(--primary-secondary-1); }
+  50% { background-color: var(--secondary-main); }
+  75% { background-color: var(--primary-secondary-2); }
+  100% { background-color: var(--primary-main); }
+}
+@-moz-keyframes fadeColorsBackground {
+  0% { background-color: var(--primary-main); }
+  25% { background-color: var(--primary-secondary-1); }
+  50% { background-color: var(--secondary-main); }
+  75% { background-color: var(--primary-secondary-2); }
+  100% { background-color: var(--primary-main); }
+}
+@-webkit-keyframes fadeColorsBackground {
+  0% { background-color: var(--primary-main); }
+  25% { background-color: var(--primary-secondary-1); }
+  50% { background-color: var(--secondary-main); }
+  75% { background-color: var(--primary-secondary-2); }
+  100% { background-color: var(--primary-main); }
+}
+@-o-keyframes fadeColorsBackground {
+  0% { background-color: var(--primary-main); }
+  25% { background-color: var(--primary-secondary-1); }
+  50% { background-color: var(--secondary-main); }
+  75% { background-color: var(--primary-secondary-2); }
+  100% { background-color: var(--primary-main); }
+}
+@keyframes fadeColors {
+  0% { color: var(--primary-main); }
+  25% { color: var(--primary-secondary-1); }
+  50% { color: var(--secondary-main); }
+  75% { color: var(--primary-secondary-2); }
+  100% { color: var(--primary-main); }
+}
+@-moz-keyframes fadeColors {
+  0% { color: var(--primary-main); }
+  25% { color: var(--primary-secondary-1); }
+  50% { color: var(--secondary-main); }
+  75% { color: var(--primary-secondary-2); }
+  100% { color: var(--primary-main); }
+}
+@-webkit-keyframes fadeColors {
+  0% { color: var(--primary-main); }
+  25% { color: var(--primary-secondary-1); }
+  50% { color: var(--secondary-main); }
+  75% { color: var(--primary-secondary-2); }
+  100% { color: var(--primary-main); }
+}
+@-o-keyframes fadeColors {
+  0% { color: var(--primary-main); }
+  25% { color: var(--primary-secondary-1); }
+  50% { color: var(--secondary-main); }
+  75% { color: var(--primary-secondary-2); }
+  100% { color: var(--primary-main); }
+}
+.fade-colors-backg {
+  background-color: var(--primary-main);
+  animation: fadeColorsBackground var(--animation-fadecolor-time);
+  -moz-animation: fadeColorsBackground var(--animation-fadecolor-time);
+  -webkit-animation: fadeColorsBackground var(--animation-fadecolor-time);
+  -o-animation: fadeColorsBackground var(--animation-fadecolor-time);
+}
+.fade-colors {
+  color: var(--primary-main);
+  animation: fadeColors var(--animation-fadecolor-time);
+  -moz-animation: fadeColors var(--animation-fadecolor-time);
+  -webkit-animation: fadeColors var(--animation-fadecolor-time);
+  -o-animation: fadeColors var(--animation-fadecolor-time);
+  letter-spacing: 1.5pt;
+}
+.fade-colors-backg, .fade-colors {
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
