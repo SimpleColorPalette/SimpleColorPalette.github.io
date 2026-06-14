@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <title>Círculo Cromático Interactivo</title>
 <style>
+  :root {
+    --circle-size: 20px;
+  }
   body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -18,13 +21,13 @@
     width: 600px;
     height: 600px;
     border-radius: 50%;
-    margin-bottom: 40px;
+    margin-bottom: var(--circle-size);
   }
 
   .color-dot {
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: var(--circle-size);
+    height: var(--circle-size);
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid #fff;
@@ -55,8 +58,8 @@
   }
 
   .gray-dot {
-    width: 40px;
-    height: 40px;
+    width: var(--circle-size);
+    height: var(--circle-size);
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid #000;
@@ -293,6 +296,15 @@ chromaColors.forEach((c, i) => {
     setTimeout(() => tooltip.style.opacity = 0, 1000);
   });
 
+  dot.addEventListener('mouseenter', () => {
+    tooltip.innerText = `${c.name} ${c.hex}`;
+    tooltip.style.opacity = 1;
+  });
+
+  dot.addEventListener('mouseleave', () => {
+    tooltip.style.opacity = 0;
+  });
+
   container.appendChild(dot);
 });
 
@@ -304,16 +316,32 @@ document.addEventListener('mousemove', e => {
 
 // Grises
 const grayList = document.getElementById('grayList');
+grayColors.sort((a,b) => {
+  const la = hexToHSL(a.hex).l;
+  const lb = hexToHSL(b.hex).l;
+  return la - lb;
+});
 grayColors.forEach(c => {
   const dot = document.createElement('div');
   dot.className = 'gray-dot';
   dot.style.background = c.hex;
+
   dot.addEventListener('click', () => {
     navigator.clipboard.writeText(c.name);
     tooltip.innerText = `Copiado: ${c.name}`;
     tooltip.style.opacity = 1;
     setTimeout(() => tooltip.style.opacity = 0, 1000);
   });
+
+  dot.addEventListener('mouseenter', () => {
+    tooltip.innerText = `${c.name} ${c.hex}`;
+    tooltip.style.opacity = 1;
+  });
+
+  dot.addEventListener('mouseleave', () => {
+    tooltip.style.opacity = 0;
+  });
+
   grayList.appendChild(dot);
 });
 </script>
