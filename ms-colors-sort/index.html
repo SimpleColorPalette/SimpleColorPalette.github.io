@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Organizador de Microsoft Brushes</title>
+<title>Organizador de Microsoft Brushes Ajustado</title>
 <style>
 :root {
   --bg-light: #fafafa;
@@ -60,14 +60,14 @@ button {
 button:hover { background: #005a9e; }
 
 h2 {
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   border-bottom: 2px solid #ccc;
   padding-bottom: 0.3rem;
 }
 
 .palette {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: var(--gap);
   margin-top: 0.5rem;
   min-height: var(--swatch-size);
@@ -105,61 +105,205 @@ h2 {
 }
 
 .hidden { display: none !important; }
+
+.family-container {
+  /* margin-bottom: 2rem; */
+  /* border: 2px dashed #ccc; */
+  padding: 0.5rem;
+  border-radius: 8px;
+}
 </style>
 </head>
 <body>
-<h1>🎨 Organizador de Microsoft Brushes</h1>
-<input type="text" id="search" placeholder="Buscar color (ej: red, blue, gray...)">
+<h1>🎨 Organizador de Microsoft Brushes Ajustado</h1>
+<input type="text" id="search" placeholder="Buscar color (ej: Blue, Gray, Red...)">
 <button id="download">💾 Descargar Orden</button>
 <button id="upload">📂 Cargar Orden</button>
-<input type="file" id="fileInput" style="display:none"/>
+<button id="reset"">🔄 Resetear Orden</button>
+<input type="file" id="fileInput" style="display:none">
 
 <div id="palettes"></div>
 
 <script>
 // ===== Datos de colores por familias =====
 const colorFamilies = {
+  // "Rojos": [
+  //   ["Red","#ff0000"],["DarkRed","#8b0000"],["Firebrick","#b22222"],["Crimson","#dc143c"],["IndianRed","#cd5c5c"],["LightCoral","#f08080"],["Salmon","#fa8072"],["DarkSalmon","#e9967a"],["LightSalmon","#ffa07a"],["Tomato","#ff6347"],["Coral","#ff7f50"]
+  // ],
+  // "Naranjas": [
+  //   ["Orange","#ffa500"],["DarkOrange","#ff8c00"],["OrangeRed","#ff4500"],["Gold","#ffd700"],["Goldenrod","#daa520"],["Peru","#cd853f"],["Chocolate","#d2691e"],["SaddleBrown","#8b4513"],["Sienna","#a0522d"],["Tan","#d2b48c"]
+  // ],
+  // "Amarillos": [
+  //   ["Yellow","#ffff00"],["LightYellow","#ffffe0"],["LemonChiffon","#fffacd"],["LightGoldenrodYellow","#fafad2"],["PapayaWhip","#ffefd5"],["Moccasin","#ffe4b5"],["PeachPuff","#ffdab9"],["PaleGoldenrod","#eee8aa"],["Khaki","#f0e68c"],["DarkKhaki","#bdb76b"]
+  // ],
+  // "Verdes": [
+  //   ["Green","#008000"],["DarkGreen","#006400"],["ForestGreen","#228b22"],["SeaGreen","#2e8b57"],["MediumSeaGreen","#3cb371"],["LightGreen","#90ee90"],["PaleGreen","#98fb98"],["Lime","#00ff00"],["LimeGreen","#32cd32"],["SpringGreen","#00ff7f"],["Olive","#808000"],["OliveDrab","#6b8e23"],["DarkOliveGreen","#556b2f"],["GreenYellow","#adff2f"],["YellowGreen","#9acd32"]
+  // ],
+  // "Azules": [
+  //   ["Blue","#0000ff"],["DarkBlue","#00008b"],["MediumBlue","#0000cd"],["Navy","#000080"],["MidnightBlue","#191970"],["DodgerBlue","#1e90ff"],["CornflowerBlue","#6495ed"],["RoyalBlue","#4169e1"],["SkyBlue","#87ceeb"],["LightSkyBlue","#87cefa"],["SteelBlue","#4682b4"],["LightSteelBlue","#b0c4de"],["LightBlue","#add8e6"],["PowderBlue","#b0e0e6"],["Teal","#008080"],["DarkCyan","#008b8b"]
+  // ],
+  // "Cyans": [
+  //   ["Aqua","#00ffff"],["Cyan","#00ffff"],["LightCyan","#e0ffff"],["DarkTurquoise","#00ced1"],["MediumTurquoise","#48d1cc"],["Turquoise","#40e0d0"],["Aquamarine","#7fffd4"],["PaleTurquoise","#afeeee"],["LightSeaGreen","#20b2aa"],["MediumAquamarine","#66cdaa"]
+  // ],
+  // "Violetas": [
+  //   ["Purple","#800080"],["MediumPurple","#9370db"],["DarkOrchid","#9932cc"],["DarkViolet","#9400d3"],["BlueViolet","#8a2be2"],["Indigo","#4b0082"],["DarkMagenta","#8b008b"],["Orchid","#da70d6"],["MediumOrchid","#ba55d3"],["Violet","#ee82ee"],["Plum","#dda0dd"],["Magenta","#ff00ff"],["Fuchsia","#ff00ff"]
+  // ],
+  // "Rosas": [
+  //   ["Pink","#ffc0cb"],["LightPink","#ffb6c1"],["HotPink","#ff69b4"],["DeepPink","#ff1493"],["MediumVioletRed","#c71585"],["PaleVioletRed","#db7093"]
+  // ],
+  // "Grises": [
+  //   ["Black","#000000"],["DimGray","#696969"],["Gray","#808080"],["DarkGray","#a9a9a9"],["Silver","#c0c0c0"],["LightGray","#d3d3d3"],["Gainsboro","#dcdcdc"]
+  // ],
+  // "Neutros con color": [
+  //   ["WhiteSmoke","#f5f5f5"],["GhostWhite","#f8f8ff"],["Ivory","#fffff0"],["Linen","#faf0e6"],["OldLace","#fdf5e6"],["Snow","#fffafa"],["White","#ffffff"],["SeaShell","#fff5ee"]
+  // ]
   "Rojos": [
-    ["Red","#ff0000"],["DarkRed","#8b0000"],["Firebrick","#b22222"],["Crimson","#dc143c"],["IndianRed","#cd5c5c"],["LightCoral","#f08080"],["Salmon","#fa8072"],["DarkSalmon","#e9967a"],["LightSalmon","#ffa07a"],["Tomato","#ff6347"],["Coral","#ff7f50"]
+    ["DarkRed","#8b0000"],
+    ["Firebrick","#b22222"],
+    ["Crimson","#dc143c"],
+    ["IndianRed","#cd5c5c"],
+    ["Tomato","#ff6347"],
+    ["Coral","#ff7f50"],
+    ["Red","#ff0000"],
+    ["DarkSalmon","#e9967a"],
+    ["Salmon","#fa8072"],
+    ["LightSalmon","#ffa07a"],
+    ["LightCoral","#f08080"],
   ],
   "Naranjas": [
-    ["Orange","#ffa500"],["DarkOrange","#ff8c00"],["OrangeRed","#ff4500"],["Gold","#ffd700"],["Goldenrod","#daa520"],["Peru","#cd853f"],["Chocolate","#d2691e"],["SaddleBrown","#8b4513"],["Sienna","#a0522d"],["Tan","#d2b48c"]
+    ["SaddleBrown","#8b4513"],
+    ["Sienna","#a0522d"],
+    ["Chocolate","#d2691e"],
+    ["Peru","#cd853f"],
+    ["DarkOrange","#ff8c00"],
+    ["OrangeRed","#ff4500"],
+    ["Orange","#ffa500"],
+    ["Goldenrod","#daa520"],
+    ["Gold","#ffd700"],
+    ["Tan","#d2b48c"],
   ],
   "Amarillos": [
-    ["Yellow","#ffff00"],["LightYellow","#ffffe0"],["LemonChiffon","#fffacd"],["LightGoldenrodYellow","#fafad2"],["PapayaWhip","#ffefd5"],["Moccasin","#ffe4b5"],["PeachPuff","#ffdab9"],["PaleGoldenrod","#eee8aa"],["Khaki","#f0e68c"],["DarkKhaki","#bdb76b"]
+    ["DarkKhaki","#bdb76b"],
+    ["Khaki","#f0e68c"],
+    ["PaleGoldenrod","#eee8aa"],
+    ["LightGoldenrodYellow","#fafad2"],
+    ["Moccasin","#ffe4b5"],
+    ["PeachPuff","#ffdab9"],
+    ["PapayaWhip","#ffefd5"],
+    ["LemonChiffon","#fffacd"],
+    ["LightYellow","#ffffe0"],
+    ["Yellow","#ffff00"],
   ],
   "Verdes": [
-    ["Green","#008000"],["DarkGreen","#006400"],["ForestGreen","#228b22"],["SeaGreen","#2e8b57"],["MediumSeaGreen","#3cb371"],["LightGreen","#90ee90"],["PaleGreen","#98fb98"],["Lime","#00ff00"],["LimeGreen","#32cd32"],["SpringGreen","#00ff7f"],["Olive","#808000"],["OliveDrab","#6b8e23"],["DarkOliveGreen","#556b2f"],["GreenYellow","#adff2f"],["YellowGreen","#9acd32"]
+    ["DarkGreen","#006400"],
+    ["Green","#008000"],
+    ["ForestGreen","#228b22"],
+    ["SeaGreen","#2e8b57"],
+    ["MediumSeaGreen","#3cb371"],
+    ["DarkOliveGreen","#556b2f"],
+    ["OliveDrab","#6b8e23"],
+    ["Olive","#808000"],
+    ["LimeGreen","#32cd32"],
+    ["Lime","#00ff00"],
+    ["SpringGreen","#00ff7f"],
+    ["YellowGreen","#9acd32"],
+    ["GreenYellow","#adff2f"],
+    ["PaleGreen","#98fb98"],
+    ["LightGreen","#90ee90"],
   ],
   "Azules": [
-    ["Blue","#0000ff"],["DarkBlue","#00008b"],["MediumBlue","#0000cd"],["Navy","#000080"],["MidnightBlue","#191970"],["DodgerBlue","#1e90ff"],["CornflowerBlue","#6495ed"],["RoyalBlue","#4169e1"],["SkyBlue","#87ceeb"],["LightSkyBlue","#87cefa"],["SteelBlue","#4682b4"],["LightSteelBlue","#b0c4de"],["LightBlue","#add8e6"],["PowderBlue","#b0e0e6"],["Teal","#008080"],["DarkCyan","#008b8b"],["Aqua","#00ffff"],["Cyan","#00ffff"],["LightCyan","#e0ffff"],["DarkTurquoise","#00ced1"],["MediumTurquoise","#48d1cc"],["Turquoise","#40e0d0"],["Aquamarine","#7fffd4"],["PaleTurquoise","#afeeee"],["LightSeaGreen","#20b2aa"],["MediumAquamarine","#66cdaa"]
+    ["MidnightBlue","#191970"],
+    ["Navy","#000080"],
+    ["DarkBlue","#00008b"],
+    ["MediumBlue","#0000cd"],
+    ["Blue","#0000ff"],
+    ["RoyalBlue","#4169e1"],
+    ["SteelBlue","#4682b4"],
+    ["DodgerBlue","#1e90ff"],
+    ["CornflowerBlue","#6495ed"],
+    ["LightSteelBlue","#b0c4de"],
+    ["LightBlue","#add8e6"],
+    ["SkyBlue","#87ceeb"],
+    ["LightSkyBlue","#87cefa"],
+  ],
+  "Cyans": [
+    ["DarkTurquoise","#00ced1"],
+    ["MediumTurquoise","#48d1cc"],
+    ["Turquoise","#40e0d0"],
+    ["LightSeaGreen","#20b2aa"],
+    ["Teal","#008080"],
+    ["DarkCyan","#008b8b"],
+    ["MediumAquamarine","#66cdaa"],
+    ["Aquamarine","#7fffd4"],
+    ["PaleTurquoise","#afeeee"],
+    ["Aqua","#00ffff"],
+    ["Cyan","#00ffff"],
+    ["LightCyan","#e0ffff"],
+    ["PowderBlue","#b0e0e6"],
   ],
   "Violetas": [
-    ["Purple","#800080"],["MediumPurple","#9370db"],["DarkOrchid","#9932cc"],["DarkViolet","#9400d3"],["BlueViolet","#8a2be2"],["Indigo","#4b0082"],["DarkMagenta","#8b008b"],["Orchid","#da70d6"],["MediumOrchid","#ba55d3"],["Violet","#ee82ee"],["Plum","#dda0dd"],["Magenta","#ff00ff"],["Fuchsia","#ff00ff"]
+    ["Indigo","#4b0082"],
+    ["DarkViolet","#9400d3"],
+    ["DarkOrchid","#9932cc"],
+    ["Purple","#800080"],
+    ["DarkMagenta","#8b008b"],
+    ["BlueViolet","#8a2be2"],
+    ["MediumOrchid","#ba55d3"],
+    ["Orchid","#da70d6"],
+    ["MediumPurple","#9370db"],
+    ["Violet","#ee82ee"],
+    ["Plum","#dda0dd"],
+    ["Magenta","#ff00ff"],
+    ["Fuchsia","#ff00ff"],
   ],
   "Rosas": [
-    ["Pink","#ffc0cb"],["LightPink","#ffb6c1"],["HotPink","#ff69b4"],["DeepPink","#ff1493"],["MediumVioletRed","#c71585"],["PaleVioletRed","#db7093"]
+    ["MediumVioletRed","#c71585"],
+    ["DeepPink","#ff1493"],
+    ["HotPink","#ff69b4"],
+    ["PaleVioletRed","#db7093"],
+    ["LightPink","#ffb6c1"],
+    ["Pink","#ffc0cb"],
   ],
-  "Neutros": [
-    ["Black","#000000"],["DimGray","#696969"],["Gray","#808080"],["DarkGray","#a9a9a9"],["Silver","#c0c0c0"],["LightGray","#d3d3d3"],["Gainsboro","#dcdcdc"],["WhiteSmoke","#f5f5f5"],["GhostWhite","#f8f8ff"],["Ivory","#fffff0"],["Linen","#faf0e6"],["OldLace","#fdf5e6"],["Snow","#fffafa"],["White","#ffffff"],["Transparent","#00ffffff"],["SeaShell","#fff5ee"]
+  "Grises": [
+    ["Black","#000000"],
+    ["DimGray","#696969"],
+    ["Gray","#808080"],
+    ["DarkGray","#a9a9a9"],
+    ["Silver","#c0c0c0"],
+    ["LightGray","#d3d3d3"],
+    ["Gainsboro","#dcdcdc"],
+    ["WhiteSmoke","#f5f5f5"],
+    ["White","#ffffff"],
+  ],
+  "Neutros con color": [
+    ["Snow","#fffafa"],
+    ["GhostWhite","#f8f8ff"],
+    ["OldLace","#fdf5e6"],
+    ["Linen","#faf0e6"],
+    ["Ivory","#fffff0"],
+    ["SeaShell","#fff5ee"],
   ]
 };
 
-// ===== Crear paletas =====
 const palettesContainer = document.getElementById("palettes");
-let swatchesData = {}; // Para guardar el orden actual
+let swatchesData = {};
 
+// ===== Crear paletas =====
 function createPalettes(savedData) {
   palettesContainer.innerHTML = "";
-  for (const family in colorFamilies) {
+  for (const family of Object.keys(savedData || colorFamilies)) {
+    const container = document.createElement("div");
+    container.className = "family-container";
+    container.dataset.family = family;
+
     const h2 = document.createElement("h2");
     h2.textContent = family;
-    palettesContainer.appendChild(h2);
+    container.appendChild(h2);
 
     const palette = document.createElement("div");
     palette.className = "palette";
     palette.dataset.family = family;
-    palettesContainer.appendChild(palette);
+    container.appendChild(palette);
 
     const colors = savedData?.[family] || colorFamilies[family];
     swatchesData[family] = colors.map(([name, hex]) => ({name, hex}));
@@ -168,45 +312,42 @@ function createPalettes(savedData) {
       const swatch = document.createElement("div");
       swatch.className = "swatch";
       swatch.draggable = true;
-      swatch.dataset.name = name.toLowerCase();
+      swatch.dataset.name = name;
       swatch.innerHTML = `
         <div class="swatch-color" style="background:${hex}"></div>
         <div class="swatch-label">${name}<code>${hex}</code></div>
       `;
+      // Click para copiar Color::<Nombre>
+      swatch.addEventListener("click", () => {
+        navigator.clipboard.writeText(`Color::${name}`);
+        // alert(`Copiado: Color::${name}`);
+      });
       palette.appendChild(swatch);
     });
+
+    palettesContainer.appendChild(container);
   }
 }
 
-// ===== Drag & Drop restringido =====
+// ===== Drag & Drop dentro de la familia =====
 let dragged = null;
-
 document.addEventListener("dragstart", e => {
-  if (e.target.classList.contains("swatch")) {
-    dragged = e.target;
-    e.dataTransfer.effectAllowed = "move";
-  }
+  if (e.target.classList.contains("swatch")) dragged = e.target;
 });
-
-document.addEventListener("dragover", e => {
-  if (e.target.classList.contains("palette")) e.preventDefault();
-});
-
+document.addEventListener("dragover", e => e.preventDefault());
 document.addEventListener("drop", e => {
   if (!dragged) return;
   const targetPalette = e.target.closest(".palette");
   if (!targetPalette || targetPalette.dataset.family !== dragged.parentNode.dataset.family) return;
-
   const afterElement = getDragAfterElement(targetPalette, e.clientY);
   if (afterElement == null) targetPalette.appendChild(dragged);
   else targetPalette.insertBefore(dragged, afterElement);
   saveOrder();
   dragged = null;
 });
-
 function getDragAfterElement(container, y) {
-  const draggableElements = [...container.querySelectorAll(".swatch:not(.dragging)")];
-  return draggableElements.reduce((closest, child) => {
+  const elements = [...container.querySelectorAll(".swatch:not(.dragging)")];
+  return elements.reduce((closest, child) => {
     const box = child.getBoundingClientRect();
     const offset = y - box.top - box.height/2;
     if (offset < 0 && offset > closest.offset) return {offset, element: child};
@@ -217,17 +358,23 @@ function getDragAfterElement(container, y) {
 // ===== Guardar y cargar orden =====
 function saveOrder() {
   const data = {};
-  document.querySelectorAll(".palette").forEach(palette => {
-    const family = palette.dataset.family;
+  document.querySelectorAll(".family-container").forEach(container => {
+    const family = container.dataset.family;
+    const palette = container.querySelector(".palette");
     data[family] = [...palette.children].map(s => [s.dataset.name, s.querySelector(".swatch-color").style.background]);
   });
+  swatchesData = data;
   localStorage.setItem("brushesOrder", JSON.stringify(data));
 }
-
 function loadOrder() {
   const data = localStorage.getItem("brushesOrder");
   return data ? JSON.parse(data) : null;
 }
+document.getElementById("reset").addEventListener("click", () => {
+  localStorage.removeItem("brushesOrder");
+  swatchesData = {};
+  createPalettes();
+});
 
 // ===== Buscador =====
 const searchInput = document.getElementById("search");
@@ -249,8 +396,9 @@ document.getElementById("download").addEventListener("click", () => {
   a.click();
   URL.revokeObjectURL(url);
 });
-
-document.getElementById("upload").addEventListener("click", () => document.getElementById("fileInput").click());
+document.getElementById("upload").addEventListener("click",
+  () => document.getElementById("fileInput").click()
+);
 document.getElementById("fileInput").addEventListener("change", e => {
   const file = e.target.files[0];
   if (!file) return;
