@@ -2,348 +2,247 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Círculo Cromático Interactivo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Círculo Cromático con Capas</title>
 <style>
-  :root {
-    --circle-size: 20px;
-  }
   body {
-    font-family: Arial, sans-serif;
+    font-family: sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px;
-    background: #f0f0f0;
+    padding: 20px;
   }
-
   .circle-container {
     position: relative;
     width: 600px;
     height: 600px;
-    border-radius: 50%;
-    margin-bottom: var(--circle-size);
+    margin-bottom: 50px;
   }
-
-  .color-dot {
+  .color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
     position: absolute;
-    width: var(--circle-size);
-    height: var(--circle-size);
-    border-radius: 50%;
     cursor: pointer;
-    border: 2px solid #fff;
-    box-shadow: 0 0 3px rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transition: transform 0.2s;
   }
-
+  .color-circle:hover {
+    transform: scale(1.5);
+    z-index: 10;
+  }
   .tooltip {
     position: absolute;
-    background: #333;
-    color: #fff;
-    padding: 4px 8px;
-    font-size: 12px;
+    padding: 5px 10px;
+    background-color: black;
+    color: white;
     border-radius: 4px;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s;
-    white-space: nowrap;
+    z-index: 100;
   }
-
   .gray-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    max-width: 800px;
+    max-width: 600px;
   }
-
-  .gray-dot {
-    width: var(--circle-size);
-    height: var(--circle-size);
+  .gray-item {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
+    margin: 2px;
     cursor: pointer;
-    border: 2px solid #000;
+    position: relative;
+    transition: transform 0.2s;
+  }
+  .gray-item:hover {
+    transform: scale(1.5);
+    z-index: 10;
   }
 </style>
 </head>
 <body>
 
-<h2>Círculo Cromático</h2>
+<h2>Círculo Cromático con Capas por Luminosidad</h2>
 <div class="circle-container" id="circleContainer"></div>
 <div class="tooltip" id="tooltip"></div>
 
-<h2>Grises y neutrales</h2>
+<h2>Grises</h2>
 <div class="gray-list" id="grayList"></div>
 
 <script>
 const colors = [
-  {name: "AliceBlue", hex: "#F0F8FF"},
-  {name: "AntiqueWhite", hex: "#FAEBD7"},
-  {name: "Aqua", hex: "#00FFFF"},
-  {name: "Aquamarine", hex: "#7FFFD4"},
-  {name: "Azure", hex: "#F0FFFF"},
-  {name: "Beige", hex: "#F5F5DC"},
-  {name: "Bisque", hex: "#FFE4C4"},
-  {name: "BlanchedAlmond", hex: "#FFEBCD"},
-  {name: "Blue", hex: "#0000FF"},
-  {name: "BlueViolet", hex: "#8A2BE2"},
-  {name: "Brown", hex: "#A52A2A"},
-  {name: "BurlyWood", hex: "#DEB887"},
-  {name: "CadetBlue", hex: "#5F9EA0"},
-  {name: "Chartreuse", hex: "#7FFF00"},
-  {name: "Chocolate", hex: "#D2691E"},
-  {name: "Coral", hex: "#FF7F50"},
-  {name: "CornflowerBlue", hex: "#6495ED"},
-  {name: "Crimson", hex: "#DC143C"},
-  {name: "Cyan", hex: "#00FFFF"},
-  {name: "DarkBlue", hex: "#00008B"},
-  {name: "DarkCyan", hex: "#008B8B"},
-  {name: "DarkGoldenrod", hex: "#B8860B"},
-  {name: "DarkGray", hex: "#A9A9A9"},
-  {name: "DarkGreen", hex: "#006400"},
-  {name: "DarkKhaki", hex: "#BDB76B"},
-  {name: "DarkMagenta", hex: "#8B008B"},
-  {name: "DarkOliveGreen", hex: "#556B2F"},
-  {name: "DarkOrange", hex: "#FF8C00"},
-  {name: "DarkOrchid", hex: "#9932CC"},
-  {name: "DarkRed", hex: "#8B0000"},
-  {name: "DarkSalmon", hex: "#E9967A"},
-  {name: "DarkSeaGreen", hex: "#8FBC8F"},
-  {name: "DarkSlateBlue", hex: "#483D8B"},
-  {name: "DarkSlateGray", hex: "#2F4F4F"},
-  {name: "DarkTurquoise", hex: "#00CED1"},
-  {name: "DarkViolet", hex: "#9400D3"},
-  {name: "DeepPink", hex: "#FF1493"},
-  {name: "DeepSkyBlue", hex: "#00BFFF"},
-  {name: "DimGray", hex: "#696969"},
-  {name: "DodgerBlue", hex: "#1E90FF"},
-  {name: "Firebrick", hex: "#B22222"},
-  {name: "FloralWhite", hex: "#FFFAF0"},
-  {name: "ForestGreen", hex: "#228B22"},
-  {name: "Fuchsia", hex: "#FF00FF"},
-  {name: "Gainsboro", hex: "#DCDCDC"},
-  {name: "GhostWhite", hex: "#F8F8FF"},
-  {name: "Gold", hex: "#FFD700"},
-  {name: "Goldenrod", hex: "#DAA520"},
-  {name: "Gray", hex: "#808080"},
-  {name: "Green", hex: "#008000"},
-  {name: "GreenYellow", hex: "#ADFF2F"},
-  {name: "Honeydew", hex: "#F0FFF0"},
-  {name: "HotPink", hex: "#FF69B4"},
-  {name: "IndianRed", hex: "#CD5C5C"},
-  {name: "Indigo", hex: "#4B0082"},
-  {name: "Ivory", hex: "#FFFFF0"},
-  {name: "Khaki", hex: "#F0E68C"},
-  {name: "Lavender", hex: "#E6E6FA"},
-  {name: "LavenderBlush", hex: "#FFF0F5"},
-  {name: "LawnGreen", hex: "#7CFC00"},
-  {name: "LemonChiffon", hex: "#FFFACD"},
-  {name: "LightBlue", hex: "#ADD8E6"},
-  {name: "LightCoral", hex: "#F08080"},
-  {name: "LightCyan", hex: "#E0FFFF"},
-  {name: "LightGoldenrodYellow", hex: "#FAFAD2"},
-  {name: "LightGray", hex: "#D3D3D3"},
-  {name: "LightGreen", hex: "#90EE90"},
-  {name: "LightPink", hex: "#FFB6C1"},
-  {name: "LightSalmon", hex: "#FFA07A"},
-  {name: "LightSeaGreen", hex: "#20B2AA"},
-  {name: "LightSkyBlue", hex: "#87CEFA"},
-  {name: "LightSlateGray", hex: "#778899"},
-  {name: "LightSteelBlue", hex: "#B0C4DE"},
-  {name: "LightYellow", hex: "#FFFFE0"},
-  {name: "Lime", hex: "#00FF00"},
-  {name: "LimeGreen", hex: "#32CD32"},
-  {name: "Linen", hex: "#FAF0E6"},
-  {name: "Magenta", hex: "#FF00FF"},
-  {name: "Maroon", hex: "#800000"},
-  {name: "MediumAquamarine", hex: "#66CDAA"},
-  {name: "MediumBlue", hex: "#0000CD"},
-  {name: "MediumOrchid", hex: "#BA55D3"},
-  {name: "MediumPurple", hex: "#9370DB"},
-  {name: "MediumSeaGreen", hex: "#3CB371"},
-  {name: "MediumSlateBlue", hex: "#7B68EE"},
-  {name: "MediumSpringGreen", hex: "#00FA9A"},
-  {name: "MediumTurquoise", hex: "#48D1CC"},
-  {name: "MediumVioletRed", hex: "#C71585"},
-  {name: "MidnightBlue", hex: "#191970"},
-  {name: "MintCream", hex: "#F5FFFA"},
-  {name: "MistyRose", hex: "#FFE4E1"},
-  {name: "Moccasin", hex: "#FFE4B5"},
-  {name: "NavajoWhite", hex: "#FFDEAD"},
-  {name: "Navy", hex: "#000080"},
-  {name: "OldLace", hex: "#FDF5E6"},
-  {name: "Olive", hex: "#808000"},
-  {name: "OliveDrab", hex: "#6B8E23"},
-  {name: "Orange", hex: "#FFA500"},
-  {name: "OrangeRed", hex: "#FF4500"},
-  {name: "Orchid", hex: "#DA70D6"},
-  {name: "PaleGoldenrod", hex: "#EEE8AA"},
-  {name: "PaleGreen", hex: "#98FB98"},
-  {name: "PaleTurquoise", hex: "#AFEEEE"},
-  {name: "PaleVioletRed", hex: "#DB7093"},
-  {name: "PapayaWhip", hex: "#FFEFD5"},
-  {name: "PeachPuff", hex: "#FFDAB9"},
-  {name: "Peru", hex: "#CD853F"},
-  {name: "Pink", hex: "#FFC0CB"},
-  {name: "Plum", hex: "#DDA0DD"},
-  {name: "PowderBlue", hex: "#B0E0E6"},
-  {name: "Purple", hex: "#800080"},
-  {name: "Red", hex: "#FF0000"},
-  {name: "RosyBrown", hex: "#BC8F8F"},
-  {name: "RoyalBlue", hex: "#4169E1"},
-  {name: "SaddleBrown", hex: "#8B4513"},
-  {name: "Salmon", hex: "#FA8072"},
-  {name: "SandyBrown", hex: "#F4A460"},
-  {name: "SeaGreen", hex: "#2E8B57"},
-  {name: "SeaShell", hex: "#FFF5EE"},
-  {name: "Sienna", hex: "#A0522D"},
-  {name: "Silver", hex: "#C0C0C0"},
-  {name: "SkyBlue", hex: "#87CEEB"},
-  {name: "SlateBlue", hex: "#6A5ACD"},
-  {name: "SlateGray", hex: "#708090"},
-  {name: "Snow", hex: "#FFFAFA"},
-  {name: "SpringGreen", hex: "#00FF7F"},
-  {name: "SteelBlue", hex: "#4682B4"},
-  {name: "Tan", hex: "#D2B48C"},
-  {name: "Teal", hex: "#008080"},
-  {name: "Thistle", hex: "#D8BFD8"},
-  {name: "Tomato", hex: "#FF6347"},
-  {name: "Turquoise", hex: "#40E0D0"},
-  {name: "Violet", hex: "#EE82EE"},
-  {name: "Wheat", hex: "#F5DEB3"},
-  {name: "White", hex: "#FFFFFF"},
-  {name: "WhiteSmoke", hex: "#F5F5F5"},
-  {name: "Yellow", hex: "#FFFF00"},
-  {name: "YellowGreen", hex: "#9ACD32"},
+  {name: "AliceBlue", hex: "#F0F8FF"}, {name: "AntiqueWhite", hex: "#FAEBD7"},
+  {name: "Aqua", hex: "#00FFFF"}, {name: "Aquamarine", hex: "#7FFFD4"},
+  {name: "Azure", hex: "#F0FFFF"}, {name: "Beige", hex: "#F5F5DC"},
+  {name: "Bisque", hex: "#FFE4C4"}, {name: "Blue", hex: "#0000FF"},
+  {name: "BlueViolet", hex: "#8A2BE2"}, {name: "Brown", hex: "#A52A2A"},
+  {name: "BurlyWood", hex: "#DEB887"}, {name: "CadetBlue", hex: "#5F9EA0"},
+  {name: "Chartreuse", hex: "#7FFF00"}, {name: "Chocolate", hex: "#D2691E"},
+  {name: "Coral", hex: "#FF7F50"}, {name: "CornflowerBlue", hex: "#6495ED"},
+  {name: "Cyan", hex: "#00FFFF"}, {name: "DarkBlue", hex: "#00008B"},
+  {name: "DarkCyan", hex: "#008B8B"}, {name: "DarkGoldenrod", hex: "#B8860B"},
+  {name: "DarkGray", hex: "#A9A9A9"}, {name: "DarkGreen", hex: "#006400"},
+  {name: "DarkKhaki", hex: "#BDB76B"}, {name: "DarkMagenta", hex: "#8B008B"},
+  {name: "DarkOliveGreen", hex: "#556B2F"}, {name: "DarkOrange", hex: "#FF8C00"},
+  {name: "DarkOrchid", hex: "#9932CC"}, {name: "DarkRed", hex: "#8B0000"},
+  {name: "DarkSalmon", hex: "#E9967A"}, {name: "DarkSeaGreen", hex: "#8FBC8F"},
+  {name: "DarkSlateBlue", hex: "#483D8B"}, {name: "DarkSlateGray", hex: "#2F4F4F"},
+  {name: "DarkTurquoise", hex: "#00CED1"}, {name: "DarkViolet", hex: "#9400D3"},
+  {name: "DeepPink", hex: "#FF1493"}, {name: "DeepSkyBlue", hex: "#00BFFF"},
+  {name: "DimGray", hex: "#696969"}, {name: "DodgerBlue", hex: "#1E90FF"},
+  {name: "Firebrick", hex: "#B22222"}, {name: "FloralWhite", hex: "#FFFAF0"},
+  {name: "ForestGreen", hex: "#228B22"}, {name: "Fuchsia", hex: "#FF00FF"},
+  {name: "Gainsboro", hex: "#DCDCDC"}, {name: "GhostWhite", hex: "#F8F8FF"},
+  {name: "Gold", hex: "#FFD700"}, {name: "Goldenrod", hex: "#DAA520"},
+  {name: "Gray", hex: "#808080"}, {name: "Green", hex: "#008000"},
+  {name: "GreenYellow", hex: "#ADFF2F"}, {name: "Honeydew", hex: "#F0FFF0"},
+  {name: "HotPink", hex: "#FF69B4"}, {name: "IndianRed", hex: "#CD5C5C"},
+  {name: "Indigo", hex: "#4B0082"}, {name: "Ivory", hex: "#FFFFF0"},
+  {name: "Khaki", hex: "#F0E68C"}, {name: "Lavender", hex: "#E6E6FA"},
+  {name: "LavenderBlush", hex: "#FFF0F5"}, {name: "LawnGreen", hex: "#7CFC00"},
+  {name: "LemonChiffon", hex: "#FFFACD"}, {name: "LightBlue", hex: "#ADD8E6"},
+  {name: "LightCoral", hex: "#F08080"}, {name: "LightCyan", hex: "#E0FFFF"},
+  {name: "LightGoldenrodYellow", hex: "#FAFAD2"}, {name: "LightGray", hex: "#D3D3D3"},
+  {name: "LightGreen", hex: "#90EE90"}, {name: "LightPink", hex: "#FFB6C1"},
+  {name: "LightSalmon", hex: "#FFA07A"}, {name: "LightSeaGreen", hex: "#20B2AA"},
+  {name: "LightSkyBlue", hex: "#87CEFA"}, {name: "LightSlateGray", hex: "#778899"},
+  {name: "LightSteelBlue", hex: "#B0C4DE"}, {name: "LightYellow", hex: "#FFFFE0"},
+  {name: "Lime", hex: "#00FF00"}, {name: "LimeGreen", hex: "#32CD32"},
+  {name: "Linen", hex: "#FAF0E6"}, {name: "Magenta", hex: "#FF00FF"},
+  {name: "Maroon", hex: "#800000"}, {name: "MediumAquamarine", hex: "#66CDAA"},
+  {name: "MediumBlue", hex: "#0000CD"}, {name: "MediumOrchid", hex: "#BA55D3"},
+  {name: "MediumPurple", hex: "#9370DB"}, {name: "MediumSeaGreen", hex: "#3CB371"},
+  {name: "MediumSlateBlue", hex: "#7B68EE"}, {name: "MediumSpringGreen", hex: "#00FA9A"},
+  {name: "MediumTurquoise", hex: "#48D1CC"}, {name: "MediumVioletRed", hex: "#C71585"},
+  {name: "MidnightBlue", hex: "#191970"}, {name: "MintCream", hex: "#F5FFFA"},
+  {name: "MistyRose", hex: "#FFE4E1"}, {name: "Moccasin", hex: "#FFE4B5"},
+  {name: "NavajoWhite", hex: "#FFDEAD"}, {name: "Navy", hex: "#000080"},
+  {name: "OldLace", hex: "#FDF5E6"}, {name: "Olive", hex: "#808000"},
+  {name: "OliveDrab", hex: "#6B8E23"}, {name: "Orange", hex: "#FFA500"},
+  {name: "OrangeRed", hex: "#FF4500"}, {name: "Orchid", hex: "#DA70D6"},
+  {name: "PaleGoldenrod", hex: "#EEE8AA"}, {name: "PaleGreen", hex: "#98FB98"},
+  {name: "PaleTurquoise", hex: "#AFEEEE"}, {name: "PaleVioletRed", hex: "#DB7093"},
+  {name: "PapayaWhip", hex: "#FFEFD5"}, {name: "PeachPuff", hex: "#FFDAB9"},
+  {name: "Peru", hex: "#CD853F"}, {name: "Pink", hex: "#FFC0CB"},
+  {name: "Plum", hex: "#DDA0DD"}, {name: "PowderBlue", hex: "#B0E0E6"},
+  {name: "Purple", hex: "#800080"}, {name: "Red", hex: "#FF0000"},
+  {name: "RosyBrown", hex: "#BC8F8F"}, {name: "RoyalBlue", hex: "#4169E1"},
+  {name: "SaddleBrown", hex: "#8B4513"}, {name: "Salmon", hex: "#FA8072"},
+  {name: "SandyBrown", hex: "#F4A460"}, {name: "SeaGreen", hex: "#2E8B57"},
+  {name: "SeaShell", hex: "#FFF5EE"}, {name: "Sienna", hex: "#A0522D"},
+  {name: "Silver", hex: "#C0C0C0"}, {name: "SkyBlue", hex: "#87CEEB"},
+  {name: "SlateBlue", hex: "#6A5ACD"}, {name: "SlateGray", hex: "#708090"},
+  {name: "Snow", hex: "#FFFAFA"}, {name: "SpringGreen", hex: "#00FF7F"},
+  {name: "SteelBlue", hex: "#4682B4"}, {name: "Tan", hex: "#D2B48C"},
+  {name: "Teal", hex: "#008080"}, {name: "Thistle", hex: "#D8BFD8"},
+  {name: "Tomato", hex: "#FF6347"}, {name: "Turquoise", hex: "#40E0D0"},
+  {name: "Violet", hex: "#EE82EE"}, {name: "Wheat", hex: "#F5DEB3"},
+  {name: "White", hex: "#FFFFFF"}, {name: "WhiteSmoke", hex: "#F5F5F5"},
+  {name: "Yellow", hex: "#FFFF00"}, {name: "YellowGreen", hex: "#9ACD32"},
   {name: "Black", hex: "#000000"}
 ];
 
 // Separar grises
 const grayColors = colors.filter(c => {
-  const h = c.hex.replace('#','');
-  const r = parseInt(h.substr(0,2),16);
-  const g = parseInt(h.substr(2,2),16);
-  const b = parseInt(h.substr(4,2),16);
-  return r === g && g === b;
+  const hex = c.hex.replace('#','');
+  const r = parseInt(hex.substr(0,2),16);
+  const g = parseInt(hex.substr(2,2),16);
+  const b = parseInt(hex.substr(4,2),16);
+  return r===g && g===b;
 });
+const colorColors = colors.filter(c => !grayColors.includes(c));
 
-// Colores para círculo
-const chromaColors = colors.filter(c => !grayColors.includes(c));
-
-// Convertir hex a HSL
-function hexToHSL(H){
-    let r = 0, g = 0, b = 0;
-    if(H.length == 4){
-      r = "0x"+H[1]+H[1];
-      g = "0x"+H[2]+H[2];
-      b = "0x"+H[3]+H[3];
-    } else if(H.length == 7){
-      r = "0x"+H[1]+H[2];
-      g = "0x"+H[3]+H[4];
-      b = "0x"+H[5]+H[6];
-    }
-    r /= 255; g /= 255; b /= 255;
-    const cmin = Math.min(r,g,b);
-    const cmax = Math.max(r,g,b);
-    const delta = cmax - cmin;
-    let h = 0, s = 0, l = 0;
-
-    if(delta === 0) h = 0;
-    else if(cmax === r) h = ((g - b)/delta) % 6;
-    else if(cmax === g) h = (b - r)/delta + 2;
-    else h = (r - g)/delta + 4;
-    h = Math.round(h*60);
-    if(h < 0) h += 360;
-    l = (cmax + cmin)/2;
-    s = delta === 0 ? 0 : delta/(1-Math.abs(2*l-1));
-    s = +(s*100).toFixed(1);
-    l = +(l*100).toFixed(1);
-    return {h,s,l};
+// Función para luminosidad
+function luminance(hex) {
+  const r = parseInt(hex.substr(1,2),16)/255;
+  const g = parseInt(hex.substr(3,2),16)/255;
+  const b = parseInt(hex.substr(5,2),16)/255;
+  return 0.299*r + 0.587*g + 0.114*b;
 }
 
-// Ordenar por Hue y luego Luminosidad
-chromaColors.forEach(c => {
-  const hsl = hexToHSL(c.hex);
-  c.hsl = hsl;
+// Ordenar grises por luminosidad
+grayColors.sort((a,b)=>luminance(a.hex)-luminance(b.hex));
+
+// Crear lista de grises con hover y clic
+const grayList = document.getElementById('grayList');
+const tooltip = document.getElementById('tooltip');
+function addTooltipEvents(element, color){
+  element.addEventListener('mouseenter', e=>{
+    tooltip.style.opacity=1;
+    tooltip.innerHTML=color.name;
+    tooltip.style.left=e.pageX+10+'px';
+    tooltip.style.top=e.pageY+10+'px';
+    tooltip.style.backgroundColor=color.hex;
+    tooltip.style.color = luminance(color.hex)>0.5?'black':'white';
+  });
+  element.addEventListener('mousemove', e=>{
+    tooltip.style.left=e.pageX+10+'px';
+    tooltip.style.top=e.pageY+10+'px';
+  });
+  element.addEventListener('mouseleave', ()=>{
+    tooltip.style.opacity=0;
+  });
+  element.addEventListener('click', ()=>{
+    navigator.clipboard.writeText(color.name);
+    tooltip.innerHTML = 'Copiado: '+color.name;
+    tooltip.style.opacity = 1;
+    setTimeout(()=>tooltip.style.opacity=0, 1000);
+  });
+}
+grayColors.forEach(c=>{
+  const div = document.createElement('div');
+  div.className='gray-item';
+  div.style.backgroundColor=c.hex;
+  addTooltipEvents(div,c);
+  grayList.appendChild(div);
 });
 
-chromaColors.sort((a,b) => a.hsl.h - b.hsl.h || a.hsl.l - b.hsl.l);
+// Crear círculo cromático con capas por luminosidad
+// Ordenar por hue y luminosidad
+function hexToHSL(H) {
+    let r = 0, g = 0, b = 0;
+    if(H.length==4){ r="0x"+H[1]+H[1]; g="0x"+H[2]+H[2]; b="0x"+H[3]+H[3]; }
+    else if(H.length==7){ r="0x"+H[1]+H[2]; g="0x"+H[3]+H[4]; b="0x"+H[5]+H[6]; }
+    r=+r; g=+g; b=+b;
+    r/=255; g/=255; b/=255;
+    let cmin=Math.min(r,g,b), cmax=Math.max(r,g,b), delta=cmax-cmin;
+    let h=0,s=0,l=0;
+    if(delta==0) h=0;
+    else if(cmax==r) h=((g-b)/delta)%6;
+    else if(cmax==g) h=(b-r)/delta+2;
+    else h=(r-g)/delta+4;
+    h=Math.round(h*60); if(h<0) h+=360;
+    l=(cmax+cmin)/2;
+    s=delta==0?0:delta/(1-Math.abs(2*l-1));
+    s=Math.round(s*100); l=Math.round(l*100);
+    return {h,s,l};
+}
+colorColors.forEach(c=>{c.hsl=hexToHSL(c.hex);});
+colorColors.sort((a,b)=>a.hsl.h-b.hsl.h || a.hsl.l-b.hsl.l);
 
-// Crear círculo cromático
 const container = document.getElementById('circleContainer');
-const tooltip = document.getElementById('tooltip');
-
 const centerX = 300;
 const centerY = 300;
 const maxRadius = 250;
-const levels = 9;
+const layers = 3; // Luminosidad
+const layerStep = maxRadius/layers;
 
-chromaColors.forEach((c, i) => {
-  const radiusIndex = Math.floor(c.hsl.l / (100/levels));
-  const radius = (radiusIndex / levels) * maxRadius + 30;
-  const angle = (c.hsl.h/360)*2*Math.PI;
-
-  const dot = document.createElement('div');
-  dot.className = 'color-dot';
-  dot.style.background = c.hex;
-  dot.style.left = `${centerX + radius*Math.cos(angle) - 20}px`;
-  dot.style.top = `${centerY + radius*Math.sin(angle) - 20}px`;
-
-  dot.addEventListener('click', () => {
-    navigator.clipboard.writeText(c.name);
-    tooltip.innerText = `Copiado: ${c.name}`;
-    tooltip.style.opacity = 1;
-    setTimeout(() => tooltip.style.opacity = 0, 1000);
-  });
-
-  dot.addEventListener('mouseenter', () => {
-    tooltip.innerText = `${c.name} ${c.hex}`;
-    tooltip.style.opacity = 1;
-  });
-
-  dot.addEventListener('mouseleave', () => {
-    tooltip.style.opacity = 0;
-  });
-
-  container.appendChild(dot);
-});
-
-// Posicionar tooltip
-document.addEventListener('mousemove', e => {
-  tooltip.style.left = (e.pageX + 10) + 'px';
-  tooltip.style.top = (e.pageY + 10) + 'px';
-});
-
-// Grises
-const grayList = document.getElementById('grayList');
-grayColors.sort((a,b) => {
-  const la = hexToHSL(a.hex).l;
-  const lb = hexToHSL(b.hex).l;
-  return la - lb;
-});
-grayColors.forEach(c => {
-  const dot = document.createElement('div');
-  dot.className = 'gray-dot';
-  dot.style.background = c.hex;
-
-  dot.addEventListener('click', () => {
-    navigator.clipboard.writeText(c.name);
-    tooltip.innerText = `Copiado: ${c.name}`;
-    tooltip.style.opacity = 1;
-    setTimeout(() => tooltip.style.opacity = 0, 1000);
-  });
-
-  dot.addEventListener('mouseenter', () => {
-    tooltip.innerText = `${c.name} ${c.hex}`;
-    tooltip.style.opacity = 1;
-  });
-
-  dot.addEventListener('mouseleave', () => {
-    tooltip.style.opacity = 0;
-  });
-
-  grayList.appendChild(dot);
+colorColors.forEach((c,i)=>{
+  const angle = i*(360/colorColors.length)*Math.PI/180;
+  const layer = Math.floor(c.hsl.l/100*layers);
+  const radius = (layer+0.5)*layerStep;
+  const x = centerX + radius*Math.cos(angle) - 10;
+  const y = centerY + radius*Math.sin(angle) - 10;
+  const div = document.createElement('div');
+  div.className='color-circle';
+  div.style.backgroundColor=c.hex;
+  div.style.left=x+'px';
+  div.style.top=y+'px';
+  addTooltipEvents(div,c);
+  container.appendChild(div);
 });
 </script>
+
 </body>
 </html>
