@@ -82,10 +82,13 @@ h2, h3 {
 }
 
 
-/* Button */
+/* Buttons */
 button, .btn {
-  background-color: var(--background);
-  color: var(--text-primary);
+  display: inline-block;
+  background-color: var(--paper);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  cursor: pointer;
 
   transition: 0.2s;
   border-radius: 0.5rem;
@@ -98,8 +101,29 @@ button:hover, .btn:hover {
   filter: brightness(1.0125);
 }
 
+.btn-text {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-weight: bold;
+}
+.btn-icon {
+  border-radius: 4rem;
+}
+
 
 /* Inputs */
+input {
+  background-color: transparent;
+}
+
+.input {
+  background-color: var(--paper);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  box-shadow: inset rgba(0,0,0,0.2) 0px 0.125rem 0.5rem;
+  transition: 0.25s;
+}
+
 input[type=range] {
   --thumb-color: rgba(0,0,0,0.67);
   --thumb-border: 2px solid #fff;
