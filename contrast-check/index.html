@@ -1,85 +1,86 @@
 <html>
+
 <head>
-    <base href="./"/>
-    <title>Color Contrast Checker</title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="manifest" href="./manifest.webmanifest"/>
-    <link rel="styleSheet" href="./../styles.css" type="text/css" media="screen"/>
-    <link rel="styleSheet" href="./styles.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
-    <meta name="description" content="Color palette"/>
+  <base href="./" />
+  <title>Color Contrast Checker</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="styleSheet" href="./../styles.css" type="text/css" media="screen" />
+  <link rel="styleSheet" href="./styles.css" type="text/css" media="screen" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+  <meta name="description" content="Color palette" />
 </head>
+
 <body class="light">
 
-<header></header>
+  <header></header>
 
-<main class="container">
+  <main class="container">
     <h1 class="fade-colors">🎨 Color Contrast Checker</h1>
 
     <section class="cont" id="image-reference">
-        <h2>Referece image</h2>
-        <input type="text" id="image-input" placeholder="Paste image (Ctrl+V)"/>
-        <label for="image-file" class="custom-file-upload">
-            ... Or upload here
-            <input type="file" id="image-file" accept="image/*"/>
-        </label>
-        <div id="image-drop">... Or drop here</div>
-        <img id="image-display" class="pixel"/>
+      <h2>Referece image</h2>
+      <input type="text" id="image-input" placeholder="Paste image (Ctrl+V)" />
+      <label for="image-file" class="custom-file-upload">
+        ... Or upload here
+        <input type="file" id="image-file" accept="image/*" />
+      </label>
+      <div id="image-drop">... Or drop here</div>
+      <img id="image-display" class="pixel" />
     </section>
 
     <!-- COLOR PICKERS -->
     <section class="cont" id="color-picker">
-        <h2>Color palette</h1>
-        <div>
-            <canvas id="colorWheel" width="200" height="200"
-                onclick="pickColorWheel.pickColor(event)"
-            ></canvas>
-            <!-- onpointerdown="pickColorWheel.enableMove(event, true)"
+      <h2>Color palette</h2>
+      <div>
+        <canvas id="colorWheel" width="200" height="200" onclick="pickColorWheel.pickColor(event)"></canvas>
+        <!-- onpointerdown="pickColorWheel.enableMove(event, true)"
             onpointerup="pickColorWheel.enableMove(event, false)"
             onpointerout="pickColorWheel.enableMove(event, false)" -->
-        </div>
-        <ul id="colors"></ul>
-        <div class="row">
-            <button class="icon" onclick="addColor()">
-                <span class="material-symbols-rounded">add</span>
-            </button>
-            <button class="icon" onclick="resetColors()">
-                <span class="material-symbols-rounded">restart_alt</span>
-            </button>
-        </div>
+      </div>
+      <ul id="colors"></ul>
+      <div class="row">
+        <button class="icon" onclick="addColor()">
+          <span class="material-symbols-rounded">add</span>
+        </button>
+        <button class="icon" onclick="resetColors()">
+          <span class="material-symbols-rounded">restart_alt</span>
+        </button>
+      </div>
     </section>
 
     <!-- TEST COLORS -->
     <section class="cont" id="test">
-        <h2>Contrast Check</h1>
-        <button class="fade-colors-backg" onclick="testColors()">TEST</button>
-        <div id="test-colors"></div>
-        <small>
-            <div class="row">
-                <span class="material-symbols-rounded">new_releases</span>
-                If contrast ratio is same or upper 7, then passes WCAG AAA standard for normal text,
-            </div>
-            <div class="row">
-                <span class="material-symbols-rounded">task_alt</span>
-                if contrast ratio is same or upper 4.5, then passes WCAG AA standard for normal text,
-            </div>
-            <div class="row">
-                <span class="material-symbols-rounded">check</span>
-                if contrast ratio is same or upper 4.5, then passes WCAG AA standard for big text,
-            </div>
-            <div class="row">
-                <span class="material-symbols-rounded">priority_high</span>
-                else has small contrast and may not be readable.
-            </div>
-        </small>
+      <h2>Contrast Check</h2>
+      <button class="fade-colors-backg" onclick="testColors()">TEST</button>
+      <div id="test-colors"></div>
+      <small>
+        <div class="row">
+          <span class="material-symbols-rounded">new_releases</span>
+          If contrast ratio is same or upper 7, then passes WCAG AAA standard for normal text,
+        </div>
+        <div class="row">
+          <span class="material-symbols-rounded">task_alt</span>
+          if contrast ratio is same or upper 4.5, then passes WCAG AA standard for normal text,
+        </div>
+        <div class="row">
+          <span class="material-symbols-rounded">check</span>
+          if contrast ratio is same or upper 4.5, then passes WCAG AA standard for big text,
+        </div>
+        <div class="row">
+          <span class="material-symbols-rounded">priority_high</span>
+          else has small contrast and may not be readable.
+        </div>
+      </small>
     </section>
 
-</main>
+  </main>
 
-<footer></footer>
+  <footer></footer>
 
 </body>
+
 </html>
 
 <script src="./scripts/commonColor.js"></script>
