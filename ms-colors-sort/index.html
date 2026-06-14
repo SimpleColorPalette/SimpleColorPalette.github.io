@@ -3,232 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎨 Círculo Cromático Interactivo</title>
-<link rel="styleSheet" href="./../styles.css" type="text/css" media="screen"/>
-<style>
-  :root {
-    --background-color: #f3f3f3;
-    --text-color: #222;
-  }
-  
-  ::root .dark {
-    --background-color: #1e1e1e;
-    --text-color: #f0f0f0;
-  }
-
-  body {
-    font-family: Calibri, sans-serif;
-    display: flex;
-    flex-direction: row;
-    background: var(--background-color);
-    color: var(--text-color);
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    padding: 2rem;
-    gap: 3rem;
-  }
-
-  h2 {
-    width: 100%;
-    margin-bottom: 0.5rem;
-  }
-  h2, h3 {
-    text-align: center;
-  }
-
-  input[type=range] {
-    --thumb-color: rgba(0,0,0,0.67);
-    --thumb-border: 2px solid #fff;
-    --thumb-size: 1rem;
-    --thumb-shadow: 0 0 5px rgba(0,0,0,0.3);
-
-    -webkit-appearance: none;
-    width: 100%;
-    height: 0.25rem;
-    border-radius: 0.125rem;
-    background: var(--background-color);
-    box-shadow: 0 -2px 2px rgba(255, 255, 255, 0.33) inset, 0 2px 2px rgba(0, 0, 0, 0.33) inset;
-    outline: none;
-    padding: 0;
-    margin: 0.5rem 0;
-  }
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: var(--thumb-size);
-    height: var(--thumb-size);
-    background: var(--thumb-color);
-    border: var(--thumb-border);
-    box-shadow: var(--thumb-shadow);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  input[type=range]::-webkit-slider-thumb:hover {
-    background: var(--thumb-color);
-  }
-  input[type=range]::-moz-range-thumb {
-    width: var(--thumb-size);
-    height: var(--thumb-size);
-    background: var(--thumb-color);
-    border: var(--thumb-border);
-    box-shadow: var(--thumb-shadow);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-
-  .dot {
-    border-radius: 50%;
-    border: 2px solid #fff;
-    box-shadow: 0 0 2px rgba(0,0,0,0.5);
-  }
-  .box {
-    width: 16px;
-    height: 16px;
-    border-radius: 3px;
-    box-shadow: 0 -2px 2px -1px rgba(255, 255, 255, 0.33), 0 2px 2px -1px rgba(0, 0, 0, 0.33);
-  }
-  .dot, .box {
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    pointer-events: all;
-  }
-  .dot:hover, .box:hover {
-    transform: scale(1.1);
-    z-index: 10;
-  }
-  .dot:hover  {
-    box-shadow: 0 0 3px rgba(0,0,0,0.75);
-  }
-
-  .tooltip {
-    position: absolute;
-    background: #333;
-    color: #fff;
-    padding: 4px 8px;
-    font-size: 12px;
-    border-radius: 4px;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s;
-    white-space: nowrap;
-    z-index: 100;
-  }
-
-  section {
-    z-index: 1;
-    position: relative;
-  }
-
-  section.chromatic {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    /* align-items: center; */
-    justify-content: center;
-    column-gap: 2rem;
-    row-gap: 0.75rem;
-  }
-  
-  .chr-settings {
-    display: flex;
-    gap: 2rem;
-  }
-  .chr-settings label {
-    display: flex;
-    column-gap: 1rem;
-    row-gap: 0.5rem;
-    flex-wrap: wrap;
-    align-items: center;
-    padding: 0.5rem;
-  }
-  .chr-settings .row {
-    display: flex;
-    align-items: center;
-    column-gap: 0.5rem;
-  }
-
-  .chr-container {
-    position: relative;
-  }
-
-  .circle-container {
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    margin-bottom: 0px;
-    pointer-events: none;
-  }
-
-  .levels-container {
-    position: absolute;
-  }
-  .level {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid #fff;
-    box-shadow: 0 0 2px rgba(0,0,0,0.5);
-  }
-  
-  svg.sector-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    /* filter: drop-shadow(0 0 1px rgba(0,0,0,0.25)); */
-  }
-  .sector {
-    fill: rgba(0, 0, 0, 0);
-    stroke: rgba(255, 255, 255, 0.5);
-    stroke-width: 1;
-    pointer-events: all;
-    cursor: pointer;
-    transition: fill 0.2s;
-  }
-  .active-sector {
-    fill: rgba(0, 0, 0, 0.1);
-    stroke: rgba(255, 255, 255, 1);
-  }
-
-  .list {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    column-gap: 0.5rem;
-    row-gap:  0.25rem;
-  }
-  .item {
-    padding: 0.5rem 0.75rem;
-    width: 9rem; /*12rem*/
-    display: flex;
-    gap: 0.33rem;
-    cursor: default;
-    border-radius: 1rem;
-    align-items: center;
-  }
-
-  .fill-flex {
-    flex: 1 1 0;
-  }
-  
-  .gray-cont {
-    max-width: 800px;
-  }
-  .gray-cont .list {
-    flex-direction: column;
-  }
-
-  @media screen and (max-width: 900px) {
-    .gray-cont .list {
-      flex-direction: row;
-    }
-  }
-
-</style>
+<title>Círculo Cromático Interactivo</title>
+<link rel="styleSheet" href="./../styles.css" type="text/css"/>
+<link rel="styleSheet" href="./styles.css" type="text/css"/>
 </head>
 
-<body>
+<body class="light">
+<div class="container">
+
   <div class="tooltip" id="tooltip"></div>
+  
+  <h1>📚 Ms Colors Organizer</h1>
   
   <section class="gray-cont">
     <h2>🖤 Grises</h2>
@@ -276,6 +61,7 @@
     </div>
   </section>
 
+</div>
 <script>
 const colors = [
   {name: "AliceBlue", hex: "#F0F8FF"},
@@ -717,4 +503,5 @@ if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').match
 }
 </script>
 </body>
+
 </html>
