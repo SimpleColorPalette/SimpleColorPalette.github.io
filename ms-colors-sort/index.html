@@ -3,292 +3,717 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Círculo Cromático Interactivo</title>
+<title>🎨 Círculo Cromático Interactivo</title>
 <style>
+  :root {
+    --background-color: #f3f3f3;
+    --text-color: #222;
+  }
+  
+  ::root .dark {
+    --background-color: #1e1e1e;
+    --text-color: #f0f0f0;
+  }
+
   body {
-    font-family: sans-serif;
+    font-family: Calibri, sans-serif;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #fafafa;
+    flex-direction: row;
+    background: var(--background-color);
+    color: var(--text-color);
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 2rem;
+    gap: 3rem;
   }
+
   h2 {
-    margin-top: 20px;
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
-  .circle-container {
-    position: relative;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    margin: 20px;
+  h2, h3 {
+    text-align: center;
   }
-  .color-circle {
-    width: 20px;
-    height: 20px;
+
+  input[type=range] {
+    --thumb-color: rgba(0,0,0,0.67);
+    --thumb-border: 2px solid #fff;
+    --thumb-size: 1rem;
+    --thumb-shadow: 0 0 5px rgba(0,0,0,0.3);
+
+    -webkit-appearance: none;
+    width: 100%;
+    height: 0.25rem;
+    border-radius: 0.125rem;
+    background: var(--background-color);
+    box-shadow: 0 -2px 2px rgba(255, 255, 255, 0.33) inset, 0 2px 2px rgba(0, 0, 0, 0.33) inset;
+    outline: none;
+    padding: 0;
+    margin: 0.5rem 0;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    background: var(--thumb-color);
+    border: var(--thumb-border);
+    box-shadow: var(--thumb-shadow);
     border-radius: 50%;
-    position: absolute;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: background 0.3s ease;
   }
-  .color-circle:hover {
-    transform: scale(1.5);
+  input[type=range]::-webkit-slider-thumb:hover {
+    background: var(--thumb-color);
+  }
+  input[type=range]::-moz-range-thumb {
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    background: var(--thumb-color);
+    border: var(--thumb-border);
+    box-shadow: var(--thumb-shadow);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .dot {
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  }
+  .box {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    box-shadow: 0 -2px 2px -1px rgba(255, 255, 255, 0.33), 0 2px 2px -1px rgba(0, 0, 0, 0.33);
+  }
+  .dot, .box {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    pointer-events: all;
+  }
+  .dot:hover, .box:hover {
+    transform: scale(1.1);
     z-index: 10;
   }
-  svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 600px;
-    height: 600px;
-    pointer-events: none;
+  .dot:hover  {
+    box-shadow: 0 0 3px rgba(0,0,0,0.75);
   }
-  .sector {
-    fill: rgba(0, 0, 0, 0.05);
-    stroke: rgba(0,0,0,0.1);
-    pointer-events: all;
-    cursor: pointer;
-  }
-  .active-sector {
-    fill: rgba(0, 0, 0, 0.2);
-  }
+
   .tooltip {
     position: absolute;
-    padding: 5px 10px;
-    background-color: black;
-    color: white;
+    background: #333;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 12px;
     border-radius: 4px;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s;
+    white-space: nowrap;
     z-index: 100;
   }
-  .color-list {
-    max-width: 600px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+
+  section {
+    z-index: 1;
+    position: relative;
   }
-  .color-item {
+
+  section.chromatic {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    /* align-items: center; */
+    justify-content: center;
+    column-gap: 2rem;
+    row-gap: 0.75rem;
+  }
+  
+  .chr-settings {
+    display: flex;
+    gap: 2rem;
+  }
+  .chr-settings label {
+    display: flex;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0.5rem;
+  }
+  .chr-settings .row {
     display: flex;
     align-items: center;
-    margin: 4px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 13px;
-    border: 1px solid #ccc;
+    column-gap: 0.5rem;
   }
-  .color-box {
-    width: 16px;
-    height: 16px;
-    margin-right: 6px;
-    border-radius: 3px;
+
+  .chr-container {
+    position: relative;
   }
+
+  .circle-container {
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    margin-bottom: 0px;
+    pointer-events: none;
+  }
+
+  .levels-container {
+    position: absolute;
+  }
+  .level {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  }
+  
+  svg.sector-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* filter: drop-shadow(0 0 1px rgba(0,0,0,0.25)); */
+  }
+  .sector {
+    fill: rgba(0, 0, 0, 0);
+    stroke: rgba(255, 255, 255, 0.5);
+    stroke-width: 1;
+    pointer-events: all;
+    cursor: pointer;
+    transition: fill 0.2s;
+  }
+  .active-sector {
+    fill: rgba(0, 0, 0, 0.1);
+    stroke: rgba(255, 255, 255, 1);
+  }
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    column-gap: 0.5rem;
+    row-gap:  0.25rem;
+  }
+  .item {
+    padding: 0.5rem 0.75rem;
+    width: 9rem; /*12rem*/
+    display: flex;
+    gap: 0.33rem;
+    cursor: default;
+    border-radius: 1rem;
+    align-items: center;
+  }
+
+  .fill-flex {
+    flex: 1 1 0;
+  }
+  
+  .gray-cont {
+    max-width: 800px;
+  }
+  .gray-cont .list {
+    flex-direction: column;
+  }
+
+  @media screen and (max-width: 900px) {
+    .gray-cont .list {
+      flex-direction: row;
+    }
+  }
+
 </style>
 </head>
+
 <body>
+  <div class="tooltip" id="tooltip"></div>
+  
+  <section class="gray-cont">
+    <h2>🖤 Grises</h2>
+    <div class="list" id="grayList"></div>
+  </section>
 
-<h2>Círculo Cromático Interactivo (12 Secciones)</h2>
-<div class="circle-container" id="circleContainer">
-  <svg id="sectorSvg"></svg>
-</div>
-<div class="tooltip" id="tooltip"></div>
+  <section class="chromatic fill-flex">
+    <h2>🌈 Círculo Cromático</h2>
+    <div class="chr-settings">
+      <label>
+        <span>Tamaño de círculo</span>
+        <div class="row">
+          <span>10</span>
+          <input id="dot-radius" type="range" value="15" min="10" max="40" step="5"/>
+          <span>40</span>
+        </div>
+      </label>
+      <label>
+        <span>Niveles</span>
+        <div class="row">
+          <span>0</span>
+          <input id="levels" type="range" value="0" min="0" max="15" step="1"/>
+          <span>15</span>
+        </div>
+      </label>
+      <label>
+        <span>Sectores</span>
+        <div class="row">
+          <span>6</span>
+          <input id="sectors" type="range" value="3" min="6" max="18" step="3"/>
+          <span>18</span>
+        </div>
+      </label>
+    </div>
 
-<h3>Colores en la sección seleccionada:</h3>
-<div class="color-list" id="colorList"></div>
+    <div class="chr-container">
+      <div class="circle-container levels-container" id="levelsContainer"></div>
+      <svg class="circle-container sector-container" id="sectorSvg"></svg>
+      <div class="circle-container" id="circleContainer"></div>
+    </div>
+
+    <div class="chr-selected fill-flex">
+      <h3>Sección seleccionada</h3>
+      <div class="list" id="colorList"></div>
+    </div>
+  </section>
 
 <script>
-
 const colors = [
-  {name: "AliceBlue", hex: "#F0F8FF"}, {name: "AntiqueWhite", hex: "#FAEBD7"},
-  {name: "Aqua", hex: "#00FFFF"}, {name: "Aquamarine", hex: "#7FFFD4"},
-  {name: "Azure", hex: "#F0FFFF"}, {name: "Beige", hex: "#F5F5DC"},
-  {name: "Bisque", hex: "#FFE4C4"}, {name: "Blue", hex: "#0000FF"},
-  {name: "BlueViolet", hex: "#8A2BE2"}, {name: "Brown", hex: "#A52A2A"},
-  {name: "BurlyWood", hex: "#DEB887"}, {name: "CadetBlue", hex: "#5F9EA0"},
-  {name: "Chartreuse", hex: "#7FFF00"}, {name: "Chocolate", hex: "#D2691E"},
-  {name: "Coral", hex: "#FF7F50"}, {name: "CornflowerBlue", hex: "#6495ED"},
-  {name: "Cyan", hex: "#00FFFF"}, {name: "DarkBlue", hex: "#00008B"},
-  {name: "DarkCyan", hex: "#008B8B"}, {name: "DarkGoldenrod", hex: "#B8860B"},
-  {name: "DarkGray", hex: "#A9A9A9"}, {name: "DarkGreen", hex: "#006400"},
-  {name: "DarkKhaki", hex: "#BDB76B"}, {name: "DarkMagenta", hex: "#8B008B"},
-  {name: "DarkOliveGreen", hex: "#556B2F"}, {name: "DarkOrange", hex: "#FF8C00"},
-  {name: "DarkOrchid", hex: "#9932CC"}, {name: "DarkRed", hex: "#8B0000"},
-  {name: "DarkSalmon", hex: "#E9967A"}, {name: "DarkSeaGreen", hex: "#8FBC8F"},
-  {name: "DarkSlateBlue", hex: "#483D8B"}, {name: "DarkSlateGray", hex: "#2F4F4F"},
-  {name: "DarkTurquoise", hex: "#00CED1"}, {name: "DarkViolet", hex: "#9400D3"},
-  {name: "DeepPink", hex: "#FF1493"}, {name: "DeepSkyBlue", hex: "#00BFFF"},
-  {name: "DimGray", hex: "#696969"}, {name: "DodgerBlue", hex: "#1E90FF"},
-  {name: "Firebrick", hex: "#B22222"}, {name: "FloralWhite", hex: "#FFFAF0"},
-  {name: "ForestGreen", hex: "#228B22"}, {name: "Fuchsia", hex: "#FF00FF"},
-  {name: "Gainsboro", hex: "#DCDCDC"}, {name: "GhostWhite", hex: "#F8F8FF"},
-  {name: "Gold", hex: "#FFD700"}, {name: "Goldenrod", hex: "#DAA520"},
-  {name: "Gray", hex: "#808080"}, {name: "Green", hex: "#008000"},
-  {name: "GreenYellow", hex: "#ADFF2F"}, {name: "Honeydew", hex: "#F0FFF0"},
-  {name: "HotPink", hex: "#FF69B4"}, {name: "IndianRed", hex: "#CD5C5C"},
-  {name: "Indigo", hex: "#4B0082"}, {name: "Ivory", hex: "#FFFFF0"},
-  {name: "Khaki", hex: "#F0E68C"}, {name: "Lavender", hex: "#E6E6FA"},
-  {name: "LavenderBlush", hex: "#FFF0F5"}, {name: "LawnGreen", hex: "#7CFC00"},
-  {name: "LemonChiffon", hex: "#FFFACD"}, {name: "LightBlue", hex: "#ADD8E6"},
-  {name: "LightCoral", hex: "#F08080"}, {name: "LightCyan", hex: "#E0FFFF"},
-  {name: "LightGoldenrodYellow", hex: "#FAFAD2"}, {name: "LightGray", hex: "#D3D3D3"},
-  {name: "LightGreen", hex: "#90EE90"}, {name: "LightPink", hex: "#FFB6C1"},
-  {name: "LightSalmon", hex: "#FFA07A"}, {name: "LightSeaGreen", hex: "#20B2AA"},
-  {name: "LightSkyBlue", hex: "#87CEFA"}, {name: "LightSlateGray", hex: "#778899"},
-  {name: "LightSteelBlue", hex: "#B0C4DE"}, {name: "LightYellow", hex: "#FFFFE0"},
-  {name: "Lime", hex: "#00FF00"}, {name: "LimeGreen", hex: "#32CD32"},
-  {name: "Linen", hex: "#FAF0E6"}, {name: "Magenta", hex: "#FF00FF"},
-  {name: "Maroon", hex: "#800000"}, {name: "MediumAquamarine", hex: "#66CDAA"},
-  {name: "MediumBlue", hex: "#0000CD"}, {name: "MediumOrchid", hex: "#BA55D3"},
-  {name: "MediumPurple", hex: "#9370DB"}, {name: "MediumSeaGreen", hex: "#3CB371"},
-  {name: "MediumSlateBlue", hex: "#7B68EE"}, {name: "MediumSpringGreen", hex: "#00FA9A"},
-  {name: "MediumTurquoise", hex: "#48D1CC"}, {name: "MediumVioletRed", hex: "#C71585"},
-  {name: "MidnightBlue", hex: "#191970"}, {name: "MintCream", hex: "#F5FFFA"},
-  {name: "MistyRose", hex: "#FFE4E1"}, {name: "Moccasin", hex: "#FFE4B5"},
-  {name: "NavajoWhite", hex: "#FFDEAD"}, {name: "Navy", hex: "#000080"},
-  {name: "OldLace", hex: "#FDF5E6"}, {name: "Olive", hex: "#808000"},
-  {name: "OliveDrab", hex: "#6B8E23"}, {name: "Orange", hex: "#FFA500"},
-  {name: "OrangeRed", hex: "#FF4500"}, {name: "Orchid", hex: "#DA70D6"},
-  {name: "PaleGoldenrod", hex: "#EEE8AA"}, {name: "PaleGreen", hex: "#98FB98"},
-  {name: "PaleTurquoise", hex: "#AFEEEE"}, {name: "PaleVioletRed", hex: "#DB7093"},
-  {name: "PapayaWhip", hex: "#FFEFD5"}, {name: "PeachPuff", hex: "#FFDAB9"},
-  {name: "Peru", hex: "#CD853F"}, {name: "Pink", hex: "#FFC0CB"},
-  {name: "Plum", hex: "#DDA0DD"}, {name: "PowderBlue", hex: "#B0E0E6"},
-  {name: "Purple", hex: "#800080"}, {name: "Red", hex: "#FF0000"},
-  {name: "RosyBrown", hex: "#BC8F8F"}, {name: "RoyalBlue", hex: "#4169E1"},
-  {name: "SaddleBrown", hex: "#8B4513"}, {name: "Salmon", hex: "#FA8072"},
-  {name: "SandyBrown", hex: "#F4A460"}, {name: "SeaGreen", hex: "#2E8B57"},
-  {name: "SeaShell", hex: "#FFF5EE"}, {name: "Sienna", hex: "#A0522D"},
-  {name: "Silver", hex: "#C0C0C0"}, {name: "SkyBlue", hex: "#87CEEB"},
-  {name: "SlateBlue", hex: "#6A5ACD"}, {name: "SlateGray", hex: "#708090"},
-  {name: "Snow", hex: "#FFFAFA"}, {name: "SpringGreen", hex: "#00FF7F"},
-  {name: "SteelBlue", hex: "#4682B4"}, {name: "Tan", hex: "#D2B48C"},
-  {name: "Teal", hex: "#008080"}, {name: "Thistle", hex: "#D8BFD8"},
-  {name: "Tomato", hex: "#FF6347"}, {name: "Turquoise", hex: "#40E0D0"},
-  {name: "Violet", hex: "#EE82EE"}, {name: "Wheat", hex: "#F5DEB3"},
-  {name: "White", hex: "#FFFFFF"}, {name: "WhiteSmoke", hex: "#F5F5F5"},
-  {name: "Yellow", hex: "#FFFF00"}, {name: "YellowGreen", hex: "#9ACD32"},
+  {name: "AliceBlue", hex: "#F0F8FF"},
+  {name: "AntiqueWhite", hex: "#FAEBD7"},
+  {name: "Aqua", hex: "#00FFFF"},
+  {name: "Aquamarine", hex: "#7FFFD4"},
+  {name: "Azure", hex: "#F0FFFF"},
+  {name: "Beige", hex: "#F5F5DC"},
+  {name: "Bisque", hex: "#FFE4C4"},
+  {name: "BlanchedAlmond", hex: "#FFEBCD"},
+  {name: "Blue", hex: "#0000FF"},
+  {name: "BlueViolet", hex: "#8A2BE2"},
+  {name: "Brown", hex: "#A52A2A"},
+  {name: "BurlyWood", hex: "#DEB887"},
+  {name: "CadetBlue", hex: "#5F9EA0"},
+  {name: "Chartreuse", hex: "#7FFF00"},
+  {name: "Chocolate", hex: "#D2691E"},
+  {name: "Coral", hex: "#FF7F50"},
+  {name: "CornflowerBlue", hex: "#6495ED"},
+  {name: "Crimson", hex: "#DC143C"},
+  {name: "Cyan", hex: "#00FFFF"},
+  {name: "DarkBlue", hex: "#00008B"},
+  {name: "DarkCyan", hex: "#008B8B"},
+  {name: "DarkGoldenrod", hex: "#B8860B"},
+  {name: "DarkGray", hex: "#A9A9A9"},
+  {name: "DarkGreen", hex: "#006400"},
+  {name: "DarkKhaki", hex: "#BDB76B"},
+  {name: "DarkMagenta", hex: "#8B008B"},
+  {name: "DarkOliveGreen", hex: "#556B2F"},
+  {name: "DarkOrange", hex: "#FF8C00"},
+  {name: "DarkOrchid", hex: "#9932CC"},
+  {name: "DarkRed", hex: "#8B0000"},
+  {name: "DarkSalmon", hex: "#E9967A"},
+  {name: "DarkSeaGreen", hex: "#8FBC8F"},
+  {name: "DarkSlateBlue", hex: "#483D8B"},
+  {name: "DarkSlateGray", hex: "#2F4F4F"},
+  {name: "DarkTurquoise", hex: "#00CED1"},
+  {name: "DarkViolet", hex: "#9400D3"},
+  {name: "DeepPink", hex: "#FF1493"},
+  {name: "DeepSkyBlue", hex: "#00BFFF"},
+  {name: "DimGray", hex: "#696969"},
+  {name: "DodgerBlue", hex: "#1E90FF"},
+  {name: "Firebrick", hex: "#B22222"},
+  {name: "FloralWhite", hex: "#FFFAF0"},
+  {name: "ForestGreen", hex: "#228B22"},
+  {name: "Fuchsia", hex: "#FF00FF"},
+  {name: "Gainsboro", hex: "#DCDCDC"},
+  {name: "GhostWhite", hex: "#F8F8FF"},
+  {name: "Gold", hex: "#FFD700"},
+  {name: "Goldenrod", hex: "#DAA520"},
+  {name: "Gray", hex: "#808080"},
+  {name: "Green", hex: "#008000"},
+  {name: "GreenYellow", hex: "#ADFF2F"},
+  {name: "Honeydew", hex: "#F0FFF0"},
+  {name: "HotPink", hex: "#FF69B4"},
+  {name: "IndianRed", hex: "#CD5C5C"},
+  {name: "Indigo", hex: "#4B0082"},
+  {name: "Ivory", hex: "#FFFFF0"},
+  {name: "Khaki", hex: "#F0E68C"},
+  {name: "Lavender", hex: "#E6E6FA"},
+  {name: "LavenderBlush", hex: "#FFF0F5"},
+  {name: "LawnGreen", hex: "#7CFC00"},
+  {name: "LemonChiffon", hex: "#FFFACD"},
+  {name: "LightBlue", hex: "#ADD8E6"},
+  {name: "LightCoral", hex: "#F08080"},
+  {name: "LightCyan", hex: "#E0FFFF"},
+  {name: "LightGoldenrodYellow", hex: "#FAFAD2"},
+  {name: "LightGray", hex: "#D3D3D3"},
+  {name: "LightGreen", hex: "#90EE90"},
+  {name: "LightPink", hex: "#FFB6C1"},
+  {name: "LightSalmon", hex: "#FFA07A"},
+  {name: "LightSeaGreen", hex: "#20B2AA"},
+  {name: "LightSkyBlue", hex: "#87CEFA"},
+  {name: "LightSlateGray", hex: "#778899"},
+  {name: "LightSteelBlue", hex: "#B0C4DE"},
+  {name: "LightYellow", hex: "#FFFFE0"},
+  {name: "Lime", hex: "#00FF00"},
+  {name: "LimeGreen", hex: "#32CD32"},
+  {name: "Linen", hex: "#FAF0E6"},
+  {name: "Magenta", hex: "#FF00FF"},
+  {name: "Maroon", hex: "#800000"},
+  {name: "MediumAquamarine", hex: "#66CDAA"},
+  {name: "MediumBlue", hex: "#0000CD"},
+  {name: "MediumOrchid", hex: "#BA55D3"},
+  {name: "MediumPurple", hex: "#9370DB"},
+  {name: "MediumSeaGreen", hex: "#3CB371"},
+  {name: "MediumSlateBlue", hex: "#7B68EE"},
+  {name: "MediumSpringGreen", hex: "#00FA9A"},
+  {name: "MediumTurquoise", hex: "#48D1CC"},
+  {name: "MediumVioletRed", hex: "#C71585"},
+  {name: "MidnightBlue", hex: "#191970"},
+  {name: "MintCream", hex: "#F5FFFA"},
+  {name: "MistyRose", hex: "#FFE4E1"},
+  {name: "Moccasin", hex: "#FFE4B5"},
+  {name: "NavajoWhite", hex: "#FFDEAD"},
+  {name: "Navy", hex: "#000080"},
+  {name: "OldLace", hex: "#FDF5E6"},
+  {name: "Olive", hex: "#808000"},
+  {name: "OliveDrab", hex: "#6B8E23"},
+  {name: "Orange", hex: "#FFA500"},
+  {name: "OrangeRed", hex: "#FF4500"},
+  {name: "Orchid", hex: "#DA70D6"},
+  {name: "PaleGoldenrod", hex: "#EEE8AA"},
+  {name: "PaleGreen", hex: "#98FB98"},
+  {name: "PaleTurquoise", hex: "#AFEEEE"},
+  {name: "PaleVioletRed", hex: "#DB7093"},
+  {name: "PapayaWhip", hex: "#FFEFD5"},
+  {name: "PeachPuff", hex: "#FFDAB9"},
+  {name: "Peru", hex: "#CD853F"},
+  {name: "Pink", hex: "#FFC0CB"},
+  {name: "Plum", hex: "#DDA0DD"},
+  {name: "PowderBlue", hex: "#B0E0E6"},
+  {name: "Purple", hex: "#800080"},
+  {name: "Red", hex: "#FF0000"},
+  {name: "RosyBrown", hex: "#BC8F8F"},
+  {name: "RoyalBlue", hex: "#4169E1"},
+  {name: "SaddleBrown", hex: "#8B4513"},
+  {name: "Salmon", hex: "#FA8072"},
+  {name: "SandyBrown", hex: "#F4A460"},
+  {name: "SeaGreen", hex: "#2E8B57"},
+  {name: "SeaShell", hex: "#FFF5EE"},
+  {name: "Sienna", hex: "#A0522D"},
+  {name: "Silver", hex: "#C0C0C0"},
+  {name: "SkyBlue", hex: "#87CEEB"},
+  {name: "SlateBlue", hex: "#6A5ACD"},
+  {name: "SlateGray", hex: "#708090"},
+  {name: "Snow", hex: "#FFFAFA"},
+  {name: "SpringGreen", hex: "#00FF7F"},
+  {name: "SteelBlue", hex: "#4682B4"},
+  {name: "Tan", hex: "#D2B48C"},
+  {name: "Teal", hex: "#008080"},
+  {name: "Thistle", hex: "#D8BFD8"},
+  {name: "Tomato", hex: "#FF6347"},
+  {name: "Turquoise", hex: "#40E0D0"},
+  {name: "Violet", hex: "#EE82EE"},
+  {name: "Wheat", hex: "#F5DEB3"},
+  {name: "White", hex: "#FFFFFF"},
+  {name: "WhiteSmoke", hex: "#F5F5F5"},
+  {name: "Yellow", hex: "#FFFF00"},
+  {name: "YellowGreen", hex: "#9ACD32"},
   {name: "Black", hex: "#000000"}
 ];
+// from https://learn.microsoft.com/en-us/dotnet/api/system.windows.media.brushes?view=windowsdesktop-9.0
 
+// Convertir hex a HSL
+function hexToHSL(H){
+    let r = 0, g = 0, b = 0;
+    if(H.length == 4){
+      r = "0x"+H[1]+H[1];
+      g = "0x"+H[2]+H[2];
+      b = "0x"+H[3]+H[3];
+    } else if (H.length == 7){
+      r = "0x"+H[1]+H[2];
+      g = "0x"+H[3]+H[4];
+      b = "0x"+H[5]+H[6];
+    }
+    r /= 255; g /= 255; b /= 255;
+    
+    const cmin = Math.min(r,g,b);
+    const cmax = Math.max(r,g,b);
+    const delta = cmax - cmin;
+    let h = 0, s = 0, l = 0;
 
-// Función para convertir a HSL
-function hexToHSL(H) {
-  let r = 0, g = 0, b = 0;
-  if(H.length == 4){
-    r = "0x" + H[1] + H[1];
-    g = "0x" + H[2] + H[2];
-    b = "0x" + H[3] + H[3];
-  } else if(H.length == 7){
-    r = "0x" + H[1] + H[2];
-    g = "0x" + H[3] + H[4];
-    b = "0x" + H[5] + H[6];
-  }
-  r /= 255; g /= 255; b /= 255;
-  let cmin = Math.min(r,g,b), cmax = Math.max(r,g,b), delta = cmax - cmin;
-  let h = 0, s = 0, l = 0;
-  if(delta == 0) h = 0;
-  else if(cmax == r) h = ((g - b) / delta) % 6;
-  else if(cmax == g) h = (b - r) / delta + 2;
-  else h = (r - g) / delta + 4;
-  h = Math.round(h * 60);
-  if(h < 0) h += 360;
-  l = (cmax + cmin) / 2;
-  s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
-  s = Math.round(s * 100);
-  l = Math.round(l * 100);
-  return {h,s,l};
+    if(delta === 0) h = 0;
+    else if(cmax === r) h = ((g - b)/delta) % 6;
+    else if(cmax === g) h = (b - r)/delta + 2;
+    else h = (r - g)/delta + 4;
+    h = Math.round(h*60);
+    if(h < 0) h += 360;
+    
+    l = (cmax + cmin)/2;
+    s = delta === 0 ? 0 : delta/(1 - Math.abs(2 * l - 1));
+    s = +(s * 100).toFixed(1);
+    l = +(l * 100).toFixed(1);
+    return {h,s,l};
 }
 
-colors.forEach(c => c.hsl = hexToHSL(c.hex));
-colors.sort((a,b) => a.hsl.h - b.hsl.h);
+// Función para luminosidad
+function luminance(hex) {
+  const r = parseInt(hex.substr(1,2),16)/255;
+  const g = parseInt(hex.substr(3,2),16)/255;
+  const b = parseInt(hex.substr(5,2),16)/255;
+  return 0.299*r + 0.587*g + 0.114*b;
+}
 
-const container = document.getElementById('circleContainer');
+// Ordenar por Hue y luego Luminosidad
+colors.forEach(c => {
+  const hsl = hexToHSL(c.hex);
+  c.hsl = hsl;
+});
+colors.sort((a,b) => a.hsl.h - b.hsl.h || a.hsl.l - b.hsl.l);
+
+// Tooltip
 const tooltip = document.getElementById('tooltip');
-const svg = document.getElementById('sectorSvg');
-const list = document.getElementById('colorList');
-const center = 300;
-const radius = 250;
-const sections = 12;
-const sectionAngle = 360 / sections;
-
-// Crear sectores en SVG
-for (let i = 0; i < sections; i++) {
-  const start = (i * sectionAngle - 90) * Math.PI / 180;
-  const end = ((i+1) * sectionAngle - 90) * Math.PI / 180;
-  const x1 = center + radius * Math.cos(start);
-  const y1 = center + radius * Math.sin(start);
-  const x2 = center + radius * Math.cos(end);
-  const y2 = center + radius * Math.sin(end);
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  const d = `M${center},${center} L${x1},${y1} A${radius},${radius} 0 0,1 ${x2},${y2} Z`;
-  path.setAttribute("d", d);
-  path.classList.add("sector");
-  path.dataset.index = i;
-  svg.appendChild(path);
-}
-
-function showTooltip(e, color){
-  tooltip.style.opacity = 1;
-  tooltip.innerHTML = color.name;
-  tooltip.style.left = e.pageX + 10 + "px";
-  tooltip.style.top = e.pageY + 10 + "px";
-  tooltip.style.backgroundColor = color.hex;
-  const l = color.hsl.l;
-  tooltip.style.color = l > 60 ? "black" : "white";
-}
-function hideTooltip(){ tooltip.style.opacity = 0; }
-function copyColor(name){
-  navigator.clipboard.writeText(name);
-  tooltip.innerHTML = "Copiado: " + name;
-  setTimeout(()=> tooltip.style.opacity = 0, 1000);
-}
-
-// Dibujar colores
-colors.forEach((c,i)=>{
-  const angle = c.hsl.h * Math.PI / 180;
-  const x = center + radius * Math.cos(angle) - 10;
-  const y = center + radius * Math.sin(angle) - 10;
-  const div = document.createElement("div");
-  div.className = "color-circle";
-  div.style.backgroundColor = c.hex;
-  div.style.left = x + "px";
-  div.style.top = y + "px";
-  div.addEventListener("mouseenter", e => showTooltip(e, c));
-  div.addEventListener("mousemove", e => showTooltip(e, c));
-  div.addEventListener("mouseleave", hideTooltip);
-  div.addEventListener("click", ()=> copyColor(c.name));
-  container.appendChild(div);
+/** @param value {boolean} */
+const ShowTooltip = (value) => {
+  tooltip.style.opacity = value ? 1 : 0;
+  tooltip.style.display = value ? "block" : "none";
+  tooltip.hidden = !value;
+};
+// Posicionar tooltip
+document.addEventListener('mousemove', e => {
+  if (!tooltip.hidden)
+  {
+    tooltip.style.left = (e.pageX + 10) + 'px';
+    tooltip.style.top = (e.pageY + 10) + 'px';
+  }
 });
 
-// Triángulo activo
-let activeSector = 0;
-function updateActiveSector(index){
-  activeSector = index;
-  document.querySelectorAll(".sector").forEach(s=>s.classList.remove("active-sector"));
-  const selected = document.querySelector(`.sector[data-index="${index}"]`);
-  selected.classList.add("active-sector");
-  updateColorList();
-}
+// Inputs
+const dotRadiusInput = document.getElementById("dot-radius");
+const levelInput = document.getElementById('levels');
+const sectorsInput = document.getElementById('sectors');
 
-function updateColorList(){
-  list.innerHTML = "";
-  const minAngle = activeSector * sectionAngle;
-  const maxAngle = (activeSector + 1) * sectionAngle;
-  const filtered = colors.filter(c => c.hsl.h >= minAngle && c.hsl.h < maxAngle);
-  filtered.forEach(c=>{
-    const item = document.createElement("div");
-    item.className = "color-item";
-    item.innerHTML = `<div class="color-box" style="background:${c.hex}"></div>${c.name}`;
-    list.appendChild(item);
+/** @param c {{name, hex, hsl}} */
+const CreateItem = (c) => {
+  const item = document.createElement('div');
+  item.style.background = c.hex;
+
+  item.addEventListener('click', () => {
+    navigator.clipboard.writeText(c.name);
+    tooltip.innerText = `Copiado: ${c.name}`;
+    // tooltip.style.backgroundColor = c.hex;
+    // tooltip.style.color = luminance(c.hex) > 0.42 ? 'black' : 'white'; //may use hsl
+    // tooltip.style.opacity = 1;
+    setTimeout(() => tooltip.style.opacity = 0, 1000);
+  });
+  
+  item.addEventListener('mouseenter', () => {
+    tooltip.innerText = `${c.name} ${c.hex}`;
+    tooltip.style.backgroundColor = c.hex;
+    tooltip.style.color = luminance(c.hex) > 0.55 ? 'black' : 'white';
+    ShowTooltip(true);
+  });
+  
+  item.addEventListener('mouseleave', () => ShowTooltip(false));
+
+  return item;
+};
+
+let dotRadius = parseInt(dotRadiusInput.value);
+/** @param c {{name, hex, hsl}} */
+const CreateDot = (c) => {
+  const dot = CreateItem(c);
+  dot.className = 'dot';
+  dot.style.width = dotRadius + 'px';
+  dot.style.height = dotRadius + 'px';
+  return dot;
+};
+
+const CreateBox = (c) => {
+  const box = CreateItem(c);
+  box.className = 'box item';
+  
+  const label = document.createElement("span");
+  label.innerText = c.name;
+  label.style.color = luminance(c.hex) > 0.55 ? 'black' : 'white';
+
+  box.appendChild(label);
+  return box;
+};
+
+// Separar grises
+const grayColors = colors.filter(c => {
+  const h = c.hex.replace('#','');
+  const r = parseInt(h.substr(0,2),16);
+  const g = parseInt(h.substr(2,2),16);
+  const b = parseInt(h.substr(4,2),16);
+  return r === g && g === b;
+});
+
+// Colores para círculo
+const chromaColors = colors.filter(c => !grayColors.includes(c));
+
+// Crear círculo cromático
+const center = 300;
+
+// Crear sectores en SVG
+let activeSector = 0;
+let sections = parseInt(sectorsInput.value);
+const svg = document.getElementById('sectorSvg');
+const list = document.getElementById('colorList');
+const CreateSectors = () => {
+  const sectionAngle = 360 / sections;
+  const radius = center - dotRadius * 0.5;
+  
+  for (let i = 0; i < sections; i++) {
+    const start = (i * sectionAngle) * Math.PI / 180;
+    const end = ((i+1) * sectionAngle) * Math.PI / 180;
+    const x1 = center + radius * Math.cos(start);
+    const y1 = center + radius * Math.sin(start);
+    const x2 = center + radius * Math.cos(end);
+    const y2 = center + radius * Math.sin(end);
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    const d = `M${center},${center} L${x1},${y1} A${radius},${radius} 0 0,1 ${x2},${y2} Z`;
+    path.setAttribute("d", d);
+    path.classList.add("sector");
+    path.dataset.index = i;
+
+    // Triángulo activo
+    path.addEventListener("click", ()=> {
+      activeSector = path.dataset.index;
+      document.querySelectorAll(".sector").forEach(s=>s.classList.remove("active-sector"));
+      const selected = document.querySelector(`.sector[data-index="${path.dataset.index}"]`);
+      selected.classList.add("active-sector");
+      
+      // updateColorList
+      list.innerHTML = "";
+      const minAngle = activeSector * sectionAngle;
+      const maxAngle = minAngle + sectionAngle; //(activeSector + 1) * sectionAngle
+      const filtered = chromaColors.filter(c => c.hsl.h >= minAngle && c.hsl.h < maxAngle);
+      filtered.forEach(c=>{
+        list.appendChild(CreateBox(c));
+      });
+    });
+    
+    svg.appendChild(path);
+  }
+}
+CreateSectors();
+
+// Crear cícurlo
+const container = document.getElementById('circleContainer');
+const levelsContainer = document.getElementById('levelsContainer');
+
+const CreateChromaticCircle = () => {
+  const radiusCenter = -dotRadius * 2;
+  const maxRadius = center + dotRadius;
+  
+  const levels = parseInt(levelInput.value);
+  
+  if (levels > 0) {
+    for (let index = 1; index <= levels; index++) {
+      const levelCircle = document.createElement('div');
+      const radius = (index / levels) * maxRadius + radiusCenter;
+      levelCircle.className = "level";
+      levelCircle.style.width = `${radius * 2}px`;
+      levelCircle.style.height = `${radius * 2}px`;
+      levelCircle.style.left = `${center - radius}px`
+      levelCircle.style.top = `${center - radius}px`
+      levelsContainer.appendChild(levelCircle)
+    }
+  }
+
+  chromaColors.forEach((c, i) => {
+    let radius;
+    if (levels > 0) {
+      const radiusIndex = Math.floor(c.hsl.l / (100 / levels));
+      radius = ((radiusIndex + 1) / levels) * maxRadius + radiusCenter;
+    }
+    else {
+      radius = Math.floor((c.hsl.l / 100) * maxRadius) + radiusCenter;
+    }
+    const angle = (c.hsl.h / 360) * 2 * Math.PI;
+
+    const dot = CreateDot(c);
+    dot.style.position = "absolute";
+    dot.style.left = `${center + radius * Math.cos(angle) - dotRadius * 0.5 - 1}px`;
+    dot.style.top = `${center + radius * Math.sin(angle) - dotRadius * 0.5 - 1}px`;
+    container.appendChild(dot);
   });
 }
 
-document.querySelectorAll(".sector").forEach(s=>{
-  s.addEventListener("click", ()=> updateActiveSector(parseInt(s.dataset.index)));
+// onload
+levelInput.value = localStorage.getItem("ChromaticLevel");
+dotRadiusInput.value = localStorage.getItem("ChromaticDotRadius");
+sectorsInput.value = localStorage.getItem("NumSectors");
+
+
+CreateChromaticCircle();
+const ReloadChromaticCircle = () => {
+  container.innerHTML = "";
+  levelsContainer.innerHTML = "";
+  CreateChromaticCircle();
+}
+
+/** @param inputElement {HTMLInputElement} */
+const UpdateTooltipByInput = (inputElement) => {
+  tooltip.innerText = `${inputElement.value === '0' ? 'auto' : inputElement.value}`;
+  const alpha = (inputElement.value - inputElement.min) / (inputElement.max - inputElement.min);
+  tooltip.style.backgroundColor = `rgba(0, 0, 0, ${0.25 + 0.75 * alpha})`;
+  tooltip.style.color = 'white';
+}
+
+levelInput.addEventListener("input", ev => {
+  localStorage.setItem("ChromaticLevel", levelInput.value);
+  UpdateTooltipByInput(levelInput);
+  ReloadChromaticCircle();
+});
+levelInput.addEventListener("mouseenter", ev => {
+  UpdateTooltipByInput(levelInput);
+  ShowTooltip(true);
+});
+levelInput.addEventListener("mouseleave", ev => {
+  ShowTooltip(false);
 });
 
-updateActiveSector(0); // sector inicial
-</script>
+dotRadiusInput.addEventListener("input", ev => {
+  localStorage.setItem("ChromaticDotRadius", dotRadiusInput.value);
+  dotRadius = parseInt(dotRadiusInput.value);
+  UpdateTooltipByInput(dotRadiusInput);
+  ReloadChromaticCircle();
+});
+dotRadiusInput.addEventListener("mouseenter", ev => {
+  UpdateTooltipByInput(dotRadiusInput);
+  ShowTooltip(true);
+});
+dotRadiusInput.addEventListener("mouseleave", ev => {
+  ShowTooltip(false);
+});
 
+sectorsInput.addEventListener("input", ev => {
+  localStorage.setItem("NumSectors", sectorsInput.value);
+  sections = parseInt(sectorsInput.value);
+  UpdateTooltipByInput(sectorsInput);
+  svg.innerHTML = "";
+  list.innerHTML = "";
+  CreateSectors();
+});
+sectorsInput.addEventListener("mouseenter", ev => {
+  UpdateTooltipByInput(sectorsInput);
+  ShowTooltip(true);
+});
+sectorsInput.addEventListener("mouseleave", ev => {
+  ShowTooltip(false);
+});
+
+
+// Grises
+const grayList = document.getElementById('grayList');
+grayColors.forEach(c => {
+  grayList.appendChild(CreateBox(c));
+});
+
+
+// ===== Modo oscuro automático =====
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.body.classList.add("dark");
+}
+</script>
 </body>
 </html>
