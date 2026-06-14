@@ -1,29 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap');
 
-body {
-  background-color: var(--background);
-  background-size: 100% 100%;
-  background-attachment: fixed;
-  color: var(--text-primary);
+.container {
+  grid-template-columns: 1fr 2fr 3fr;
 }
 
 *[hidden] {
   display: none !important;
 }
 
-::-moz-selection {
-  color: var(--background);
-  background: var(--text-primary);
-}
-::selection {
-  color: var(--background);
-  background: var(--text-primary);
-}
-
 /* button */
-a {
-  text-decoration: none;
-}
 button, input, .custom-file-upload {
   position: relative;
   align-items: center;
@@ -114,22 +99,6 @@ input[type="text"]:active {
 }
 
 /* Section cont */
-h1 {
-  font-weight: 200;
-}
-h2, h3 {
-  font-weight: 400;
-}
-h1, h2, h3, h4, h5, h6 {
-  color: var(--text-secondary);
-}
-main.container {
-  display: flex;
-  min-height: 100%;
-  flex-wrap: wrap;
-  align-content: center;
-  font-weight: 300;
-}
 main.container > h1 {
   flex-grow: 1;
   width: 100%;
@@ -305,6 +274,24 @@ ul#colors input[type="color"]{
 .fade-colors-backg, .fade-colors {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+}
+
+@media screen and (max-width: 850px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+  }
+  section#test {
+    grid-column: 1/-1;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  section#color-picker {
+    grid-column: 1/-1;
+  }
 }
 
 @media (max-width: 480px) {
