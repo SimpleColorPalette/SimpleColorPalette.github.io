@@ -2,7 +2,7 @@
 @import url("./theme.css");
 @import url("./animations.css");
 @import url("./layout.css");
-@import url("./forms.css");
+@import url("./controls.css");
 
 /* grid-column: 1/-1; */
 h1 {

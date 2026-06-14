@@ -8,50 +8,6 @@
   display: none !important;
 }
 
-/* button */
-button, input, .custom-file-upload {
-  position: relative;
-  align-items: center;
-  border: none;
-  border-radius: 0.25rem;
-  font-size: 1em;
-  background-color: var(--paper);
-  color: var(--text-secondary);
-  transition: 0.33s;
-}
-button.icon {
-  padding: 0.25rem;
-}
-
-input {
-  box-shadow: 0px 0.5pt 2pt #00000040 inset;
-  padding: 0.25em 0.5em;
-  text-align: center;
-  font-size: medium;
-}
-input[type="color"] {
-  padding: 0rem;
-  width: 2em;
-  height: 2em;
-}
-input[type="file"] {
-  display: none;
-}
-::-webkit-color-swatch { border: none; }
-::-moz-color-swatch { border: none; }
-::-webkit-color-swatch-wrapper { padding: 0; }
-::-moz-color-swatch-wrapper { padding: 0; }
-
-input:focus{
-  outline: none;
-}
-input[type="text"]:hover {
-  box-shadow: 0px 1pt 4pt #00000040 inset;
-}
-input[type="text"]:active {
-  box-shadow: 0px 2pt 8pt #00000040 inset;
-}
-
 
 /* General */
 .row {
