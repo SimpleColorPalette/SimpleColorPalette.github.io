@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Color Mini Apps</title>
+    <base href="./" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="StyleSheet" HREF="./styles.css" TYPE="text/css" MEDIA="screen" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+    <link rel="icon" href="./favicon.ico" sizes="any" type="image/svg+xml" />
+    <meta name="description" content="Color Mini Apps" />
+</head>
+
+<body class="light">
+    <header></header>
+
+    <main class="container">
+        <h1 class="fade-colors">Color Mini Apps</h1>
+        <div id="mini-apps-container" class="card-container"></div>
+    </main>
+
+    <footer></footer>
+
+    <script>
+        const miniApps = [
+            {name: "Matrix Map Generator", folder: "matrix-map"},
+            {name: "Ms Colors Organizer", folder: "ms-colors-sort"},
+            {name: "Color Contrast Checker", folder: "contrast-check"},
+        ];
+
+        const createSelector = () => {
+            /** @type HTMLDivElement */
+            const container = document.getElementById("mini-apps-container");
+
+            miniApps.map(app => {
+                /** @type HTMLAnchorElement */
+                const btn = document.createElement("a");
+                /** @type HTMLHeadingElement */
+                const title = document.createElement("h4");
+
+                btn.href =  `./${app.folder}/`;
+                btn.className = "card card-small btn";
+                title.textContent = app.name;
+
+                btn.appendChild(title);
+                container.appendChild(btn);
+            });
+        };
+
+        createSelector();
+    </script>
+</body>
+
+</html>
