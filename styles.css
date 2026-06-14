@@ -86,14 +86,15 @@ h2, h3 {
 
 /* Buttons */
 button, .btn, input[type="color"] {
+  cursor: pointer;
   display: inline-block;
   background-color: var(--paper);
   color: var(--text-secondary);
   font-size: 1rem;
-  cursor: pointer;
-
+  font-weight: bold;
+  
   transition: 0.2s;
-  border-radius: 0.5rem;
+  border-radius: 1rem; /*0.5rem*/
   box-shadow: var(--shadow-light), var(--shadow-dark);
 }
 button:hover, .btn:hover, input[type="color"]:hover, .custom-file-upload:hover {
@@ -104,8 +105,6 @@ button:hover, .btn:hover, input[type="color"]:hover, .custom-file-upload:hover {
 
 .btn-text {
   padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-weight: bold;
 }
 .btn-icon {
   border-radius: 4rem;
@@ -117,6 +116,26 @@ button.primary {
 button.secondary {
   background-color: var(--secondary-main);
   color: var(--text-contrast-secondary);
+}
+
+.btn-select {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+}
+.btn-select button, .btn-select.btn {
+  border-radius: 0.125rem;
+}
+.btn-select button:first-child, .btn-select .btn:first-child {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+.btn-select button:last-child, .btn-select .btn:last-child {
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+.btn-select .btn-selected {
+  box-shadow: var(--shadow-light) inset, var(--shadow-dark) inset;
 }
 
 /* General */

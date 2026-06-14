@@ -1,6 +1,9 @@
 let matrix = [];
-
 let isPainting = false;
+
+let cellSize = {w: 8, h: 16};
+    // const cw = parseInt(document.getElementById("cell-width").value);
+    // const ch = parseInt(document.getElementById("cell-height").value);
 
 function createMatrix() {
     const w = parseInt(document.getElementById("width").value);
@@ -34,10 +37,8 @@ function paintCell(x, y, cell) {
 
 function drawGrid() {
     const grid = document.getElementById("grid");
-    const cw = parseInt(document.getElementById("cell-width").value);
-    const ch = parseInt(document.getElementById("cell-height").value);
 
-    grid.style.gridTemplateColumns = `repeat(${matrix[0].length}, ${cw}px)`;
+    grid.style.gridTemplateColumns = `repeat(${matrix[0].length}, ${cellSize.w}px)`;
     grid.innerHTML = "";
 
     for (let y = 0; y < matrix.length; y++) {
@@ -48,8 +49,8 @@ function drawGrid() {
 
             cell.className = "cell";
             cell.style.background = getColor(matrix[y][x]);
-            cell.style.width = cw + "px";
-            cell.style.height = ch + "px";
+            cell.style.width = cellSize.w + "px";
+            cell.style.height = cellSize.h + "px";
 
             cell.dataset.x = x;
             cell.dataset.y = y;
@@ -110,17 +111,6 @@ function paintFromEvent(e) {
     updateOutput();
 }
 
-
-const updateCellSize = () => {
-    const grid = document.getElementById("grid");
-    const cw = parseInt(document.getElementById("cell-width").value);
-    const ch = parseInt(document.getElementById("cell-height").value);
-    
-    [...grid.children].forEach((cell, i) => {
-        cell.style.width = cw + "px";
-        cell.style.height = ch + "px";
-    });
-}
 
 function updateOutput() {
     const output = document.getElementById("output");
@@ -185,3 +175,42 @@ document.addEventListener("keydown", (e) => {
         numberBuffer = "";
     }, 175); // Espera 300 ms por el siguiente dígito
 });
+
+
+const updateCellSize = () => {
+    const grid = document.getElementById("grid");
+    
+    [...grid.children].forEach((cell, i) => {
+        cell.style.width = cellSize.w + "px";
+        cell.style.height = cellSize.h + "px";
+    });
+}
+
+/** @type "CONSOLE" | "TILEMAP" */
+let mode = "CONSOLE";
+
+/** @param newMode {"CONSOLE" | "TILEMAP"} */
+const changeCellMode = (newMode, force = false) => {
+    if (!force && newMode == mode) return;
+
+    /** @type HTMLButtonElement */
+    const btnConsole = document.getElementById("btn-mode-console");
+    /** @type HTMLButtonElement */
+    const btnTilemap = document.getElementById("btn-mode-tilemap");
+
+    if (newMode == "CONSOLE") {
+        cellSize = { w: 8, h: 16 };
+        btnConsole.classList.add("btn-selected");
+        btnTilemap.classList.remove("btn-selected");
+    }
+    else if (newMode == "TILEMAP") {
+        cellSize = { w: 12, h: 12 };
+        btnTilemap.classList.add("btn-selected");
+        btnConsole.classList.remove("btn-selected");
+    }
+    
+    mode = newMode;
+    updateCellSize();
+}
+
+changeCellMode("CONSOLE", true);

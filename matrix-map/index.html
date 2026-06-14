@@ -26,11 +26,20 @@
     <section class="col card">
 
       <div class="row">
+        <h4>Modo</h4>
+
+        <div class="btn-select">
+          <button class="btn-text" id="btn-mode-console" onclick="changeCellMode('CONSOLE')">Consola</button>
+          <button class="btn-text" id="btn-mode-tilemap" onclick="changeCellMode('TILEMAP')">Tilemap</button>
+        </div>
+      </div>
+
+      <div class="row">
         <h4>Paleta</h4>
         <div id="palette"></div>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <h4>Celda</h4>
 
         <div class="row input">
@@ -46,7 +55,7 @@
         <button onclick="updateCellSize()" class="btn-text">
           Actualizar
         </button>
-      </div>
+      </div> -->
 
       <div class="row">
         <h4>Matriz</h4>
