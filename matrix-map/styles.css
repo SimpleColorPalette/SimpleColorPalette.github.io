@@ -25,10 +25,6 @@ section {
   align-items: center;
 }
 
-.form {
-  box-shadow: #00000020 0px 0.1rem 0.25rem;
-}
-
 /* Palette */
 #palette {
   --cell-size: 25px;
@@ -69,12 +65,14 @@ section {
   margin-top: 1rem;
   margin-bottom: 1rem;
   justify-content: center;
+  -webkit-user-select: none;
   user-select: none;
   touch-action: none;
 }
 
 .cell {
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
   touch-action: none;
 }

@@ -1,6 +1,7 @@
 @import url("./reset.css");
 @import url("./theme.css");
 @import url("./animations.css");
+@import url("./layout.css");
 @import url("./forms.css");
 
 /* grid-column: 1/-1; */
@@ -19,13 +20,14 @@ h2, h3 {
 
 /* Cards */
 .card-container {
+  grid-column: 1 / -1;
   display: flex;
   gap: 1rem;
   justify-content: center;
   max-width: max-content;
   flex-wrap: wrap;
   width: 100%;
-  min-width: webkit-fill-available;
+  min-width: -webkit-fill-available;
 }
 
 .card {
@@ -47,24 +49,6 @@ h2, h3 {
 
 
 /* General */
-.container {
-  display: grid;
-  gap: 2rem;
-  margin: 0px auto;
-  padding: 2rem 2.5rem;
-  width: calc(100% - 5rem);
-  max-width: 1280px;
-}
-
-main {
-  min-height: calc(100vh - 14rem);
-  align-content: center;
-}
-
-header, footer {
-  grid-column: 1 / -1;
-}
-
 img.apps-icon {
   width: 2rem;
   height: 2rem;
@@ -88,4 +72,10 @@ img.apps-icon {
 }
 #btn-main-menu img {
   filter: brightness(0.75);
+}
+
+
+.big-icon {
+  text-align: center;
+  font-size: 4rem;
 }
