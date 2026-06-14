@@ -3,173 +3,272 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paletas Microsoft Brushes - Buscador</title>
+<title>Organizador de Microsoft Brushes</title>
 <style>
-  body {
-    font-family: system-ui, sans-serif;
-    background: #fafafa;
-    color: #222;
-    margin: 0;
-    padding: 2rem;
-  }
+:root {
+  --bg-light: #fafafa;
+  --bg-dark: #1e1e1e;
+  --text-light: #222;
+  --text-dark: #f0f0f0;
+  --swatch-size: 60px;
+  --swatch-radius: 6px;
+  --gap: 10px;
+}
 
-  h1 {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: background 0.3s, color 0.3s;
+}
 
-  input[type="text"] {
-    display: block;
-    margin: 0 auto 2rem auto;
-    padding: 0.6rem 1rem;
-    font-size: 1rem;
-    width: 90%;
-    max-width: 400px;
-    border: 2px solid #ccc;
-    border-radius: 6px;
-  }
+body.dark {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
 
-  h2 {
-    margin-top: 2.5rem;
-    color: #333;
-    border-bottom: 3px solid #ccc;
-    padding-bottom: 0.3rem;
-  }
+h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
 
-  .palette {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
-    margin-top: 1rem;
-  }
+input[type="text"] {
+  display: block;
+  margin: 0 auto 1.5rem auto;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 6px;
+  border: 2px solid #ccc;
+}
 
-  .swatch {
-    border-radius: 6px;
-    border: 1px solid rgba(0,0,0,0.1);
-    overflow: hidden;
-    background: #fff;
-    transition: transform 0.15s ease-in-out;
-  }
+button {
+  margin: 0 5px 1rem 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  background: #0078d7;
+  color: white;
+  transition: background 0.2s;
+}
 
-  .swatch:hover {
-    transform: scale(1.05);
-  }
+button:hover { background: #005a9e; }
 
-  .swatch-color {
-    height: 60px;
-  }
+h2 {
+  margin-top: 2rem;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 0.3rem;
+}
 
-  .swatch-label {
-    padding: 6px;
-    font-size: 0.8rem;
-    text-align: center;
-    background: rgba(255,255,255,0.8);
-  }
+.palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--gap);
+  margin-top: 0.5rem;
+  min-height: var(--swatch-size);
+}
 
-  .swatch-label code {
-    display: block;
-    color: #666;
-    font-size: 0.7rem;
-  }
+.swatch {
+  border-radius: var(--swatch-radius);
+  border: 1px solid rgba(0,0,0,0.1);
+  overflow: hidden;
+  cursor: grab;
+  transition: transform 0.15s ease-in-out;
+  background: #fff;
+}
 
-  .hidden {
-    display: none !important;
-  }
+.swatch:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+}
+
+.swatch-color {
+  height: var(--swatch-size);
+}
+
+.swatch-label {
+  padding: 4px 6px;
+  font-size: 0.8rem;
+  text-align: center;
+  background: rgba(255,255,255,0.8);
+}
+
+.swatch-label code {
+  display: block;
+  font-size: 0.7rem;
+  color: #666;
+}
+
+.hidden { display: none !important; }
 </style>
 </head>
 <body>
+<h1>🎨 Organizador de Microsoft Brushes</h1>
+<input type="text" id="search" placeholder="Buscar color (ej: red, blue, gray...)">
+<button id="download">💾 Descargar Orden</button>
+<button id="upload">📂 Cargar Orden</button>
+<input type="file" id="fileInput" style="display:none"/>
 
-<h1>🎨 Microsoft Brushes con Buscador</h1>
-<input type="text" id="search" placeholder="Buscar color (ej: blue, red, gray...)" />
-
-<!-- CONTENEDOR DE COLORES -->
-<div id="all-palettes">
-
-  <h2>🟥 Cálidos</h2>
-  <div class="palette" id="warm"></div>
-
-  <h2>🟦 Fríos</h2>
-  <div class="palette" id="cool"></div>
-
-  <h2>💜 Púrpuras / Rosados</h2>
-  <div class="palette" id="purple"></div>
-
-  <h2>⚫ Neutros / Grises</h2>
-  <div class="palette" id="neutral"></div>
-
-  <h2>🟩 Verdes / Terrosos</h2>
-  <div class="palette" id="green"></div>
-
-</div>
+<div id="palettes"></div>
 
 <script>
-const colors = {
-  warm: [
-    ["Red","#ff0000"],["OrangeRed","#ff4500"],["Orange","#ffa500"],["DarkOrange","#ff8c00"],
-    ["Tomato","#ff6347"],["Coral","#ff7f50"],["Salmon","#fa8072"],["LightSalmon","#ffa07a"],
-    ["Gold","#ffd700"],["Goldenrod","#daa520"],["Peru","#cd853f"],["Chocolate","#d2691e"],
-    ["Brown","#a52a2a"],["SaddleBrown","#8b4513"],["Sienna","#a0522d"],["Tan","#d2b48c"],
-    ["Khaki","#f0e68c"],["IndianRed","#cd5c5c"],["RosyBrown","#bc8f8f"],["PeachPuff","#ffdab9"],
-    ["AntiqueWhite","#faebd7"],["Bisque","#ffe4c4"],["BlanchedAlmond","#ffebcd"],["Wheat","#f5deb3"]
+// ===== Datos de colores por familias =====
+const colorFamilies = {
+  "Rojos": [
+    ["Red","#ff0000"],["DarkRed","#8b0000"],["Firebrick","#b22222"],["Crimson","#dc143c"],["IndianRed","#cd5c5c"],["LightCoral","#f08080"],["Salmon","#fa8072"],["DarkSalmon","#e9967a"],["LightSalmon","#ffa07a"],["Tomato","#ff6347"],["Coral","#ff7f50"]
   ],
-  cool: [
-    ["Blue","#0000ff"],["DarkBlue","#00008b"],["MediumBlue","#0000cd"],["MidnightBlue","#191970"],
-    ["Navy","#000080"],["DodgerBlue","#1e90ff"],["CornflowerBlue","#6495ed"],["SkyBlue","#87ceeb"],
-    ["LightBlue","#add8e6"],["SteelBlue","#4682b4"],["Teal","#008080"],["DarkCyan","#008b8b"],
-    ["Aquamarine","#7fffd4"],["Turquoise","#40e0d0"],["MediumTurquoise","#48d1cc"],["LightCyan","#e0ffff"],
-    ["SpringGreen","#00ff7f"],["Chartreuse","#7fff00"],["Lime","#00ff00"],["LimeGreen","#32cd32"],
-    ["MediumSeaGreen","#3cb371"],["SeaGreen","#2e8b57"],["DarkSeaGreen","#8fbc8f"],["PaleTurquoise","#afeeee"],
-    ["LightSeaGreen","#20b2aa"],["DarkTurquoise","#00ced1"]
+  "Naranjas": [
+    ["Orange","#ffa500"],["DarkOrange","#ff8c00"],["OrangeRed","#ff4500"],["Gold","#ffd700"],["Goldenrod","#daa520"],["Peru","#cd853f"],["Chocolate","#d2691e"],["SaddleBrown","#8b4513"],["Sienna","#a0522d"],["Tan","#d2b48c"]
   ],
-  purple: [
-    ["Magenta","#ff00ff"],["DeepPink","#ff1493"],["HotPink","#ff69b4"],["Pink","#ffc0cb"],
-    ["LightPink","#ffb6c1"],["Orchid","#da70d6"],["MediumOrchid","#ba55d3"],["Violet","#ee82ee"],
-    ["Plum","#dda0dd"],["Purple","#800080"],["MediumPurple","#9370db"],["DarkOrchid","#9932cc"],
-    ["MediumVioletRed","#c71585"],["PaleVioletRed","#db7093"],["BlueViolet","#8a2be2"],
-    ["DarkViolet","#9400d3"],["Indigo","#4b0082"],["DarkMagenta","#8b008b"]
+  "Amarillos": [
+    ["Yellow","#ffff00"],["LightYellow","#ffffe0"],["LemonChiffon","#fffacd"],["LightGoldenrodYellow","#fafad2"],["PapayaWhip","#ffefd5"],["Moccasin","#ffe4b5"],["PeachPuff","#ffdab9"],["PaleGoldenrod","#eee8aa"],["Khaki","#f0e68c"],["DarkKhaki","#bdb76b"]
   ],
-  neutral: [
-    ["Black","#000000"],["DimGray","#696969"],["Gray","#808080"],["DarkGray","#a9a9a9"],
-    ["LightGray","#d3d3d3"],["Silver","#c0c0c0"],["Gainsboro","#dcdcdc"],["WhiteSmoke","#f5f5f5"],
-    ["GhostWhite","#f8f8ff"],["Ivory","#fffff0"],["Linen","#faf0e6"],["OldLace","#fdf5e6"],
-    ["Snow","#fffafa"],["White","#ffffff"],["Transparent","#00ffffff"]
+  "Verdes": [
+    ["Green","#008000"],["DarkGreen","#006400"],["ForestGreen","#228b22"],["SeaGreen","#2e8b57"],["MediumSeaGreen","#3cb371"],["LightGreen","#90ee90"],["PaleGreen","#98fb98"],["Lime","#00ff00"],["LimeGreen","#32cd32"],["SpringGreen","#00ff7f"],["Olive","#808000"],["OliveDrab","#6b8e23"],["DarkOliveGreen","#556b2f"],["GreenYellow","#adff2f"],["YellowGreen","#9acd32"]
   ],
-  green: [
-    ["Olive","#808000"],["OliveDrab","#6b8e23"],["DarkOliveGreen","#556b2f"],["LawnGreen","#7cfc00"],
-    ["LightGreen","#90ee90"],["PaleGreen","#98fb98"],["Green","#008000"],["DarkGreen","#006400"],
-    ["GreenYellow","#adff2f"],["SeaShell","#fff5ee"]
+  "Azules": [
+    ["Blue","#0000ff"],["DarkBlue","#00008b"],["MediumBlue","#0000cd"],["Navy","#000080"],["MidnightBlue","#191970"],["DodgerBlue","#1e90ff"],["CornflowerBlue","#6495ed"],["RoyalBlue","#4169e1"],["SkyBlue","#87ceeb"],["LightSkyBlue","#87cefa"],["SteelBlue","#4682b4"],["LightSteelBlue","#b0c4de"],["LightBlue","#add8e6"],["PowderBlue","#b0e0e6"],["Teal","#008080"],["DarkCyan","#008b8b"],["Aqua","#00ffff"],["Cyan","#00ffff"],["LightCyan","#e0ffff"],["DarkTurquoise","#00ced1"],["MediumTurquoise","#48d1cc"],["Turquoise","#40e0d0"],["Aquamarine","#7fffd4"],["PaleTurquoise","#afeeee"],["LightSeaGreen","#20b2aa"],["MediumAquamarine","#66cdaa"]
+  ],
+  "Violetas": [
+    ["Purple","#800080"],["MediumPurple","#9370db"],["DarkOrchid","#9932cc"],["DarkViolet","#9400d3"],["BlueViolet","#8a2be2"],["Indigo","#4b0082"],["DarkMagenta","#8b008b"],["Orchid","#da70d6"],["MediumOrchid","#ba55d3"],["Violet","#ee82ee"],["Plum","#dda0dd"],["Magenta","#ff00ff"],["Fuchsia","#ff00ff"]
+  ],
+  "Rosas": [
+    ["Pink","#ffc0cb"],["LightPink","#ffb6c1"],["HotPink","#ff69b4"],["DeepPink","#ff1493"],["MediumVioletRed","#c71585"],["PaleVioletRed","#db7093"]
+  ],
+  "Neutros": [
+    ["Black","#000000"],["DimGray","#696969"],["Gray","#808080"],["DarkGray","#a9a9a9"],["Silver","#c0c0c0"],["LightGray","#d3d3d3"],["Gainsboro","#dcdcdc"],["WhiteSmoke","#f5f5f5"],["GhostWhite","#f8f8ff"],["Ivory","#fffff0"],["Linen","#faf0e6"],["OldLace","#fdf5e6"],["Snow","#fffafa"],["White","#ffffff"],["Transparent","#00ffffff"],["SeaShell","#fff5ee"]
   ]
 };
 
-function renderPalettes() {
-  for (const group in colors) {
-    const container = document.getElementById(group);
-    colors[group].forEach(([name, hex]) => {
+// ===== Crear paletas =====
+const palettesContainer = document.getElementById("palettes");
+let swatchesData = {}; // Para guardar el orden actual
+
+function createPalettes(savedData) {
+  palettesContainer.innerHTML = "";
+  for (const family in colorFamilies) {
+    const h2 = document.createElement("h2");
+    h2.textContent = family;
+    palettesContainer.appendChild(h2);
+
+    const palette = document.createElement("div");
+    palette.className = "palette";
+    palette.dataset.family = family;
+    palettesContainer.appendChild(palette);
+
+    const colors = savedData?.[family] || colorFamilies[family];
+    swatchesData[family] = colors.map(([name, hex]) => ({name, hex}));
+
+    colors.forEach(([name, hex]) => {
       const swatch = document.createElement("div");
       swatch.className = "swatch";
+      swatch.draggable = true;
       swatch.dataset.name = name.toLowerCase();
       swatch.innerHTML = `
         <div class="swatch-color" style="background:${hex}"></div>
         <div class="swatch-label">${name}<code>${hex}</code></div>
       `;
-      container.appendChild(swatch);
+      palette.appendChild(swatch);
     });
   }
 }
 
-function setupSearch() {
-  const input = document.getElementById("search");
-  input.addEventListener("input", () => {
-    const term = input.value.trim().toLowerCase();
-    document.querySelectorAll(".swatch").forEach(swatch => {
-      const match = swatch.dataset.name.includes(term);
-      swatch.classList.toggle("hidden", !match && term);
-    });
-  });
+// ===== Drag & Drop restringido =====
+let dragged = null;
+
+document.addEventListener("dragstart", e => {
+  if (e.target.classList.contains("swatch")) {
+    dragged = e.target;
+    e.dataTransfer.effectAllowed = "move";
+  }
+});
+
+document.addEventListener("dragover", e => {
+  if (e.target.classList.contains("palette")) e.preventDefault();
+});
+
+document.addEventListener("drop", e => {
+  if (!dragged) return;
+  const targetPalette = e.target.closest(".palette");
+  if (!targetPalette || targetPalette.dataset.family !== dragged.parentNode.dataset.family) return;
+
+  const afterElement = getDragAfterElement(targetPalette, e.clientY);
+  if (afterElement == null) targetPalette.appendChild(dragged);
+  else targetPalette.insertBefore(dragged, afterElement);
+  saveOrder();
+  dragged = null;
+});
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll(".swatch:not(.dragging)")];
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height/2;
+    if (offset < 0 && offset > closest.offset) return {offset, element: child};
+    return closest;
+  }, {offset: Number.NEGATIVE_INFINITY}).element;
 }
 
-renderPalettes();
-setupSearch();
+// ===== Guardar y cargar orden =====
+function saveOrder() {
+  const data = {};
+  document.querySelectorAll(".palette").forEach(palette => {
+    const family = palette.dataset.family;
+    data[family] = [...palette.children].map(s => [s.dataset.name, s.querySelector(".swatch-color").style.background]);
+  });
+  localStorage.setItem("brushesOrder", JSON.stringify(data));
+}
+
+function loadOrder() {
+  const data = localStorage.getItem("brushesOrder");
+  return data ? JSON.parse(data) : null;
+}
+
+// ===== Buscador =====
+const searchInput = document.getElementById("search");
+searchInput.addEventListener("input", () => {
+  const term = searchInput.value.trim().toLowerCase();
+  document.querySelectorAll(".swatch").forEach(s => {
+    s.classList.toggle("hidden", term && !s.dataset.name.includes(term));
+  });
+});
+
+// ===== Descargar / Cargar JSON =====
+document.getElementById("download").addEventListener("click", () => {
+  const dataStr = JSON.stringify(swatchesData, null, 2);
+  const blob = new Blob([dataStr], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "brushes_order.json";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("upload").addEventListener("click", () => document.getElementById("fileInput").click());
+document.getElementById("fileInput").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const data = JSON.parse(ev.target.result);
+    createPalettes(data);
+  };
+  reader.readAsText(file);
+});
+
+// ===== Modo oscuro automático =====
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.body.classList.add("dark");
+}
+
+// ===== Inicializar =====
+createPalettes(loadOrder());
 </script>
 </body>
 </html>
