@@ -62,17 +62,17 @@
 }
 .fade-colors-backg {
   background-color: var(--primary-main);
-  animation: fadeColorsBackground var(--animation-fadecolor-time);
-  -moz-animation: fadeColorsBackground var(--animation-fadecolor-time);
   -webkit-animation: fadeColorsBackground var(--animation-fadecolor-time);
+  -moz-animation: fadeColorsBackground var(--animation-fadecolor-time);
   -o-animation: fadeColorsBackground var(--animation-fadecolor-time);
+  animation: fadeColorsBackground var(--animation-fadecolor-time);
 }
 .fade-colors {
   color: var(--primary-main);
-  animation: fadeColors var(--animation-fadecolor-time);
-  -moz-animation: fadeColors var(--animation-fadecolor-time);
   -webkit-animation: fadeColors var(--animation-fadecolor-time);
+  -moz-animation: fadeColors var(--animation-fadecolor-time);
   -o-animation: fadeColors var(--animation-fadecolor-time);
+  animation: fadeColors var(--animation-fadecolor-time);
   letter-spacing: 1.5pt;
 }
 .fade-colors-backg, .fade-colors {

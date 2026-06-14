@@ -1,43 +1,6 @@
-@import url("./styles/animations.css");
-
-/* Theme */
-:root {
-  --primary-main: #ffd862;
-  --text-contrast-primary: #121928;
-  --secondary-main: #66d6ff;
-  --text-contrast-secondary: #0c0d16;
-
-  --font-base: Calibri, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  --shadow-light: 0.125rem -0.125rem 0.5rem -0.125rem rgba(255, 255, 255, 0.33);
-  --shadow-dark: -0.125rem 0.125rem 0.5rem -0.125rem rgba(0, 0, 0, 0.33);
-}
-
-:root .light {
-  --background: #f3f3f3;
-  --text-primary: #222;
-  --paper: #fcfcfc;
-  --text-secondary: #1f1f1f;
-}
-
-:root .dark {
-  --background: #1e1e1e;
-  --text-primary: #f0f0f0;
-  --paper: #2b2d31;
-  --text-secondary: #ffffff;
-}
-
-
-/* Reset */
-* {
-  margin: 0px;
-  padding: 0px;
-  border: none;
-  outline: none;
-}
-
-*:not(pre) {
-  font-family: var(--font-base);
-}
+@import url("./reset.css");
+@import url("./theme.css");
+@import url("./animations.css");
 
 body {
   font-family: var(--font-base);
@@ -48,21 +11,7 @@ body {
   height: 100%;
 }
 
-::-moz-selection {
-  color: var(--background);
-  background: var(--text-primary);
-}
-::selection {
-  color: var(--background);
-  background: var(--text-primary);
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-  /* grid-column: 1/-1; */
+/* grid-column: 1/-1; */
 h1 {
   width: inherit; /*100%*/
   text-align: center;
@@ -194,7 +143,7 @@ input[type=range]::-moz-range-thumb {
   max-width: max-content;
   flex-wrap: wrap;
   width: 100%;
-  min-width: stretch;
+  min-width: webkit-fill-available;
 }
 
 .card {

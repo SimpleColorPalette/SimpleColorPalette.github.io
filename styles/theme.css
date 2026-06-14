@@ -1,0 +1,32 @@
+:root {
+  --primary-main: #ffd862;
+  --text-contrast-primary: #121928;
+  --secondary-main: #66d6ff;
+  --text-contrast-secondary: #0c0d16;
+}
+
+:root .light {
+  --background: #f3f3f3;
+  --text-primary: #222;
+  --paper: #fcfcfc;
+  --text-secondary: #1f1f1f;
+}
+
+:root .dark {
+  --background: #1e1e1e;
+  --text-primary: #f0f0f0;
+  --paper: #2b2d31;
+  --text-secondary: #ffffff;
+}
+
+/* Selection */
+::-moz-selection {
+  color: var(--background);
+  background: var(--text-primary);
+}
+::selection {
+  color: var(--background);
+  background: var(--text-primary);
+}
+
+/* Scroll */
