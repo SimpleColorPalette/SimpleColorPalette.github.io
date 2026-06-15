@@ -29,6 +29,10 @@
       <span class="apps-icon">🎨</span>
       <h1>Color Contrast Checker</h1>
     </div>
+    <div id="theme">
+      <button title="light mode" id="theme-light" class="btn-icon" onclick="Theme.SetMode('light')">⛭</button>
+      <button title="dark mode" id="theme-dark" class="btn-icon" onclick="Theme.SetMode('dark')">☾</button>
+    </div>
   </header>
 
   <main class="container">
@@ -54,10 +58,10 @@
       </div>
       <ul id="colors"></ul>
       <div class="row">
-        <button class="btn-icon" onclick="addColor()">
+        <button class="btn-icon-text" onclick="addColor()">
           <span class="material-symbols-rounded">add</span>
         </button>
-        <button class="btn-icon" onclick="resetColors()">
+        <button class="btn-icon-text" onclick="resetColors()">
           <span class="material-symbols-rounded">restart_alt</span>
         </button>
       </div>

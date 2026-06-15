@@ -81,8 +81,19 @@ input[type="file"]::file-selector-button,
               var(--shadow-2-down) var(--shadow-dark);
 }
 
-.btn-icon {
+.btn-icon,
+.btn-icon-text {
   line-height: 1rem;
+}
+
+.btn-icon {
+  padding: 0.2rem 0px;
+  border-radius: 100rem;
+  font-size: 1.1rem;
+  min-width: 1.4rem;
+}
+
+.btn-icon-text {
   padding: 0.25rem;
 }
 

@@ -31,7 +31,8 @@ header nav {
 }
 
 header .mini-app-name {
-  flex: auto;
+  /* flex: auto; */
+  flex-grow: 1;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -70,6 +71,10 @@ header .apps-icon {
   filter: brightness(0.75);
 }
 
+#theme {
+  margin-right: 1rem;
+  font-size: 1.75rem !important;
+}
 
 /* Footer */
 footer {
