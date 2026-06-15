@@ -3,6 +3,20 @@
   --text-contrast-primary: #121928;
   --secondary-main: #66d6ff;
   --text-contrast-secondary: #0c0d16;
+
+  /* Shadows */
+  --shadow-1-up:    0.05rem -0.05rem 0.25rem -0.05rem;
+  --shadow-1-down: -0.05rem  0.05rem 0.25rem -0.05rem;
+  --shadow-2-up:    0.125rem -0.125rem 0.5rem -0.125rem;
+  --shadow-2-down: -0.125rem 0.125rem 0.5rem -0.125rem;
+  --shadow-3-up:    0.25rem -0.25rem 0.75rem -0.25rem;
+  --shadow-3-down: -0.25rem  0.25rem 0.75rem -0.25rem;
+  --shadow-4-up:    0.5rem -0.5rem 1rem -0.25rem;
+  --shadow-4-down: -0.5rem  0.5rem 1rem -0.25rem;
+  --shadow-light: rgba(255, 255, 255, 0.33);
+  --shadow-dark:  rgba(0, 0, 0, 0.33);
+  
+  --input-radius: 3pt;
 }
 
 :root .light {

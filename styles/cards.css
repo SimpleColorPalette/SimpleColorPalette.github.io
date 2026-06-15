@@ -14,9 +14,11 @@
   display: block;
   padding: 1rem 1.5rem;
   align-content: space-evenly;
-  background-color: var(--paper);
   color: var(--text-secondary);
-  border-radius: 0.25rem;
+  background-color: var(--paper);
+  border-radius: var(--input-radius);
+  box-shadow: var(--shadow-1-up) var(--shadow-light),
+              var(--shadow-1-down) var(--shadow-dark);
 }
 
 .card.card-small { width: 8rem; }

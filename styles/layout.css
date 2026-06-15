@@ -48,6 +48,7 @@ header .apps-icon {
 #btn-main-menu {
   position: relative;
   padding: 0px;
+  border-radius: 4rem;
 }
 
 #btn-main-menu span {

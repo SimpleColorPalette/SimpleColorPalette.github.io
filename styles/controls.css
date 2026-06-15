@@ -24,7 +24,6 @@ type="week"
 */
 
 :root {
-  --input-radius: 0.25rem;
   --input-transition: 0.25s;
 }
 
@@ -50,11 +49,11 @@ input[type="file"]::file-selector-button,
   
   transition: var(--input-transition);
   border-radius: var(--input-radius);
-  box-shadow: var(--shadow-light), var(--shadow-dark);
+  box-shadow: var(--shadow-2-up) var(--shadow-light),
+              var(--shadow-2-down) var(--shadow-dark);
 }
 
 .btn-icon {
-  border-radius: 4rem;
   line-height: 1rem;
   padding: 0.25rem;
 }
@@ -68,27 +67,45 @@ input[type="submit"]:hover,
 input[type="file"]:hover::file-selector-button,
 .btn:hover {
   scale: 1.05;
-  translate: 0px -0.125rem;
   filter: brightness(1.0125);
 }
 
+button:active,
+input[type="button"]:active,
+input[type="imager"]:active,
+input[type="color"]:active,
+input[type="reset"]:active,
+input[type="submit"]:active,
+input[type="file"]:active::file-selector-button,
+.btn:active {
+  scale: 1;
+  filter: brightness(1.025);
+}
 
 
+/* Multiple buttons as options */
 .btn-select {
   display: flex;
   flex-direction: row;
   gap: 0px;
 }
-.btn-select button:first-child, .btn-select .btn:first-child {
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
+.btn-select button:hover,
+.btn-select .btn:hover {
+  translate: 0px;
 }
-.btn-select button:last-child, .btn-select .btn:last-child {
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
+.btn-select button:first-child,
+.btn-select .btn:first-child {
+  border-top-left-radius: var(--input-radius);
+  border-bottom-left-radius: var(--input-radius);
+}
+.btn-select button:last-child,
+.btn-select .btn:last-child {
+  border-top-right-radius: var(--input-radius);
+  border-bottom-right-radius: var(--input-radius);
 }
 .btn-select .btn-selected {
-  box-shadow: var(--shadow-light) inset, var(--shadow-dark) inset;
+  box-shadow: var(--shadow-1-up) var(--shadow-light) inset,
+              var(--shadow-1-down) var(--shadow-dark) inset;
 }
 
 
@@ -103,12 +120,13 @@ input[type="file"] {
   /* Modern Chrome and standards support */
   text-wrap: wrap;
   /* text-align-last: center; */
+  font-size: 1rem;
 
   transition: var(--input-transition);
 }
 
 input[type="file"]::file-selector-button {
-  font-size: 1em;
+  font-size: 0.9rem;
   width: 100%;
   margin-right: 1rem;
 }
@@ -128,7 +146,8 @@ input[type="tel"],
   background-color: var(--paper);
   padding: 0.25rem 0.75rem;
   border-radius: var(--input-radius);
-  box-shadow: var(--shadow-light) inset, var(--shadow-dark) inset;
+  box-shadow: var(--shadow-2-up) var(--shadow-light) inset,
+              var(--shadow-2-down) var(--shadow-dark) inset;
   transition: var(--input-transition);
   filter: brightness(0.975);
 }
@@ -185,7 +204,8 @@ input[type=range] {
   height: 0.25rem;
   border-radius: var(--input-radius);
   background: var(--background);
-  box-shadow: var(--shadow-light) inset, var(--shadow-dark) inset;
+  box-shadow: var(--shadow-2-up) var(--shadow-light) inset,
+              var(--shadow-2-down) var(--shadow-dark) inset;
   outline: none;
   padding: 0;
   margin: 0.5rem 0;
