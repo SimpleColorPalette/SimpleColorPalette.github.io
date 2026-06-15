@@ -262,7 +262,8 @@ input[type="number"] {
 buton .adv,
 .btn .adv,
 input .adv,
-.input .adv{
+.input .adv,
+label .adv {
   display: block;
   font-size: 0.85rem;
   opacity: 0.33;
