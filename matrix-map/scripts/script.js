@@ -79,6 +79,11 @@ const changeCellMode = (newMode, force = false) => {
 
 changeCellMode("CONSOLE", true);
 
+function rgbToHex(r, g, b) {
+  return "#" + ((1 << 24) | (r << 16) | (g << 8) | b)
+    .toString(16)
+    .slice(1);
+}
 
 // Show matrix by image
 document.getElementById("image-input").addEventListener("change", loadImage);
@@ -89,14 +94,18 @@ function loadImage(e) {
 
   const img = new Image();
 
-  img.onload = () => processImage(img);
+  img.onload = () => createImageBitmap(file, {
+    imageOrientation: "from-image"
+  }).then(bitmap => {
+    processImage(bitmap);
+  });
+
   img.src = URL.createObjectURL(file);
 }
 
-
 function processImage(img) {
 
-  if (img.width > 256 || img.height > 128) {
+  if (img.width > 256 || img.height > 64) {
     alert("Máximo permitido: 256 x 128");
     return;
   }
@@ -117,10 +126,39 @@ function processImage(img) {
     img.height
   ).data;
 
-  const colorMap = new Map();
-
   let newPalette = [];
   let newMatrix = [];
+
+  //
+  COLOR_TOLERANCE = 10; // Ajustable
+
+  function colorDistance(r1, g1, b1, r2, g2, b2) {
+    const dr = r1 - r2;
+    const dg = g1 - g2;
+    const db = b1 - b2;
+
+    return Math.sqrt(dr * dr + dg * dg + db * db);
+  }
+
+  function findSimilarColor(r, g, b) {
+
+    for (let i = 0; i < newPalette.length; i++) {
+
+      const p = newPalette[i];
+
+      if (
+        colorDistance(
+          r, g, b,
+          p.r, p.g, p.b
+        ) <= COLOR_TOLERANCE
+      ) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+  //
 
   for (let y = 0; y < img.height; y++) {
 
@@ -135,30 +173,30 @@ function processImage(img) {
       const b = pixels[p + 2];
       const a = pixels[p + 3];
 
-      const hex = a == 0 ? "#00000000" :
-        "#" +
-        r.toString(16).padStart(2, "0") +
-        g.toString(16).padStart(2, "0") +
-        b.toString(16).padStart(2, "0"); // +
-        // a.toString(16).padStart(2, "0");
+      let index = findSimilarColor(r, g, b);
 
-      if (!colorMap.has(hex)) {
+      if (index === -1) {
 
         if (newPalette.length >= 32) {
           alert("La imagen tiene más de 32 colores.");
           return;
         }
 
-        colorMap.set(hex, newPalette.length);
-        newPalette.push(hex.substring(0, 7)); // ignorar alpha
+        index = newPalette.length;
+
+        newPalette.push({ r:r, g:g, b:b, });
       }
 
-      row.push(colorMap.get(hex));
+      row.push(index);
     }
 
     newMatrix.push(row);
   }
 
-  palette.createPalette(newPalette);
+  changeCellMode("TILEMAP");
+  document.getElementById("width").value = newMatrix[0].length;
+  document.getElementById("height").value = newMatrix.length;
+
+  palette.createPalette(newPalette.map(p=>rgbToHex(p.r, p.g, p.b)));
   matrix.updateMatrix(newMatrix);
 }

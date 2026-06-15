@@ -35,8 +35,10 @@ class Matrix {
   updateMatrix(matrix) {
     this.#matrix = matrix;
 
-    if (matrix.length > 0)
-      this.updateMatrixSize(matrix[0].length, matrix.length);
+    if (matrix.length > 0) {
+      this.#grid.draw();
+      this.updateOutput();
+    }
   }
   
   updateMatrixSize(width = 0, height = 0,
@@ -46,6 +48,7 @@ class Matrix {
     if (height == 0) height = parseInt(document.getElementById(heightId).value);
 
     const DEFAULT_VAL = 0;
+
 
     if (this.#matrix.length === 0) {
       
