@@ -72,6 +72,7 @@ class Grid {
   draw () {
     this.#grid.innerHTML = "";
     const matrix = this.#matrix.getMatrix();
+    this.updateSize();
 
     for (let y = 0; y < matrix.length; y++) {
 
