@@ -1,18 +1,14 @@
-.container {
-  grid-template-columns: 1fr 5fr;
-}
-
 .dot {
   padding: 0px;
   border-radius: 50%;
-  border: 1.5pt solid transparent;
+  outline: 1.5pt solid transparent;
 }
 .dot, .box {
   pointer-events: all;
 }
 .dot:hover {
   z-index: 10;
-  border: 1.5pt solid var(--paper);
+  outline: 1.5pt solid var(--paper);
 }
 
 .tooltip {
@@ -34,28 +30,37 @@ section {
   position: relative;
 }
 
+.gray-cont {
+  grid-column: span 1;
+  order: 1;
+}
+
 section.chromatic {
-  grid-column: 2 / -1;
+  grid-column: span 7;
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
   justify-content: center;
   column-gap: 2rem;
   row-gap: 0.75rem;
+  order: 2;
 }
 
 .chr-settings {
   display: flex;
-  gap: 2rem;
+  flex-wrap: wrap;
+  column-gap: 2.5rem;
+  row-gap: 1rem;
 }
+
 .chr-settings label {
   display: flex;
   column-gap: 1rem;
   row-gap: 0.5rem;
   flex-wrap: wrap;
   align-items: center;
-  padding: 0.5rem;
 }
+
 .chr-settings .row {
   display: flex;
   align-items: center;
@@ -113,7 +118,8 @@ svg.sector-container {
   flex-wrap: wrap;
   flex-direction: row;
   column-gap: 0.5rem;
-  row-gap:  0.25rem;
+  row-gap:  0.33rem;
+  justify-content: center;
 }
 
 .item {
@@ -131,16 +137,34 @@ svg.sector-container {
   flex: 1 1 0;
 }
 
-.gray-cont {
-  max-width: 800px;
-  grid-column: 1 / 1;
-}
-.gray-cont .list {
-  flex-direction: column;
+
+@media screen and (max-width: 1280px) {
+  .gray-cont, section.chromatic {
+    grid-column: 1 / -1;
+  }
+
+  .gray-cont {
+    order: 2;
+  }
+  section.chromatic {
+    order: 1;
+  }
 }
 
-@media screen and (max-width: 900px) {
-  .gray-cont .list {
-    flex-direction: row;
+@media screen and (max-width: 640px) {
+  .chr-container {
+    scale: 0.75;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .chr-container {
+    scale: 0.67;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .chr-container {
+    scale: 0.5;
   }
 }
