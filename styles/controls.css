@@ -54,9 +54,9 @@ input[type="file"]::file-selector-button,
 }
 
 .btn-icon {
-  padding: 0px;
   border-radius: 4rem;
-  line-height: 0.75rem;
+  line-height: 1rem;
+  padding: 0.25rem;
 }
 
 button:hover,
@@ -217,8 +217,20 @@ input[type=range]::-moz-range-thumb {
 }
 
 
-/* Color Variations */
+/* With side element inside */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+input[type="number"] {
+  background-color: transparent;
+}
 
+
+
+
+/* Color Variations */
 button.primary,
 input[type="button"].primary,
 input[type="imager"].primary,

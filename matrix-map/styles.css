@@ -12,7 +12,7 @@ section {
 .row {
   display: flex;
   flex-direction: row;
-  column-gap: 0.5rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
@@ -29,15 +29,16 @@ section {
 #palette {
   --cell-size: 25px;
   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--cell-size), 1fr));
+  flex: auto;
   gap: 0px;
-  grid-auto-flow: column;
-  grid-auto-columns: min-content;
   justify-content: center;
 }
 
 .color-btn {
   width: var(--cell-size);
   height: var(--cell-size);
+  padding: 0px;
   text-align: center;
   align-content: center;
   border: 1pt #00000000 solid;
