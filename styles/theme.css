@@ -4,7 +4,9 @@
   --secondary-main: #66d6ff;
   --text-contrast-secondary: #0c0d16;
 
-  --bg-img-props: center / cover no-repeat fixed;
+  /* background: [bg-image] [bg-position] / [bg-size] [repeat-style] [attachment] [bg-origin] [bg-clip] [bg-color]; */
+  /* --bg-img-props: center / cover no-repeat fixed; */
+  --bg-img-props: -19px -19px / 40px 40px repeat fixed;
 
   /* Shadows */
   --shadow-1-up:    0.05rem -0.05rem 0.25rem -0.05rem;
@@ -27,11 +29,12 @@
   --paper-color: #fcfcfc;
   --text-secondary: #1f1f1f;
   
+  /* url("https://a.jpg") */
   --background: 
-    url("https://a.jpg")
+    radial-gradient(#22222220 1px, transparent 0)
     var(--bg-img-props) var(--background-color);
+  /* url("https://a.jpg") */
   --paper: 
-    url("https://a.jpg")
     var(--bg-img-props) var(--paper-color);
 }
 
