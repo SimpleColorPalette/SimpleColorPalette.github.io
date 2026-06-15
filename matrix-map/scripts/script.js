@@ -204,7 +204,11 @@ function processImage(img) {
   matrix.updateMatrix(newMatrix);
 
   if (newPalette.length > 0) {
-    newPalette.sort( (p1, p2) => p2.q - p1.q );
-    palette.setBgColor( newPalette[0] );
+    let iMaxColor = {i: -1, q: 0};
+    for (let i = 0; i < newPalette.length; i++) {
+      if (newPalette[i].q > iMaxColor.q)
+        iMaxColor = {i: i, q : newPalette[i].q};
+    }
+    palette.setBgColor( iMaxColor.i );
   }
 }

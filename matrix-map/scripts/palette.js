@@ -64,7 +64,17 @@ class Palette {
 
   getColor (index) { return this.#palette[index]; }
   getCurrent () { return this.#currentColor; }
-  setBgColor (index = 0) { this.#bgColor = index; }
+
+  setBgColor (index = 0) {
+    if (index === this.#lastColor) {
+      for (let i = 0; i < this.#palette.length; i++) {
+        if (i != index)
+          this.#lastColor = i;
+          break;
+      }
+    }
+    this.#bgColor = index;
+  }
 
   #isErasing = false;
 
