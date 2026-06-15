@@ -8,7 +8,7 @@
 }
 .dot:hover {
   z-index: 10;
-  outline: 1.5pt solid var(--paper);
+  outline: 1.5pt solid var(--paper-color);
 }
 
 .tooltip {
