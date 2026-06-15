@@ -184,7 +184,10 @@ function processImage(img) {
 
         index = newPalette.length;
 
-        newPalette.push({ r:r, g:g, b:b, });
+        newPalette.push({ r:r, g:g, b:b, q:1 });
+      }
+      else {
+        newPalette[index].q++;
       }
 
       row.push(index);
@@ -199,4 +202,9 @@ function processImage(img) {
 
   palette.createPalette(newPalette.map(p=>rgbToHex(p.r, p.g, p.b)));
   matrix.updateMatrix(newMatrix);
+
+  if (newPalette.length > 0) {
+    newPalette.sort( (p1, p2) => p2.q - p1.q );
+    palette.setBgColor( newPalette[0] );
+  }
 }

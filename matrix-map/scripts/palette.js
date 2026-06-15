@@ -60,15 +60,11 @@ class Palette {
     });
   }
 
-  isValidColor (index) {
-    return index >= 0 && index < this.#palette.length;
-  }
+  isValidColor (index) { return index >= 0 && index < this.#palette.length; }
 
-  getColor (index) {
-    return this.#palette[index];
-  }
-
+  getColor (index) { return this.#palette[index]; }
   getCurrent () { return this.#currentColor; }
+  setBgColor (index = 0) { this.#bgColor = index; }
 
   #isErasing = false;
 
