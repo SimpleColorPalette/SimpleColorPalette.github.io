@@ -27,7 +27,7 @@ body {
   height: 100%;
   position: relative;
   min-height: 100vh;
-  min-width: 100vw;
+  min-width: 99vw;
 }
 
 body, main, footer {
