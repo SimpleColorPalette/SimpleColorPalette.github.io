@@ -42,11 +42,6 @@
         </div>
       </div>
 
-      <div class="row">
-        <h4>Paleta</h4>
-        <div id="palette"></div>
-      </div>
-
       <!-- <div class="row">
         <h4>Celda</h4>
 
@@ -78,14 +73,20 @@
           <input id="height" type="number" value="30" min="1" , max="100" />
         </div>
 
-        <button onclick="createMatrix()">
-          Generar
+        <button onclick="updateMatrix()">
+          Actualizar
         </button>
       </div>
     </section>
   </div>
 
   <section>
+    <button onclick="cleanMatrix()">
+      Limpiar
+    </button>
+    
+    <div id="palette"></div>
+
     <div id="grid"></div>
   </section>
 
@@ -95,6 +96,7 @@
   </section>
 
   <script src="./palette.js"></script>
+  <script src="./map.js"></script>
   <script src="./script.js"></script>
 
 </body>
