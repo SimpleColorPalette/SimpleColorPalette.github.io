@@ -3,7 +3,10 @@ let matrix = new Matrix(palette);
 
 /** @type "CONSOLE" | "TILEMAP" */
 let mode = "CONSOLE";
+/** @type "number" */
+let cellScale = 1;
 
+/** @type "string" */
 let numberBuffer = "";
 let numberTimer = null;
 
@@ -78,6 +81,38 @@ const changeCellMode = (newMode, force = false) => {
 }
 
 changeCellMode("CONSOLE", true);
+
+/**
+ * @param {HTMLButtonElement} e
+ * @param {boolean} scaleUp */
+const scaleCellSize = (e, scaleUp) => {
+  const STEP = 0.1;
+  let isValid = false;
+
+  if (scaleUp) {
+    if (cellScale + STEP <= 2) {
+      cellScale += STEP;
+      isValid = true;
+    }
+    e.disabled = (cellScale + STEP) > 2;
+    document.getElementById("scale-down").disabled = false;;
+  }
+  else {
+    if (cellScale - STEP > 0.1) {
+      cellScale -= STEP;
+      isValid = true;
+    }
+    e.disabled = (cellScale - STEP) < 0.1;
+    document.getElementById("scale-up").disabled = false;
+  }
+
+  if (isValid) {
+    cellScale = +cellScale.toFixed(2);
+    matrix.getGrid().updateCellSize(0, 0, cellScale);
+    document.getElementById("scale").textContent = cellScale.toFixed(1);
+  }
+}
+
 
 function rgbToHex(r, g, b) {
   return "#" + ((1 << 24) | (r << 16) | (g << 8) | b)

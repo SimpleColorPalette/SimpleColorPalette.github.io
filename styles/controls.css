@@ -27,10 +27,34 @@ type="week"
   --input-transition: 0.25s ease;
 }
 
-button, .btn, input, .input {
+button,
+.btn,
+input,
+.input {
   transition: var(--input-transition);
   font-size: 1rem;
   position: relative;
+}
+
+button:disabled,
+.btn:disabled,
+input:disabled,
+.input:disabled {
+  cursor: default;
+  opacity: 0.8;
+  filter: grayscale(0.8) brightness(0.8);
+  box-shadow: none;
+}
+
+button:disabled:hover,
+.btn:disabled:hover,
+input:disabled:hover,
+.input:disabled:hover {
+  opacity: 0.8;
+  translate: 0;
+  scale: 1;
+  filter: grayscale(0.8) brightness(0.8);
+  box-shadow: none;
 }
 
 /* Buttons inputs */

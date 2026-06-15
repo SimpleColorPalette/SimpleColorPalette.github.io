@@ -2,8 +2,8 @@ class Grid {
   /** @type {HTMLDivElement} */
   #grid;
 
-  /** @type {{w: number, h: number}} */
-  #cellSize = {w: 12, h: 12};
+  /** @type {{w: number, h: number, s: number}} */
+  #cellSize = {w: 12, h: 12, s: 1};
 
   /** @type {boolean} */
   #isPainting = false;
@@ -49,23 +49,27 @@ class Grid {
   
   /** @param {number} w  */
   updateSize () {
-    this.#grid.style.gridTemplateColumns = `repeat(${this.#matrix.getWidth()}, ${this.#cellSize.w}px)`;
+    this.#grid.style.gridTemplateColumns =
+        `repeat(${this.#matrix.getWidth()}, ${this.#cellSize.w * this.#cellSize.s}px)`;
   }
 
   /**
    * @param {number} h 
    * @param {number} w 
+   * @param {number} s 
   */
-  updateCellSize (w, h) {
-    this.#cellSize = { w: w, h: h };
+  updateCellSize (w = 0, h = 0, s = 0) {
+    if (w > 0) this.#cellSize.w = w;
+    if (h > 0) this.#cellSize.h = h;
+    if (s > 0) this.#cellSize.s = s;
 
     this.updateSize();
     // const cw = parseInt(document.getElementById("cell-width").value);
     // const ch = parseInt(document.getElementById("cell-height").value);
 
     [...this.#grid.children].forEach((cell, i) => {
-      cell.style.width = this.#cellSize.w + "px";
-      cell.style.height = this.#cellSize.h + "px";
+      cell.style.width = (this.#cellSize.w * this.#cellSize.s) + "px";
+      cell.style.height = (this.#cellSize.h * this.#cellSize.s) + "px";
     });
   }
 

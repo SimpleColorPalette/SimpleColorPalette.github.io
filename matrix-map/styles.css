@@ -41,7 +41,7 @@ section {
   padding: 0px;
   text-align: center;
   align-content: center;
-  border: 1.5pt #00000000 solid;
+  /* border: 1.5pt #00000000 solid; */
   outline: 1.5pt #ffffff00 solid;
   border-radius: 0px;
   z-index: 1;
@@ -58,7 +58,7 @@ section {
 }
 .color-btn.selected {
   scale: 1.125;
-  border: 1.5pt #00000048 solid;
+  /* border: 1.5pt #00000048 solid; */
   outline: 1.5pt #ffffffff solid;
   z-index: 10;
 }
