@@ -27,8 +27,10 @@ type="week"
   --input-transition: 0.25s ease;
 }
 
-button, .btn, input {
+button, .btn, input, .input {
   transition: var(--input-transition);
+  font-size: 1rem;
+  position: relative;
 }
 
 /* Buttons inputs */
@@ -47,7 +49,6 @@ input[type="file"]::file-selector-button,
 
   background-color: var(--paper-color);
   color: var(--text-secondary);
-  font-size: 1rem;
   font-weight: bold;
   padding: 0.25rem 0.75rem;
   
@@ -133,9 +134,13 @@ input[type="file"]::file-selector-button {
   transition: var(--input-transition);
 }
 
+/* Inputs placeholder */
+input::placeholder {
+  font-style: italic;
+  opacity: 1; /* Ensures custom color displays properly in Firefox */
+}
 
 /* Text inputs */
-
 input[type="text"],
 input[type="password"],
 input[type="search"],
@@ -238,7 +243,6 @@ input[type=range]::-webkit-slider-thumb:hover {
   scale: 1.125;
 }
 
-
 /* With side element inside */
 input[type="date"],
 input[type="time"],
@@ -249,7 +253,20 @@ input[type="number"] {
   background-color: transparent;
 }
 
+input[type="number"] {
+  text-align: right;
+}
 
+
+/* Input adv */
+buton .adv,
+.btn .adv,
+input .adv,
+.input .adv{
+  display: block;
+  font-size: 0.85rem;
+  opacity: 0.33;
+}
 
 
 /* Color Variations */

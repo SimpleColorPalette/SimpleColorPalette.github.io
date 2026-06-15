@@ -103,44 +103,58 @@ function loadImage(e) {
   img.src = URL.createObjectURL(file);
 }
 
+/** @param {ImageBitmap} img  */
 function processImage(img) {
+  const MAX_SIZE_W = 256;
+  const MAX_SIZE_H = 128;
 
-  if (img.width > 256 || img.height > 64) {
-    alert("Máximo permitido: 256 x 128");
-    return;
-  }
+  let width = img.width;
+  let height = img.height;
+
+  const scale_w = Math.min(1, MAX_SIZE_W / width);
+  const scale_h = Math.min(1, MAX_SIZE_H / height);
+  const scale = Math.min(scale_w, scale_h);
+
+  width = Math.round(width * scale);
+  height = Math.round(height * scale);
+  console.log(img.width, img.height, scale_w, scale_h, scale, width, height);
 
   const canvas = document.getElementById("canvas");
-  canvas.width = img.width;
-  canvas.height = img.height;
+  canvas.width = width;
+  canvas.height = height;
 
   const ctx = canvas.getContext("2d");
   ctx.imageSmoothingEnabled = false;
 
-  ctx.drawImage(img, 0, 0);
+  ctx.drawImage(img, 0, 0, img.width, img.height,
+                     0, 0, width, height );
 
   const pixels = ctx.getImageData(
     0,
     0,
-    img.width,
-    img.height
+    width,
+    height
   ).data;
 
   let newPalette = [];
   let newMatrix = [];
 
   //
-  COLOR_TOLERANCE = 10; // Ajustable
+  COLOR_TOLERANCE = 20;
 
   function colorDistance(r1, g1, b1, r2, g2, b2) {
     const dr = r1 - r2;
     const dg = g1 - g2;
     const db = b1 - b2;
-
     return Math.sqrt(dr * dr + dg * dg + db * db);
+    // return (
+    //   Math.abs(r1 - r2) +
+    //   Math.abs(g1 - g2) +
+    //   Math.abs(b1 - b2)
+    // );
   }
 
-  function findSimilarColor(r, g, b) {
+  function findSimilarColor(r, g, b, tolerance = COLOR_TOLERANCE) {
 
     for (let i = 0; i < newPalette.length; i++) {
 
@@ -150,23 +164,25 @@ function processImage(img) {
         colorDistance(
           r, g, b,
           p.r, p.g, p.b
-        ) <= COLOR_TOLERANCE
+        ) <= tolerance
       ) {
         return i;
       }
+      
     }
 
     return -1;
   }
   //
 
-  for (let y = 0; y < img.height; y++) {
+  MAX_COLORS = 32;
+  for (let y = 0; y < height; y++) {
 
     const row = [];
 
-    for (let x = 0; x < img.width; x++) {
+    for (let x = 0; x < width; x++) {
 
-      const p = (y * img.width + x) * 4;
+      const p = (y * width + x) * 4;
 
       const r = pixels[p];
       const g = pixels[p + 1];
@@ -175,15 +191,15 @@ function processImage(img) {
 
       let index = findSimilarColor(r, g, b);
 
+      if (index === -1 && newPalette.length >= MAX_COLORS) {
+        index = findSimilarColor(r, g, b, 1000);
+        if (index === -1) index = 0;
+        // alert("La imagen tiene más de 32 colores.");
+        // return;
+      }
+
       if (index === -1) {
-
-        if (newPalette.length >= 32) {
-          alert("La imagen tiene más de 32 colores.");
-          return;
-        }
-
         index = newPalette.length;
-
         newPalette.push({ r:r, g:g, b:b, q:1 });
       }
       else {
