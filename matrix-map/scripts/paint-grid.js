@@ -11,9 +11,19 @@ class Grid {
   /** @type {Matrix} */
   #matrix = null;
 
-  constructor(matrix = null, gridId = "grid") {
-    this.#matrix = matrix;
+  /** @type {Palette} */
+  #palette = null;
+
+  /**
+   * 
+   * @param {string} gridId 
+   * @param {Matrix} matrix 
+   * @param {Palette} palette 
+   */
+  constructor(gridId = "grid", matrix = null, palette = null) {
     this.#grid = document.getElementById(gridId);
+    this.#matrix = matrix;
+    this.#palette = palette;
 
     // listeners for paint
 
@@ -70,7 +80,7 @@ class Grid {
         const cell = document.createElement("div");
 
         cell.className = "cell";
-        cell.style.background = getColor(matrix[y][x]);
+        cell.style.background = this.#palette.getColor(matrix[y][x]);
         cell.style.width = this.#cellSize.w + "px";
         cell.style.height = this.#cellSize.h + "px";
 
@@ -113,10 +123,10 @@ class Grid {
    * @param {HTMLElement} cell
    */
   paintCell(x, y, cell) {
-    cell.style.background = getColor(currentColor);
+    cell.style.background = this.#palette.getColor(this.#palette.getCurrent());
 
     if (this.#matrix) {
-      this.#matrix.getMatrix()[y][x] = currentColor;
+      this.#matrix.getMatrix()[y][x] = this.#palette.getCurrent();
       this.#matrix.updateOutput();
     }
   } 

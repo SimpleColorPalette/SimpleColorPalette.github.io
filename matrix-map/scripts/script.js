@@ -1,4 +1,5 @@
-let matrix = new Matrix();
+let palette = new Palette();
+let matrix = new Matrix(palette);
 
 
 let numberBuffer = "";
@@ -6,7 +7,7 @@ let numberTimer = null;
 
 document.addEventListener("keydown", (e) => {
   if (e.key == "c" || e.key == "C") {
-    selectColor(-1);
+    palette.selectColor(-1);
     numberBuffer = "";
     return;
   }
@@ -19,7 +20,7 @@ document.addEventListener("keydown", (e) => {
   clearTimeout(numberTimer);
 
   numberTimer = setTimeout(() => {
-    selectColor( parseInt(numberBuffer) );
+    palette.selectColor( parseInt(numberBuffer) );
     numberBuffer = "";
   }, 175); // Espera 300 ms por el siguiente dígito
 });

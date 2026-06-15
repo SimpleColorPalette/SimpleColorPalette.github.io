@@ -6,11 +6,21 @@ class Matrix {
   /** @type {Grid} */
   #grid;
   
-  constructor(width = 0, height = 0,
+  /**
+   * 
+   * @param {number} width 
+   * @param {number} height 
+   * @param {string} widthId 
+   * @param {string} heightId 
+   * @param {string} gridId 
+   * @param {Palette} palette 
+   */
+  constructor(palette = null,
+              width = 0, height = 0,
               widthId = "width", heightId = "height",
               gridId = "grid") {
 
-    this.#grid = new Grid(this, gridId);
+    this.#grid = new Grid(gridId, this, palette);
     this.updateMatrixSize(width, height, widthId, heightId);
   }
 
