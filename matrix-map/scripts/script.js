@@ -1,6 +1,8 @@
 let palette = new Palette();
 let matrix = new Matrix(palette);
 
+/** @type "CONSOLE" | "TILEMAP" */
+let mode = "CONSOLE";
 
 let numberBuffer = "";
 let numberTimer = null;
@@ -40,15 +42,13 @@ const cleanMatrix = () => {
     delete matrix;
   }
   matrix = new Matrix(palette);
+  changeCellMode(mode, true);
 }
 
 const copyMatrix = () => {
   matrix.copyMatrix();
 }
 
-
-/** @type "CONSOLE" | "TILEMAP" */
-let mode = "CONSOLE";
 
 /** @param newMode {"CONSOLE" | "TILEMAP"} */
 const changeCellMode = (newMode, force = false) => {
