@@ -39,7 +39,7 @@ const cleanMatrix = () => {
   if (matrix != undefined || matrix != null) {
     delete matrix;
   }
-  matrix = new Matrix();
+  matrix = new Matrix(palette);
 }
 
 const copyMatrix = () => {
