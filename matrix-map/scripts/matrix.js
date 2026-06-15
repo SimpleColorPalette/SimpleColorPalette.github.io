@@ -27,6 +27,18 @@ class Matrix {
   getHeight() { return this.#matrix.length; }
   getWidth() { return this.getHeight() < 1 ? 0 : this.#matrix[0].length; }
 
+  getGrid() { return this.#grid; }
+  getMatrix() { return this.#matrix; }
+
+
+  /** @param {number[][]} matrix */
+  updateMatrix(matrix) {
+    this.#matrix = matrix;
+
+    if (matrix.length > 0)
+      this.updateMatrixSize(matrix[0].length, matrix.length);
+  }
+  
   updateMatrixSize(width = 0, height = 0,
                    widthId = "width", heightId = "height") {
     
@@ -64,9 +76,6 @@ class Matrix {
     this.updateOutput();
   }
 
-  getGrid() { return this.#grid; }
-  getMatrix() { return this.#matrix; }
-  
   updateOutput() {
     const output = document.getElementById("output");
 

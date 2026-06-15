@@ -33,11 +33,12 @@ class Palette {
 
   /** @param {string[]} palette  */
   constructor(palette = Palette.ConsoleColors) {
-    this.#palette = palette;
-    this.createPalette();
+    this.createPalette(palette);
   }
 
-  createPalette() {
+  /** @param {string[]} palette  */
+  createPalette(palette = Palette.ConsoleColors) {
+    this.#palette = palette;
     this.#paletteCont.innerHTML = "";
 
     this.#palette.map((color, index) => {
@@ -63,16 +64,16 @@ class Palette {
     return index >= 0 && index < this.#palette.length;
   }
 
-  getColor = (index) => {
+  getColor (index) {
     return this.#palette[index];
   }
 
-  getCurrent = () => { return this.#currentColor; }
+  getCurrent () { return this.#currentColor; }
 
   #isErasing = false;
 
   /** @param index {number} */
-  selectColor = (index) => {
+  selectColor (index) {
     if (index < 0) {
       this.#isErasing = !this.#isErasing;
       index = this.#isErasing ? this.#bgColor : this.#lastColor;

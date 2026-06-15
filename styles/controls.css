@@ -108,6 +108,7 @@ input[type="file"] {
 }
 
 input[type="file"]::file-selector-button {
+  font-size: 1em;
   width: 100%;
   margin-right: 1rem;
 }
