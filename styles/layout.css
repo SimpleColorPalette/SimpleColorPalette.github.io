@@ -1,7 +1,7 @@
 /* Common */
 header, footer {
   width: 100%;
-  background-color: var(--paper-color);
+  background: var(--paper);
   color: var(--text-secondary);
   cursor: default;
 }

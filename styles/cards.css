@@ -15,7 +15,7 @@
   padding: 1rem 1.5rem;
   align-content: space-evenly;
   color: var(--text-secondary);
-  background-color: var(--paper-color);
+  background: var(--paper);
   border-radius: var(--input-radius);
   box-shadow: var(--shadow-1-up) var(--shadow-light),
               var(--shadow-1-down) var(--shadow-dark);

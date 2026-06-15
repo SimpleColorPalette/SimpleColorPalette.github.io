@@ -4,6 +4,8 @@
   --secondary-main: #66d6ff;
   --text-contrast-secondary: #0c0d16;
 
+  --bg-img-props: center / cover no-repeat fixed;
+
   /* Shadows */
   --shadow-1-up:    0.05rem -0.05rem 0.25rem -0.05rem;
   --shadow-1-down: -0.05rem  0.05rem 0.25rem -0.05rem;
@@ -24,6 +26,13 @@
   --text-primary: #222222;
   --paper-color: #fcfcfc;
   --text-secondary: #1f1f1f;
+  
+  --background: 
+    url("https://a.jpg")
+    var(--bg-img-props) var(--background-color);
+  --paper: 
+    url("https://a.jpg")
+    var(--bg-img-props) var(--paper-color);
 }
 
 :root .dark {
@@ -44,3 +53,10 @@
 }
 
 /* Scroll */
+
+
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+}
