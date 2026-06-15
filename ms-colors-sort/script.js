@@ -241,7 +241,7 @@ let dotRadius = parseInt(dotRadiusInput.value);
 /** @param c {{name, hex, hsl}} */
 const CreateDot = (c) => {
   const dot = CreateItem(c);
-  dot.className = 'dot';
+  dot.className = 'btn dot';
   dot.style.width = dotRadius + 'px';
   dot.style.height = dotRadius + 'px';
   return dot;
@@ -249,7 +249,7 @@ const CreateDot = (c) => {
 
 const CreateBox = (c) => {
   const box = CreateItem(c);
-  box.className = 'box item';
+  box.className = 'btn box item';
   
   const label = document.createElement("span");
   label.innerText = c.name;

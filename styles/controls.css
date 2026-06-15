@@ -24,7 +24,11 @@ type="week"
 */
 
 :root {
-  --input-transition: 0.25s;
+  --input-transition: 0.25s ease;
+}
+
+button, .btn, input {
+  transition: var(--input-transition);
 }
 
 /* Buttons inputs */
@@ -47,7 +51,6 @@ input[type="file"]::file-selector-button,
   font-weight: bold;
   padding: 0.25rem 0.75rem;
   
-  transition: var(--input-transition);
   border-radius: var(--input-radius);
   box-shadow: var(--shadow-2-up) var(--shadow-light),
               var(--shadow-2-down) var(--shadow-dark);
@@ -121,14 +124,13 @@ input[type="file"] {
   text-wrap: wrap;
   /* text-align-last: center; */
   font-size: 1rem;
-
-  transition: var(--input-transition);
 }
 
 input[type="file"]::file-selector-button {
   font-size: 0.9rem;
   width: 100%;
   margin-right: 1rem;
+  transition: var(--input-transition);
 }
 
 
@@ -148,7 +150,6 @@ input[type="tel"],
   border-radius: var(--input-radius);
   box-shadow: var(--shadow-2-up) var(--shadow-light) inset,
               var(--shadow-2-down) var(--shadow-dark) inset;
-  transition: var(--input-transition);
   filter: brightness(0.975);
 }
 
@@ -194,10 +195,10 @@ input[type="color"] {
 
 /* Range */
 input[type=range] {
-  --thumb-color: rgba(0,0,0,0.67);
-  --thumb-border: 2px solid #fff;
+  --thumb-color: var(--paper);
   --thumb-size: 1rem;
-  --thumb-shadow: 0 0 5px rgba(0,0,0,0.3);
+  --thumb-shadow: var(--shadow-2-up) var(--shadow-light),
+                  var(--shadow-2-down) var(--shadow-dark);
 
   -webkit-appearance: none;
   width: 100%;
@@ -206,34 +207,35 @@ input[type=range] {
   background: var(--background);
   box-shadow: var(--shadow-2-up) var(--shadow-light) inset,
               var(--shadow-2-down) var(--shadow-dark) inset;
-  outline: none;
   padding: 0;
   margin: 0.5rem 0;
 }
+
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: var(--thumb-size);
   height: var(--thumb-size);
   background: var(--thumb-color);
-  border: var(--thumb-border);
   box-shadow: var(--thumb-shadow);
   border-radius: 50%;
   cursor: pointer;
-  transition: background var(--input-transition) ease;
+  transition: var(--input-transition);
 }
-input[type=range]::-webkit-slider-thumb:hover {
-  background: var(--thumb-color);
-}
+
 input[type=range]::-moz-range-thumb {
   width: var(--thumb-size);
   height: var(--thumb-size);
   background: var(--thumb-color);
-  border: var(--thumb-border);
   box-shadow: var(--thumb-shadow);
   border-radius: 50%;
   cursor: pointer;
-  transition: background var(--input-transition) ease;
+  transition: var(--input-transition);
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  background: var(--thumb-color);
+  scale: 1.125;
 }
 
 

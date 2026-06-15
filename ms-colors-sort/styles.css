@@ -3,27 +3,16 @@
 }
 
 .dot {
+  padding: 0px;
   border-radius: 50%;
-  border: 2px solid #fff;
-  box-shadow: 0 0 2px rgba(0,0,0,0.5);
-}
-.box {
-  width: 16px;
-  height: 16px;
-  border-radius: 3px;
-  box-shadow: 0 -2px 2px -1px rgba(255, 255, 255, 0.33), 0 2px 2px -1px rgba(0, 0, 0, 0.33);
+  border: 1.5pt solid transparent;
 }
 .dot, .box {
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
   pointer-events: all;
 }
-.dot:hover, .box:hover {
-  transform: scale(1.1);
+.dot:hover {
   z-index: 10;
-}
-.dot:hover  {
-  box-shadow: 0 0 3px rgba(0,0,0,0.75);
+  border: 1.5pt solid var(--paper);
 }
 
 .tooltip {
@@ -96,7 +85,8 @@ section.chromatic {
   position: absolute;
   border-radius: 50%;
   border: 1px solid #fff;
-  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  box-shadow: var(--shadow-1-down) var(--shadow-dark) inset,
+              var(--shadow-1-up) var(--shadow-light) inset;
 }
 
 svg.sector-container {
@@ -125,14 +115,16 @@ svg.sector-container {
   column-gap: 0.5rem;
   row-gap:  0.25rem;
 }
+
 .item {
   padding: 0.5rem 0.75rem;
   width: 9rem; /*12rem*/
   display: flex;
   gap: 0.33rem;
-  cursor: default;
   border-radius: 1rem;
   align-items: center;
+  font-weight: normal;
+  font-size: 0.95rem;
 }
 
 .fill-flex {

@@ -41,8 +41,8 @@ section {
   padding: 0px;
   text-align: center;
   align-content: center;
-  border: 1pt #00000000 solid;
-  outline: 1pt #ffffff00 solid;
+  border: 1.5pt #00000000 solid;
+  outline: 1.5pt #ffffff00 solid;
   border-radius: 0px;
   z-index: 1;
 }
@@ -53,11 +53,13 @@ section {
 .color-text-light.selected { color: #ffffffa8; }
 
 .color-btn:hover, .color-btn.selected {
-  scale: 1.125;
+  scale: 1.075;
+  z-index: 11;
 }
 .color-btn.selected {
-  border: 1pt #00000048 solid;
-  outline: 1pt #ffffffff solid;
+  scale: 1.125;
+  border: 1.5pt #00000048 solid;
+  outline: 1.5pt #ffffffff solid;
   z-index: 10;
 }
 
