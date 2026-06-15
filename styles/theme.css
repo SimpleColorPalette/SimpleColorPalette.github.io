@@ -36,6 +36,9 @@
   /* url("https://a.jpg") */
   --paper: 
     var(--bg-img-props) var(--paper-color);
+  
+  --shadow-light: rgba(255, 255, 255, 0.5);
+  --shadow-dark:  rgba(0, 0, 0, 0.25);
 }
 
 :root .dark {
@@ -43,6 +46,15 @@
   --text-primary: #f0f0f0;
   --paper-color: #2b2d31;
   --text-secondary: #ffffff;
+
+  --background: 
+    radial-gradient(#f0f0f020 1px, transparent 0)
+    var(--bg-img-props) var(--background-color);
+  --paper: 
+    var(--bg-img-props) var(--paper-color);
+  
+  --shadow-light: rgba(255, 255, 255, 0.15);
+  --shadow-dark:  rgba(0, 0, 0, 0.55);
 }
 
 /* Selection */

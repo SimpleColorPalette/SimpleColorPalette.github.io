@@ -175,6 +175,7 @@ input[type="tel"],
   font-size: medium;
   text-align: center;
   background-color: var(--paper-color);
+  color: var(--text-secondary);
   padding: 0.25rem 0.75rem;
   border-radius: var(--input-radius);
   box-shadow: var(--shadow-2-up) var(--shadow-light) inset,
@@ -224,7 +225,7 @@ input[type="color"] {
 
 /* Range */
 input[type=range] {
-  --thumb-color: var(--paper-color);
+  --thumb-color: var(--text-secondary);
   --thumb-size: 1rem;
   --thumb-shadow: var(--shadow-2-up) var(--shadow-light),
                   var(--shadow-2-down) var(--shadow-dark);
@@ -275,10 +276,22 @@ input[type="month"],
 input[type="week"],
 input[type="number"] {
   background-color: transparent;
+  color: var(--text-secondary);
 }
 
 input[type="number"] {
   text-align: right;
+}
+
+/* Increase the size of the clickable arrow zone in WebKit browsers */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  padding: 0.5rem 0px;
+  margin-left: 2pt;
+  cursor: pointer;
+  background: transparent;
+  color: transparent;
+  border-radius: 1rem;
 }
 
 

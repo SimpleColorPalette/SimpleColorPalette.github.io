@@ -62,6 +62,7 @@
 }
 .fade-colors-backg {
   background-color: var(--primary-main);
+  color: var(--text-contrast-primary);
   -webkit-animation: fadeColorsBackground var(--animation-fadecolor-time);
   -moz-animation: fadeColorsBackground var(--animation-fadecolor-time);
   -o-animation: fadeColorsBackground var(--animation-fadecolor-time);

@@ -430,9 +430,3 @@ const grayList = document.getElementById('grayList');
 grayColors.forEach(c => {
   grayList.appendChild(CreateBox(c));
 });
-
-
-// ===== Modo oscuro automático =====
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  document.body.classList.add("dark");
-}
