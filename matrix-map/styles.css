@@ -29,10 +29,11 @@ section {
 #palette {
   --cell-size: 25px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--cell-size), 1fr));
+  grid-template-columns: repeat(16, minmax(var(--cell-size), 1fr));
   flex: auto;
   gap: 0px;
   justify-content: center;
+  max-width: fit-content;
 }
 
 .color-btn {
