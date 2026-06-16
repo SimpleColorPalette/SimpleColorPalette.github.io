@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-.container {
-  grid-template-columns: 1fr;
-}
-
 section {
   padding: 1rem;
   width: calc(100% - 2rem);
@@ -93,4 +89,20 @@ pre {
 #output {
   text-align: center;
   background-color: #00000014;
+}
+
+@media screen and (max-width: 600px) {
+  
+  #palette {
+    grid-template-columns: repeat(12, minmax(var(--cell-size), 1fr));
+  }
+
+}
+
+@media screen and (max-width: 350px) {
+  
+  #palette {
+    grid-template-columns: repeat(8, minmax(var(--cell-size), 1fr));
+  }
+
 }

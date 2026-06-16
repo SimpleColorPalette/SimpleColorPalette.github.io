@@ -13,9 +13,10 @@
 .card {
   display: block;
   padding: 1rem 1.5rem !important;
+  width: fit-content;
   align-content: space-evenly;
   color: var(--text-secondary);
-  background: var(--paper);
+  background: var(--paper) !important;
   border-radius: var(--input-radius);
   box-shadow: var(--shadow-1-up) var(--shadow-light),
               var(--shadow-1-down) var(--shadow-dark);
