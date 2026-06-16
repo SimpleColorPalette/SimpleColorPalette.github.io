@@ -70,6 +70,7 @@ section {
   -webkit-user-select: none;
   user-select: none;
   touch-action: none;
+  overflow-x: auto;
 }
 
 .cell {
@@ -79,16 +80,9 @@ section {
   touch-action: none;
 }
 
-pre {
-  background: #eee;
-  padding: 10px;
-}
-
-
 /* Output */
 #output {
   text-align: center;
-  background-color: #00000014;
 }
 
 @media screen and (max-width: 600px) {

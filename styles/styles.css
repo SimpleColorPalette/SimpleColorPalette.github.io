@@ -35,6 +35,17 @@ h2, h3 {
 } */
 
 
+pre {
+  background: var(--paper-color);
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-1-up) var(--shadow-light) inset,
+              var(--shadow-1-down) var(--shadow-dark) inset;
+  padding: 0.85rem 0.75rem;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+
 /* General */
 .big-icon {
   text-align: center;

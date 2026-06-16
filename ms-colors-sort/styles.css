@@ -133,6 +133,10 @@ svg.sector-container {
   font-size: 0.95rem;
 }
 
+.gray-cont .item {
+  width: -webkit-fill-available;
+}
+
 .fill-flex {
   flex: 1 1 0;
 }
@@ -143,27 +147,27 @@ svg.sector-container {
     grid-column: 1 / -1;
   }
 
-  .gray-cont {
-    order: 2;
-  }
-  section.chromatic {
-    order: 1;
+  .gray-cont { order: 2; }
+  section.chromatic { order: 1; }
+
+  .gray-cont .item {
+    width: 9rem;
   }
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 680px) {
   .chr-container {
     scale: 0.75;
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 540px) {
   .chr-container {
     scale: 0.67;
   }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 480px) {
   .chr-container {
     scale: 0.5;
   }

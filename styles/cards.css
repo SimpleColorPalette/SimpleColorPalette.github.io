@@ -12,8 +12,9 @@
 
 .card {
   display: block;
-  padding: 1rem 1.5rem !important;
+  padding: 1.25rem 1.5rem !important;
   width: fit-content;
+  max-width: calc(100% - 2.5rem);
   align-content: space-evenly;
   color: var(--text-secondary);
   background: var(--paper) !important;
