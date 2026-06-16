@@ -45,7 +45,7 @@
   /* url("https://a.jpg") */
   --paper: #fcfcfc80;
   
-  --shadow-light: rgba(255, 255, 255, 0.5);
+  --shadow-light: rgba(255, 255, 255, 0.75);
   --shadow-dark:  rgba(0, 0, 0, 0.25);
 }
 
