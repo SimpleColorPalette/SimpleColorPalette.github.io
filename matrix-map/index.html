@@ -65,7 +65,7 @@
             <input id="height" type="number" value="30" min="1" max="128" placeholder="max 128" />
           </div>
   
-          <button onclick="updateMatrix()" class="primary">
+          <button onclick="updateMatrix()" class="secondary">
             Create
           </button>
         </div>
@@ -76,7 +76,7 @@
               Or upload a pixel map
               <span class="adv">It will scale until width 256 and / or 128 height</span>
             </label>
-            <input id="image-input" type="file" accept="image/*" class="secondary"/>
+            <input id="image-input" type="file" accept="image/*" class="primary"/>
             <canvas id="canvas" style="display:none"></canvas>
           </div>
         </div>
@@ -108,7 +108,9 @@
   </section>
 
   <section class="col">
-    <button id="copy-btn" onclick="copyMatrix()">Copy matrix</button>
+    <button id="copy-btn" onclick="copyMatrix()" class="secondary">
+      Copy matrix
+    </button>
     <pre id="output"></pre>
   </section>
 

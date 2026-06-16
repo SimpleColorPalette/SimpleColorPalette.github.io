@@ -1,7 +1,16 @@
 :root {
   --primary-main: #ffd862;
+  --primary-main-dark: #f3ab4d;
+  --primary-main-light: #fff06e;
+  --primary-grad: var(--primary-main-light) 0%, var(--primary-main) 50%, var(--primary-main-light) 100%;
+  --primary-grad-h: linear-gradient(72deg, var(--primary-grad)) var(--primary-main) 100% / 200%;
   --text-contrast-primary: #121928;
+
   --secondary-main: #66d6ff;
+  --secondary-main-dark: #5eb6ff;
+  --secondary-main-light: #66edff;
+  --secondary-grad: var(--secondary-main-light) 0%, var(--secondary-main) 50%, var(--secondary-main-light) 100%;
+  --secondary-grad-h: linear-gradient(72deg, var(--secondary-grad)) var(--secondary-main) 100% / 200%;
   --text-contrast-secondary: #0c0d16;
 
   /* background: [bg-image] [bg-position] / [bg-size] [repeat-style] [attachment] [bg-origin] [bg-clip] [bg-color]; */
